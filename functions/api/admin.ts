@@ -12,9 +12,22 @@ function auth(c: Context<{ Bindings: Env }>) {
   return token && token === c.env.ADMIN_SECRET;
 }
 
+// GET /api/admin/reports
+app.get('/reports', async (c) => {
+  if (!auth(c)) return c.text('unauthorized', 401);
+  const { results } = await c.env.DB.prepare(
+    `SELECT r.id, r.comment_id, r.quote_id, r.reason, r.details, r.created_at,
+            c.body, c.display_name, c.hidden
+     FROM reports r LEFT JOIN comments c ON c.id = r.comment_id
+     ORDER BY r.created_at DESC LIMIT 200`
+  ).all();
+  return c.json({ reports: results || [] });
+});
+
+// POST /api/admin/comments/hide
 const actionSchema = z.object({ commentId: z.string().min(8), hide: z.boolean() });
 
-app.post('/', async (c) => {
+app.post('/comments/hide', async (c) => {
   if (!auth(c)) return c.text('unauthorized', 401);
   const body = await c.req.json().catch(() => ({}));
   const p = actionSchema.safeParse(body);
@@ -26,4 +39,3 @@ app.post('/', async (c) => {
 });
 
 export default app;
-
