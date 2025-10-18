@@ -1,32 +1,42 @@
-import { Header } from '@/components/Header';
-import { QuoteCard } from '@/components/QuoteCard';
+import { loadQuotes, pickDaily } from '@/lib/quotes';
 import { DiscussionBox } from '@/components/DiscussionBox';
-import { pickDaily } from '@/lib/quotes';
-import quotes from '../../public/quotes.json';
 
-export default function Home() {
-  const { item: dailyQuote } = pickDaily(quotes);
+export default async function HomePage() {
+  const quotes = await loadQuotes().catch(() => []);
+  const { item } = pickDaily(quotes);
 
-  if (!dailyQuote) {
+  if (!item) {
     return (
-      <>
-        <Header />
-        <main className="max-w-4xl mx-auto px-6 py-12 md:py-20">
-          <p className="text-zinc-400 text-center">No quotes available.</p>
-        </main>
-      </>
+      <main className="min-h-dvh flex items-center justify-center text-zinc-300">
+        <div className="text-center">
+          <h1 className="text-xl mb-2">LectioToday</h1>
+          <p>No quotes found. Add your CSV and run the build script.</p>
+        </div>
+      </main>
     );
   }
 
   return (
-    <>
-      <Header />
-      <main className="max-w-4xl mx-auto px-6 py-12 md:py-20">
-        <div className="space-y-8">
-          <QuoteCard quote={dailyQuote} />
-          <DiscussionBox quoteId={dailyQuote.id} />
+    <main className="min-h-dvh flex items-center justify-center p-6 text-zinc-100">
+      <div className="w-full max-w-3xl space-y-6">
+        <div className="rounded-2xl bg-white/6 backdrop-blur-2xl border border-white/10 p-8 shadow-lg">
+          <blockquote className="font-serif text-2xl leading-snug">
+            &ldquo;{item.quote}&rdquo;
+          </blockquote>
+          <div className="mt-4 text-sm text-zinc-300/80">
+            {item.source}
+            {item.translationSource && (
+              <> • <span className="opacity-80">{item.translationSource}</span></>
+            )}
+            {item.translationAuthor && (
+              <> — <span className="opacity-70">{item.translationAuthor}</span></>
+            )}
+          </div>
         </div>
-      </main>
-    </>
+
+        {/* Discussion tied to this quote's stable id */}
+        <DiscussionBox quoteId={item.id} />
+      </div>
+    </main>
   );
 }

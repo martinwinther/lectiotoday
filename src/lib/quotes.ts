@@ -9,15 +9,13 @@ export async function loadQuotes(): Promise<Quote[]> {
   return res.json();
 }
 
-export function pickDaily(quotes: Quote[], offset = 0) {
-  if (!quotes.length) return { item: undefined, index: 0 };
-  const now = new Date();
-  const zoned = toZonedTime(now, SITE_TZ);
+export function pickDaily(quotes: Quote[]) {
+  if (!quotes?.length) return { item: undefined, index: 0, ymd: 0 };
+  const zoned = toZonedTime(new Date(), SITE_TZ);
   const y = zoned.getFullYear();
   const m = String(zoned.getMonth() + 1).padStart(2, '0');
   const d = String(zoned.getDate()).padStart(2, '0');
   const ymd = Number(`${y}${m}${d}`);
-  const idx = Math.abs((ymd + offset) % quotes.length);
-  return { item: quotes[idx], index: idx };
+  const index = Math.abs(ymd % quotes.length);
+  return { item: quotes[index], index, ymd };
 }
-

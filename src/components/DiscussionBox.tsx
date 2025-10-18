@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Turnstile } from '@/components/Turnstile';
 import { fetchComments, postComment } from '@/lib/comments';
-import { track } from '@/lib/track';
 import type { Comment } from '@/types/comment';
 
 export function DiscussionBox({ quoteId }: { quoteId: string }) {
@@ -74,7 +73,6 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
         turnstileToken: token,
         honeypot: '',
       });
-      track('post_ok', quoteId);
       // success: refresh list & fully reset UI for another post
       const r = await fetchComments(quoteId);
       setComments(r.comments || []);
@@ -85,7 +83,6 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
       // focus back to textarea for quick second post
       requestAnimationFrame(() => textareaRef.current?.focus());
     } catch (e) {
-      track('post_blocked', quoteId);
       const msg = e instanceof Error ? e.message : 'Could not post.';
       setError(msg);
       // any token-related failure → get a new token
