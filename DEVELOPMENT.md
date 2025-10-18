@@ -2,18 +2,36 @@
 
 ## Quick Start
 
+### Development Server
+
+To run the full application with database access:
+
 ```bash
 # Install dependencies
 npm install
 
-# Run development server
-npm run dev
+# Apply local database migrations (first time only)
+npm run cf:d1:apply:local
 
+# Build and run with Cloudflare Pages dev server
+npm run dev:cf
+```
+
+This will:
+1. Build the Next.js app for Cloudflare Pages
+2. Start the Cloudflare Pages dev server with D1 database access
+3. Load environment variables from `.dev.vars`
+
+⚠️ **Note**: The regular `npm run dev` command won't work for this project because it requires Cloudflare-specific features (D1 database, Functions, etc.). Always use `npm run dev:cf` for development.
+
+### Production Build
+
+```bash
 # Build for production
-npm run build
+npm run pages:build
 
-# Start production server
-npm start
+# Deploy to Cloudflare Pages
+npm run deploy
 ```
 
 ## Project Structure
@@ -122,15 +140,32 @@ npm run format:check
 
 3. Generate the `id` by hashing the quote text using the `quoteIdFromText()` function
 
-## Next Steps (Future Development)
+## API Routes & Database
 
-- [ ] Create CSV to JSON import script for bulk quote additions
-- [ ] Implement comments backend with Cloudflare Workers + D1
-- [ ] Add user authentication
-- [ ] Build comment moderation system
-- [ ] Create RSS feed for daily quotes
-- [ ] Add share functionality
-- [ ] Build archive view
+All API routes are implemented as **Cloudflare Functions** in `functions/api/`:
+
+- Full D1 database integration
+- Rate limiting, spam protection, Turnstile verification
+- Used in both development (`npm run dev:cf`) and production
+
+### Available Endpoints
+- `POST /api/comments` - Submit a comment
+- `GET /api/comments?quoteId=xxx` - Get comments for a quote
+- `POST /api/track` - Track analytics events
+- `POST /api/report` - Report a comment
+- `GET /api/quote/today` - Get today's quote
+- `GET /api/quote/[id]` - Get specific quote
+
+## Database Schema
+
+The D1 database includes:
+
+- **comments** - User comments with spam protection
+- **votes** - Comment upvote/downvote tracking  
+- **reports** - Moderation reports
+- **events** - Analytics tracking (views, shares, etc.)
+
+Migrations are in `db/migrations/`
 
 ## Troubleshooting
 

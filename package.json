@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "dev:cf": "npm run pages:build && npm run cf:dev",
     "build": "next build",
     "pages:build": "opennextjs-cloudflare build && npm run pages:fix-worker && npm run pages:flatten-assets && npm run pages:add-routes",
     "pages:fix-worker": "mv .open-next/worker.js .open-next/_worker.js",
@@ -17,8 +18,9 @@
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\"",
     "content:build": "tsx scripts/csv-to-json.ts content/quotes.csv public/quotes.json",
     "content:check": "tsx scripts/csv-to-json.ts --check content/quotes.csv",
-    "cf:dev": "wrangler pages dev --compatibility-date=2025-01-01",
+    "cf:dev": "wrangler pages dev .open-next --compatibility-date=2025-01-01 --d1 DB=LectioTodayDB",
     "cf:d1:apply": "wrangler d1 migrations apply LectioTodayDB",
+    "cf:d1:apply:local": "wrangler d1 migrations apply LectioTodayDB --local",
     "cf:d1:local": "wrangler d1 execute LectioTodayDB --local --file=db/migrations/0001_init.sql"
   },
   "dependencies": {
