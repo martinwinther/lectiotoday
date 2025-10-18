@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\""
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\"",
+    "content:build": "tsx scripts/csv-to-json.ts content/quotes.csv public/quotes.json",
+    "content:check": "tsx scripts/csv-to-json.ts --check content/quotes.csv"
   },
   "dependencies": {
     "next": "15.5.6",
@@ -21,10 +23,12 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "csv-parse": "^6.1.0",
     "eslint": "^9",
     "eslint-config-next": "15.5.6",
     "prettier": "^3.6.2",
     "tailwindcss": "^4",
+    "tsx": "^4.20.6",
     "typescript": "^5"
   }
 }

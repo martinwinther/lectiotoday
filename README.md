@@ -40,6 +40,39 @@ npm start
 
 Visit [http://localhost:3000](http://localhost:3000) to see the app.
 
+## 📝 Content Management
+
+LectioToday uses a simple CSV → JSON pipeline to manage quotes.
+
+### Adding Quotes
+
+1. **Edit the CSV file** at `content/quotes.csv` with your quotes. The CSV expects these headers:
+   - `Quote` - The quote text (required, 5-1200 characters)
+   - `Source` - Author and work (e.g., "Marcus Aurelius, Meditations, Book 5")
+   - `Translation source` - Translation title (optional)
+   - `Translation author` - Translator name (optional)
+   - `Top comment` - Editorial commentary (optional)
+
+2. **Generate the JSON**:
+   ```bash
+   npm run content:build
+   ```
+   This converts `content/quotes.csv` → `public/quotes.json` with stable IDs derived from the quote text.
+
+3. **Check for issues** (optional):
+   ```bash
+   npm run content:check
+   ```
+   Validates the CSV without writing output.
+
+### How It Works
+
+- **Stable IDs**: Each quote gets a deterministic 12-character ID from SHA-256 hash of the normalized quote text
+- **Deduplication**: Duplicate quotes (same text) are merged, keeping the first non-empty field values
+- **Sorting**: Output is sorted by source then ID for consistent diffs in version control
+
+The generated `public/quotes.json` is committed to the repo so the site can deploy without a database.
+
 ## 📁 Project Structure
 
 ```
@@ -56,10 +89,17 @@ src/
 ├── types/
 │   └── quote.ts            # Quote type definitions
 └── lib/
-    └── hash.ts             # Deterministic quote ID generator
+    ├── hash.ts             # Deterministic quote ID generator
+    └── quotes.ts           # Quote loading utilities
+
+content/
+└── quotes.csv              # Source CSV file for quotes
+
+scripts/
+└── csv-to-json.ts          # CSV → JSON conversion pipeline
 
 public/
-└── quotes.json             # Quote database
+└── quotes.json             # Generated quote database
 ```
 
 ## 🎨 Design System
@@ -72,7 +112,7 @@ public/
 
 ## 📋 Upcoming Tasks
 
-- [ ] CSV to JSON conversion script for importing large quote collections
+- [x] CSV to JSON conversion script for importing large quote collections
 - [ ] Comments API backend (Cloudflare Workers/D1)
 - [ ] User authentication
 - [ ] Comment moderation system

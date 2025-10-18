@@ -1,9 +1,7 @@
-export async function quoteIdFromText(text: string): Promise<string> {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(text);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-  return hashHex.substring(0, 12);
-}
+import { createHash } from 'crypto';
 
+export function quoteIdFromText(text: string): string {
+  // normalize whitespace, trim, then sha256 → 12 hex chars
+  const normalized = text.replace(/\s+/g, ' ').trim();
+  return createHash('sha256').update(normalized, 'utf8').digest('hex').slice(0, 12);
+}

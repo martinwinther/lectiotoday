@@ -1,27 +1,65 @@
 [
   {
-    "id": "7c9fa136df99",
-    "quote": "You have power over your mind—not outside events. Realize this, and you will find strength.",
-    "source": "Marcus Aurelius, Meditations, Book 5",
-    "translationAuthor": "Gregory Hays"
+    "id": "1e4ef8de5d58",
+    "quote": "How long are you going to wait before you demand the best for yourself?",
+    "source": "Epictetus, Discourses",
+    "translationAuthor": "Robin Hard"
   },
   {
-    "id": "b5f3e2a8c1d4",
+    "id": "53d97150ddfe",
+    "quote": "First say to yourself what you would be; and then do what you have to do.",
+    "source": "Epictetus, Discourses",
+    "translationAuthor": "Robin Hard"
+  },
+  {
+    "id": "8c9c54a0a1e6",
+    "quote": "Don't explain your philosophy. Embody it.",
+    "source": "Epictetus, Discourses",
+    "translationAuthor": "Robin Hard",
+    "topComment": "Actions speak louder than words."
+  },
+  {
+    "id": "e5aa5fe6f775",
+    "quote": "He who laughs at himself never runs out of things to laugh at.",
+    "source": "Epictetus, Discourses",
+    "translationAuthor": "Robin Hard"
+  },
+  {
+    "id": "380a958ea698",
     "quote": "It's not what happens to you, but how you react to it that matters.",
     "source": "Epictetus, Enchiridion",
     "translationAuthor": "Elizabeth Carter"
   },
   {
-    "id": "a3d7f9e1b2c8",
+    "id": "eb9caeb5d0fe",
     "quote": "Waste no more time arguing about what a good man should be. Be one.",
     "source": "Marcus Aurelius, Meditations, Book 10",
     "translationAuthor": "Gregory Hays"
   },
   {
-    "id": "f2e8d4a9c7b1",
-    "quote": "He who laughs at himself never runs out of things to laugh at.",
-    "source": "Epictetus, Discourses",
-    "translationAuthor": "Robin Hard"
+    "id": "3a328a54d374",
+    "quote": "If it is not right, do not do it. If it is not true, do not say it.",
+    "source": "Marcus Aurelius, Meditations, Book 12",
+    "translationAuthor": "Gregory Hays"
+  },
+  {
+    "id": "a7ea35349962",
+    "quote": "The happiness of your life depends upon the quality of your thoughts.",
+    "source": "Marcus Aurelius, Meditations, Book 4",
+    "translationAuthor": "Gregory Hays",
+    "topComment": "This reminds us that our internal state is within our control."
+  },
+  {
+    "id": "913efd28d2dd",
+    "quote": "The obstacle is the way.",
+    "source": "Marcus Aurelius, Meditations, Book 5",
+    "translationAuthor": "Gregory Hays",
+    "topComment": "Every challenge is an opportunity for growth."
+  },
+  {
+    "id": "af682d6403b2",
+    "quote": "You have power over your mind—not outside events. Realize this, and you will find strength.",
+    "source": "Marcus Aurelius, Meditations, Book 5",
+    "translationAuthor": "Gregory Hays"
   }
 ]
-

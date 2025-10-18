@@ -1,19 +1,22 @@
 import { Header } from '@/components/Header';
 import { QuoteCard } from '@/components/QuoteCard';
 import { DiscussionBox } from '@/components/DiscussionBox';
-import type { Quote } from '@/types/quote';
+import { pickDaily } from '@/lib/quotes';
 import quotes from '../../public/quotes.json';
 
-function getDailyQuoteIndex(): number {
-  const today = new Date();
-  const utcDate = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
-  const daysSinceEpoch = Math.floor(utcDate / (1000 * 60 * 60 * 24));
-  return daysSinceEpoch % quotes.length;
-}
-
 export default function Home() {
-  const dailyQuoteIndex = getDailyQuoteIndex();
-  const dailyQuote = quotes[dailyQuoteIndex] as Quote;
+  const { item: dailyQuote } = pickDaily(quotes);
+
+  if (!dailyQuote) {
+    return (
+      <>
+        <Header />
+        <main className="max-w-4xl mx-auto px-6 py-12 md:py-20">
+          <p className="text-zinc-400 text-center">No quotes available.</p>
+        </main>
+      </>
+    );
+  }
 
   return (
     <>

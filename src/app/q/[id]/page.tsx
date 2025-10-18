@@ -81,4 +81,3 @@ export default function QuotePage({ params }: { params: { id: string } }) {
     </>
   );
 }
-
