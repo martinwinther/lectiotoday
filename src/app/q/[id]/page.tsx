@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { QuoteCard } from '@/components/QuoteCard';
@@ -10,16 +10,21 @@ import quotesData from '../../../../public/quotes.json';
 
 const quotes = quotesData as Quote[];
 
-export default function QuotePage({ params }: { params: { id: string } }) {
+export default function QuotePage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = use(params);
   const [currentIndex, setCurrentIndex] = useState<number>(-1);
 
   useEffect(() => {
-    const index = quotes.findIndex((q) => q.id === params.id);
+    const index = quotes.findIndex((q) => q.id === id);
     if (index === -1) {
       notFound();
     }
     setCurrentIndex(index);
-  }, [params.id]);
+  }, [id]);
 
   if (currentIndex === -1) {
     return null;
