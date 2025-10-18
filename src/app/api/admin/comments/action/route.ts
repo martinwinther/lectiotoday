@@ -8,7 +8,7 @@ function isAuth(req: NextRequest, secret: string) {
 }
 
 export async function POST(req: NextRequest) {
-  const { DB, ADMIN_SECRET, HASH_SALT } = cfEnv() as any;
+  const { DB, ADMIN_SECRET, HASH_SALT } = cfEnv();
   if (!isAuth(req, ADMIN_SECRET))
     return new NextResponse('unauthorized', { status: 401 });
 

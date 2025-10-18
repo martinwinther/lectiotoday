@@ -37,7 +37,7 @@ function isAuth(req: NextRequest, secret: string) {
 }
 
 export async function GET(req: NextRequest) {
-  const { DB, ADMIN_SECRET } = cfEnv() as any;
+  const { DB, ADMIN_SECRET } = cfEnv();
   if (!isAuth(req, ADMIN_SECRET))
     return new NextResponse('unauthorized', { status: 401 });
 
@@ -74,7 +74,7 @@ export async function GET(req: NextRequest) {
   }
 
   const where: string[] = [];
-  const params: any[] = [];
+  const params: (string | number)[] = [];
 
   if (scope === 'deleted') {
     where.push('c.deleted_at IS NOT NULL');
@@ -132,7 +132,10 @@ export async function GET(req: NextRequest) {
 
   let nextCursor: string | undefined = undefined;
   if (rows.length > limit) {
-    const last = rows[limit - 1] as any;
+    const last = rows[limit - 1] as {
+      created_at: number;
+      id: string;
+    };
     nextCursor = encodeCursor({
       t: Number(last.created_at),
       id: String(last.id),
@@ -141,8 +144,8 @@ export async function GET(req: NextRequest) {
   }
 
   const map = await loadQuotesMap(req);
-  const items = rows.map((r: any) => {
-    const qv = map.get(r.quote_id) || null;
+  const items = rows.map((r: Record<string, unknown>) => {
+    const qv = map.get(String(r.quote_id)) || null;
     return {
       ...r,
       quote_preview: qv?.quote?.slice(0, 120) || null,
