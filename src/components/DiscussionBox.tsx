@@ -100,11 +100,10 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
   }
 
   return (
-    <div className="glass-card rounded-2xl overflow-hidden">
-      <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between">
-        <h3 className="text-sm uppercase tracking-widest text-zinc-400">Conversation</h3>
-        <div className="text-xs text-zinc-500">
-          Quote ID: <span className="font-mono text-zinc-400">{quoteId}</span>
+    <div className="rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 overflow-hidden">
+      <div className="px-5 py-4 border-b border-white/10 flex items-center justify-between">
+        <div className="text-sm tracking-[0.18em] uppercase text-zinc-300/60">
+          Conversation
         </div>
       </div>
 
