@@ -180,7 +180,9 @@ function ReportModal({
         }),
       });
       if (!res.ok) {
-        const data = await res.json().catch(() => ({ error: 'unknown' }));
+        const data = (await res.json().catch(() => ({
+          error: 'unknown',
+        }))) as { error?: string };
         throw new Error(data.error || 'Failed to submit report');
       }
       onClose();

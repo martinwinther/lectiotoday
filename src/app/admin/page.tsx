@@ -25,7 +25,7 @@ export default function AdminPage() {
     });
     setLoading(false);
     if (!res.ok) return alert('Auth failed or error');
-    const j = await res.json();
+    const j = (await res.json()) as { reports: Report[] };
     setReports(j.reports || []);
   }
 

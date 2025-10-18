@@ -1,12 +1,12 @@
 /// <reference types="@cloudflare/workers-types" />
-import { Hono } from 'hono';
+import { Hono, Context } from 'hono';
 import { z } from 'zod';
 
 type Env = { DB: D1Database; ADMIN_SECRET: string };
 
 const app = new Hono<{ Bindings: Env }>();
 
-function auth(c: any) {
+function auth(c: Context<{ Bindings: Env }>) {
   const h = c.req.header('authorization') || '';
   const token = h.startsWith('Bearer ') ? h.slice(7) : '';
   return token && token === c.env.ADMIN_SECRET;
