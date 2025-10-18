@@ -1,4 +1,5 @@
 /// <reference types="@cloudflare/workers-types" />
+import type { EventContext } from '@cloudflare/workers-types';
 import { Hono } from 'hono';
 
 const app = new Hono();
@@ -40,7 +41,7 @@ fetch('${origin}/api/quote/today').then(r=>r.json()).then(({quote})=>{
   });
 });
 
-export const onRequest = async (context) => {
+export const onRequest = async (context: EventContext<{}, any, Record<string, unknown>>) => {
   return app.fetch(context.request, context.env, context);
 };
 

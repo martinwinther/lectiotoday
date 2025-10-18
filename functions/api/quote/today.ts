@@ -1,4 +1,5 @@
 /// <reference types="@cloudflare/workers-types" />
+import type { EventContext } from '@cloudflare/workers-types';
 import { Hono } from 'hono';
 import { toZonedTime } from 'date-fns-tz';
 
@@ -25,6 +26,6 @@ app.get('/', async (c) => {
   return c.json({ quote: item, index: idx, dateYmd: ymd, tz: SITE_TZ });
 });
 
-export const onRequest = async (context) => {
+export const onRequest = async (context: EventContext<Env, any, Record<string, unknown>>) => {
   return app.fetch(context.request, context.env, context);
 };

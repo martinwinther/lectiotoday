@@ -1,4 +1,5 @@
 /// <reference types="@cloudflare/workers-types" />
+import type { EventContext } from '@cloudflare/workers-types';
 import { Hono } from 'hono';
 import { z } from 'zod';
 
@@ -111,7 +112,7 @@ app.post('/', async (c) => {
   return c.json({ ok: true, id, created_at: now });
 });
 
-export const onRequest = async (context) => {
+export const onRequest = async (context: EventContext<Env, any, Record<string, unknown>>) => {
   return app.fetch(context.request, context.env, context);
 };
 

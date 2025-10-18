@@ -1,4 +1,5 @@
 /// <reference types="@cloudflare/workers-types" />
+import type { EventContext } from '@cloudflare/workers-types';
 import { Hono } from 'hono';
 import satori from 'satori';
 import { Resvg } from '@resvg/resvg-wasm';
@@ -88,7 +89,7 @@ app.get('/:id.png', async (c) => {
   });
 });
 
-export const onRequest = async (context) => {
+export const onRequest = async (context: EventContext<{}, any, Record<string, unknown>>) => {
   return app.fetch(context.request, context.env, context);
 };
 
