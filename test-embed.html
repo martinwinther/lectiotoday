@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LectioToday Embed Test</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    h1 { color: #333; }
+    .test-section {
+      margin: 40px 0;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h2 { margin-top: 0; color: #666; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <h1>LectioToday Embed Widget Test</h1>
+  
+  <div class="test-section">
+    <h2>Dark Theme (Default)</h2>
+    <script async src="http://localhost:3000/embed.js" data-theme="dark"></script>
+  </div>
+
+  <div class="test-section">
+    <h2>Light Theme</h2>
+    <script async src="http://localhost:3000/embed.js" data-theme="light"></script>
+  </div>
+
+  <p style="margin-top: 40px; color: #666; font-size: 14px;">
+    <strong>Testing Instructions:</strong><br>
+    1. Start your dev server: <code>npm run dev</code><br>
+    2. Open this file in a browser<br>
+    3. You should see two embedded quote cards (one dark, one light theme)
+  </p>
+</body>
+</html>
+

@@ -9,12 +9,32 @@ export function Header() {
             LectioToday
           </h1>
         </Link>
-        <Link
-          href="/archive"
-          className="text-sm font-medium text-zinc-300 hover:text-white transition-colors"
-        >
-          Archive
-        </Link>
+        <nav className="flex items-center gap-4">
+          <Link
+            href="/archive"
+            className="text-sm font-medium text-zinc-300 hover:text-white transition-colors"
+          >
+            Archive
+          </Link>
+          <div className="flex items-center gap-2 text-sm text-zinc-400">
+            <span className="hidden sm:inline">Feeds:</span>
+            <a
+              href="/feed.xml"
+              className="text-zinc-400 hover:text-white transition-colors"
+              title="RSS Feed"
+            >
+              RSS
+            </a>
+            <span className="text-zinc-600">/</span>
+            <a
+              href="/feed.json"
+              className="text-zinc-400 hover:text-white transition-colors"
+              title="JSON Feed"
+            >
+              JSON
+            </a>
+          </div>
+        </nav>
       </div>
     </header>
   );

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
   },
+  manifest: '/manifest.webmanifest',
 };
 
 export default function RootLayout({
@@ -26,7 +28,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ServiceWorkerRegister />
+        {children}
+      </body>
     </html>
   );
 }

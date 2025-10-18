@@ -17,6 +17,9 @@ LectioToday presents one carefully selected Stoic quote each day, creating a foc
 - **Comments**: Cloudflare D1 (SQLite) + Pages Functions
 - **Anti-spam**: Cloudflare Turnstile
 - **API**: Hono framework
+- **Timezone**: Europe/Copenhagen (for daily quote selection)
+- **PWA**: Service Worker with offline caching
+- **Feeds**: RSS 2.0 and JSON Feed 1.1
 
 ## 🚀 Getting Started
 
@@ -102,8 +105,16 @@ scripts/
 └── csv-to-json.ts          # CSV → JSON conversion pipeline
 
 functions/
-└── api/
-    └── comments.ts         # Cloudflare Pages Function (Hono API)
+├── api/
+│   ├── comments.ts         # Comment submission API
+│   ├── quote/
+│   │   ├── today.ts        # Today's quote API
+│   │   └── [id].ts         # Quote by ID API
+│   ├── admin.ts            # Admin routes
+│   └── ...
+├── feed.xml.ts             # RSS 2.0 feed
+├── feed.json.ts            # JSON Feed
+└── embed.js.ts             # Embed widget script
 
 db/
 └── migrations/
@@ -215,27 +226,117 @@ The API endpoints will be available at `/api/comments`.
 5. **Honeypot field**: Hidden field to catch bots
 6. **Timing check**: Minimum typing time required
 
-## 📋 Upcoming Tasks
+## 📋 Completed Features
 
 - [x] CSV to JSON conversion script for importing large quote collections
 - [x] Comments API backend (Cloudflare Workers/D1)
+- [x] Archive view with all quotes
+- [x] RSS & JSON Feed for daily quotes
+- [x] Public REST APIs (today's quote, quote by ID)
+- [x] Embed widget for external websites
+- [x] Progressive Web App (PWA) support
+- [x] Timezone-aware daily selection (Europe/Copenhagen)
+
+## 📋 Future Enhancements
+
 - [ ] User authentication (optional)
 - [ ] Comment moderation dashboard
 - [ ] Upvote/downvote system
-- [ ] RSS feed for daily quotes
-- [ ] Share quote functionality
-- [ ] Archive view with all quotes
+- [ ] Share quote functionality (social media integration)
 
 ## 🔧 Key Features
 
 ### Daily Quote Selection
-The home page automatically selects a quote based on the current UTC date, ensuring everyone sees the same quote globally on any given day.
+The home page automatically selects a quote based on the current date in **Europe/Copenhagen timezone**, ensuring consistent daily quotes for the target audience.
 
 ### Permalink Pages
 Each quote has a unique permalink (`/q/[id]`) with prev/next navigation for browsing the entire collection.
 
 ### Deterministic Quote IDs
 Quote IDs are generated using SHA-256 hashing of the quote text, ensuring stable URLs even if the quote order changes.
+
+## 🔌 APIs & Feeds
+
+LectioToday provides read-only public APIs and feed formats for integrations.
+
+### REST APIs
+
+#### Get Today's Quote
+```
+GET /api/quote/today
+```
+Returns the current daily quote based on Europe/Copenhagen timezone.
+
+**Response:**
+```json
+{
+  "quote": {
+    "id": "abc123...",
+    "quote": "Quote text...",
+    "source": "Marcus Aurelius, Meditations",
+    "translation_source": "...",
+    "translation_author": "...",
+    "top_comment": "..."
+  },
+  "index": 42,
+  "dateYmd": 20251018,
+  "tz": "Europe/Copenhagen"
+}
+```
+
+#### Get Quote by ID
+```
+GET /api/quote/[id]
+```
+Returns a specific quote by its ID.
+
+**Response:**
+```json
+{
+  "quote": {
+    "id": "abc123...",
+    "quote": "Quote text...",
+    "source": "..."
+  }
+}
+```
+
+### Feeds
+
+Subscribe to daily quotes via RSS or JSON Feed:
+
+- **RSS 2.0**: `/feed.xml`
+- **JSON Feed 1.1**: `/feed.json`
+
+Both feeds include the last 14 daily quotes with proper publication dates.
+
+### Embed Widget
+
+Embed today's quote on any website with a simple script tag:
+
+```html
+<script async src="https://your-domain.com/embed.js" data-theme="dark"></script>
+```
+
+**Options:**
+- `data-theme="dark"` (default) or `data-theme="light"` - Set the theme
+- The widget is fully self-contained with no external dependencies
+- Automatically fetches and displays today's quote
+- Includes a link back to the full quote page
+
+## 📱 Progressive Web App (PWA)
+
+LectioToday is installable as a Progressive Web App:
+
+- **Offline support**: Core pages cached for offline viewing
+- **Install prompt**: Available on supported browsers (Chrome, Edge, Safari)
+- **Standalone mode**: Runs like a native app when installed
+- **Automatic updates**: Service worker updates in the background
+
+To install:
+1. Visit the site in a PWA-compatible browser
+2. Look for the "Install" prompt in the address bar
+3. Click "Install" to add to home screen/app drawer
 
 ## 📝 License
 
