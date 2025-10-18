@@ -61,7 +61,8 @@ export function Turnstile({ siteKey, onToken, onReady }: TurnstileProps) {
       document.head.appendChild(s);
     };
     ensureScriptAndRender();
-  }, [siteKey, onToken, onReady]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [siteKey]);
 
   return <div ref={hostRef} />;
 }
