@@ -3,8 +3,10 @@ compatibility_date = "2025-01-01"
 pages_build_output_dir = ".open-next"
 compatibility_flags = ["nodejs_compat"]
 
-[[d1_databases]]
-binding = "DB"
-database_name = "LectioTodayDB"
-database_id = "REPLACE_IN_DASHBOARD"
+# D1 Database for comments system (commented out until database is created)
+# To enable: run `wrangler d1 create LectioTodayDB` and replace database_id below
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "LectioTodayDB"
+# database_id = "YOUR_DATABASE_ID_HERE"
 
