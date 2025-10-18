@@ -338,6 +338,23 @@ To install:
 2. Look for the "Install" prompt in the address bar
 3. Click "Install" to add to home screen/app drawer
 
+## Cloudflare Pages Functions Routing
+
+We ship `functions/_routes.json` to ensure /api/*, /og/*, /feed.*, and /embed.js are handled by Functions. If POSTs return 405 in prod, check:
+- Pages → Settings → Functions: Enabled, directory = functions
+- A fresh deploy after modifying functions/_routes.json
+- D1 binding present and migrations applied
+
+### Testing after deployment
+
+Open these URLs to verify routing works:
+- GET `https://<domain>/api/health` (should 200 with `{"ok":true,"method":"GET"}`)
+- POST `https://<domain>/api/health` (should 200, not 405)
+- GET `https://<domain>/api/comments?quoteId=test` (should 200 with `{"comments":[]}`)
+- POST `https://<domain>/api/comments` (should 400 if body invalid, not 405)
+
+If any endpoint returns 405, the routing config is not applied. Redeploy and check Pages dashboard settings.
+
 ## 📝 License
 
 MIT

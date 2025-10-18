@@ -51,6 +51,4 @@ app.post('/', async (c) => {
   return c.json({ ok: true });
 });
 
-export const onRequest = async (context: EventContext<Env, any, Record<string, unknown>>) => {
-  return app.fetch(context.request as any, context.env, context as any);
-};
+export default app;

@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "include": [
+    "/api/*",
+    "/og/*",
+    "/feed.xml",
+    "/feed.json",
+    "/embed.js"
+  ],
+  "exclude": [
+    "/_next/*",
+    "/*"
+  ]
+}
+

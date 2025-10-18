@@ -26,6 +26,4 @@ app.get('/', async (c) => {
   return c.json({ quote: item, index: idx, dateYmd: ymd, tz: SITE_TZ });
 });
 
-export const onRequest = async (context: EventContext<Env, any, Record<string, unknown>>) => {
-  return app.fetch(context.request as any, context.env, context as any);
-};
+export default app;
