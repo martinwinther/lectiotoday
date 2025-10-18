@@ -1,16 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cfEnv } from '@/lib/cf';
 
-function isAuth(req: NextRequest, secret: string) {
-  const h = req.headers.get('authorization') || '';
-  const token = h.startsWith('Bearer ') ? h.slice(7) : '';
-  return token && token === secret;
+function isAuthorized(req: NextRequest) {
+  const { ADMIN_SECRET } = cfEnv();
+  const authHeader = req.headers.get('authorization') || '';
+  const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : '';
+  return token && token === ADMIN_SECRET;
 }
 
 export async function POST(req: NextRequest) {
-  const { DB, ADMIN_SECRET, HASH_SALT } = cfEnv();
-  if (!isAuth(req, ADMIN_SECRET))
+  if (!isAuthorized(req)) {
     return new NextResponse('unauthorized', { status: 401 });
+  }
+
+  const { DB, HASH_SALT } = cfEnv();
 
   const body = (await req
     .json()

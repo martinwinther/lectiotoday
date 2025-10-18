@@ -33,16 +33,19 @@ async function loadQuotesMap(req: NextRequest) {
   }
 }
 
-function isAuth(req: NextRequest, secret: string) {
-  const h = req.headers.get('authorization') || '';
-  const token = h.startsWith('Bearer ') ? h.slice(7) : '';
-  return token && token === secret;
+function isAuthorized(req: NextRequest) {
+  const { ADMIN_SECRET } = cfEnv();
+  const authHeader = req.headers.get('authorization') || '';
+  const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : '';
+  return token && token === ADMIN_SECRET;
 }
 
 export async function GET(req: NextRequest) {
-  const { DB, ADMIN_SECRET } = cfEnv();
-  if (!isAuth(req, ADMIN_SECRET))
+  if (!isAuthorized(req)) {
     return new NextResponse('unauthorized', { status: 401 });
+  }
+
+  const { DB } = cfEnv();
 
   const url = new URL(req.url);
   const scope = (url.searchParams.get('scope') || 'today') as
