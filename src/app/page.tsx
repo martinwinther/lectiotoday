@@ -1,8 +1,11 @@
-import { loadQuotes, pickDaily } from '@/lib/quotes';
+import { pickDaily } from '@/lib/quotes';
 import { DiscussionBox } from '@/components/DiscussionBox';
+import quotesData from '../../public/quotes.json';
+import type { Quote } from '@/types/quote';
+
+const quotes = quotesData as Quote[];
 
 export default async function HomePage() {
-  const quotes = await loadQuotes().catch(() => []);
   const { item } = pickDaily(quotes);
 
   if (!item) {
