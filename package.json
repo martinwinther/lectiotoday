@@ -10,14 +10,19 @@
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\"",
     "content:build": "tsx scripts/csv-to-json.ts content/quotes.csv public/quotes.json",
-    "content:check": "tsx scripts/csv-to-json.ts --check content/quotes.csv"
+    "content:check": "tsx scripts/csv-to-json.ts --check content/quotes.csv",
+    "cf:dev": "wrangler pages dev --compatibility-date=2025-01-01",
+    "cf:d1:apply": "wrangler d1 migrations apply LectioTodayDB",
+    "cf:d1:local": "wrangler d1 execute LectioTodayDB --local --file=db/migrations/0001_init.sql"
   },
   "dependencies": {
+    "hono": "^4.10.1",
     "next": "15.5.6",
     "react": "19.1.0",
     "react-dom": "19.1.0"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20251011.0",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
@@ -29,6 +34,8 @@
     "prettier": "^3.6.2",
     "tailwindcss": "^4",
     "tsx": "^4.20.6",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.43.0",
+    "zod": "^4.1.12"
   }
 }

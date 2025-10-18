@@ -75,7 +75,7 @@ export default function QuotePage({ params }: { params: { id: string } }) {
       <main className="max-w-4xl mx-auto px-6 py-12 md:py-20">
         <div className="space-y-8">
           <QuoteCard quote={currentQuote} />
-          <DiscussionBox />
+          <DiscussionBox quoteId={currentQuote.id} />
         </div>
       </main>
     </>

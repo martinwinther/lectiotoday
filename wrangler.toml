@@ -1,0 +1,14 @@
+name = "lectiotoday"
+compatibility_date = "2025-01-01"
+
+[vars]
+HASH_SALT = "replace-with-a-long-random-string"
+# Set these in CF dashboard → Pages → Settings → Environment variables
+# TURNSTILE_SECRET = "server-secret"
+# NEXT_PUBLIC_TURNSTILE_SITE_KEY = "site-key"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "LectioTodayDB"
+database_id = "REPLACE_IN_DASHBOARD"
+

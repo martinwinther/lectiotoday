@@ -14,6 +14,9 @@ LectioToday presents one carefully selected Stoic quote each day, creating a foc
 - **Runtime**: Node.js v20 (LTS)
 - **Package Manager**: npm
 - **Fonts**: EB Garamond (serif) for quotes, system sans for UI
+- **Comments**: Cloudflare D1 (SQLite) + Pages Functions
+- **Anti-spam**: Cloudflare Turnstile
+- **API**: Hono framework
 
 ## 🚀 Getting Started
 
@@ -98,6 +101,14 @@ content/
 scripts/
 └── csv-to-json.ts          # CSV → JSON conversion pipeline
 
+functions/
+└── api/
+    └── comments.ts         # Cloudflare Pages Function (Hono API)
+
+db/
+└── migrations/
+    └── 0001_init.sql       # D1 database schema
+
 public/
 └── quotes.json             # Generated quote database
 ```
@@ -110,12 +121,107 @@ public/
 - **Colors**: Zinc/Stone palette (zinc-50 to zinc-900)
 - **Effects**: Soft shadows, rounded corners, subtle borders
 
+## 💬 Comments System
+
+LectioToday includes a free, persistent comment system powered by Cloudflare D1 and Turnstile.
+
+### Features
+
+- **Zero-cost hosting**: Uses Cloudflare Pages Functions + D1 (SQLite)
+- **Anti-spam**: Cloudflare Turnstile for bot protection
+- **Rate limiting**: Max 5 comments per 10 minutes per IP
+- **Duplicate detection**: Prevents exact same comment on same quote
+- **Link limits**: Max 1 link per comment
+- **Typing time check**: Basic anti-bot timing verification
+
+### Setup Instructions
+
+#### 1. Get Cloudflare Turnstile Keys
+
+1. Visit [Cloudflare Dashboard](https://dash.cloudflare.com/) → Turnstile
+2. Create a new site widget
+3. Note your **Site Key** and **Secret Key**
+
+#### 2. Create D1 Database
+
+```bash
+# Create the database in Cloudflare
+wrangler d1 create LectioTodayDB
+
+# Copy the database_id from output and update wrangler.toml
+```
+
+Update `wrangler.toml` with your `database_id`.
+
+#### 3. Apply Database Schema
+
+```bash
+# For production (Cloudflare)
+npm run cf:d1:apply
+
+# For local development
+npm run cf:d1:local
+```
+
+#### 4. Set Environment Variables
+
+In **Cloudflare Pages** dashboard → Settings → Environment variables:
+
+- `TURNSTILE_SECRET` = Your Turnstile secret key
+- `NEXT_PUBLIC_TURNSTILE_SITE_KEY` = Your Turnstile site key
+- `HASH_SALT` = A long random string (for IP hashing)
+
+For local development, create `.dev.vars` in project root:
+
+```
+TURNSTILE_SECRET=your-secret-key
+NEXT_PUBLIC_TURNSTILE_SITE_KEY=your-site-key
+HASH_SALT=your-random-salt-string
+```
+
+#### 5. Deploy to Cloudflare Pages
+
+1. Connect your GitHub repo to Cloudflare Pages
+2. Build command: `npm run build`
+3. Output directory: `.next`
+4. Add environment variables (see step 4)
+5. Deploy!
+
+### Local Development
+
+Run both servers simultaneously:
+
+```bash
+# Terminal 1: Next.js dev server
+npm run dev
+
+# Terminal 2: Cloudflare Pages Functions (API)
+npm run cf:dev
+```
+
+The API endpoints will be available at `/api/comments`.
+
+### Database Schema
+
+- **comments**: Stores comment data with quote_id, body, display_name, timestamps, hashes for deduplication
+- **votes**: Reserved for future upvote/downvote functionality
+
+### Anti-Spam Features
+
+1. **Turnstile**: Human verification on every post
+2. **Rate limiting**: IP-based (5 posts/10 min)
+3. **Duplicate detection**: Hash-based per quote
+4. **Link limits**: Max 1 URL per comment
+5. **Honeypot field**: Hidden field to catch bots
+6. **Timing check**: Minimum typing time required
+
 ## 📋 Upcoming Tasks
 
 - [x] CSV to JSON conversion script for importing large quote collections
-- [ ] Comments API backend (Cloudflare Workers/D1)
-- [ ] User authentication
-- [ ] Comment moderation system
+- [x] Comments API backend (Cloudflare Workers/D1)
+- [ ] User authentication (optional)
+- [ ] Comment moderation dashboard
+- [ ] Upvote/downvote system
 - [ ] RSS feed for daily quotes
 - [ ] Share quote functionality
 - [ ] Archive view with all quotes
