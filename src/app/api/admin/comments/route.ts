@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cfEnv } from '@/lib/cf';
+import { pickDaily } from '@/lib/quotes';
+import quotesData from '../../../public/quotes.json';
+import type { Quote } from '@/types/quote';
 
 function encodeCursor(c: { t: number; id: string }) {
   return Buffer.from(JSON.stringify(c)).toString('base64url');
@@ -17,13 +20,8 @@ function decodeCursor(s?: string | null) {
   }
 }
 
-async function loadQuotesMap(req: NextRequest) {
-  const r = await fetch(new URL('/quotes.json', req.url).toString());
-  const quotes = (await r.json()) as Array<{
-    id: string;
-    quote: string;
-    source?: string;
-  }>;
+function loadQuotesMap() {
+  const quotes = quotesData as Quote[];
   const map = new Map(
     quotes.map((q) => [q.id, { quote: q.quote, source: q.source }])
   );
@@ -64,13 +62,9 @@ export async function GET(req: NextRequest) {
 
   let quoteId = quoteIdParam;
   if (!quoteId && scope === 'today') {
-    const now = new Date();
-    const ymd = Number(
-      `${now.getUTCFullYear()}${String(now.getUTCMonth() + 1).padStart(2, '0')}${String(now.getUTCDate()).padStart(2, '0')}`
-    );
-    const r = await fetch(new URL('/quotes.json', req.url).toString());
-    const quotes = (await r.json()) as Array<{ id: string }>;
-    quoteId = quotes.length ? quotes[Math.abs(ymd % quotes.length)].id : '';
+    const quotes = quotesData as Quote[];
+    const { item } = pickDaily(quotes);
+    quoteId = item?.id || '';
   }
 
   const where: string[] = [];
@@ -143,7 +137,7 @@ export async function GET(req: NextRequest) {
     rows.length = limit;
   }
 
-  const map = await loadQuotesMap(req);
+  const map = loadQuotesMap();
   const items = rows.map((r: Record<string, unknown>) => {
     const qv = map.get(String(r.quote_id)) || null;
     return {

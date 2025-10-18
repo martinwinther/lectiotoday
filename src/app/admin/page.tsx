@@ -44,7 +44,9 @@ export default function AdminPage() {
       });
       if (!res.ok) {
         setAuthenticated(false);
-        throw new Error('Auth or server error');
+        const errorText = await res.text();
+        console.error('Admin API error:', res.status, errorText);
+        throw new Error(`Auth or server error: ${res.status} ${errorText}`);
       }
       setAuthenticated(true);
       const j = (await res.json()) as { items: Item[]; nextCursor?: string };
@@ -71,7 +73,9 @@ export default function AdminPage() {
     });
     if (!res.ok) {
       setAuthenticated(false);
-      return alert('Action failed');
+      const errorText = await res.text();
+      console.error('Admin action error:', res.status, errorText);
+      return alert(`Action failed: ${res.status} ${errorText}`);
     }
     load(true);
   }
