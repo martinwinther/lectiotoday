@@ -23,6 +23,9 @@ const config: OpenNextConfig = {
       queue: 'dummy',
     },
   },
+  dangerous: {
+    enableCacheInterception: false,
+  },
 };
 
 export default config;
