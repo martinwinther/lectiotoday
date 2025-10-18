@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { toZonedTime } from 'date-fns-tz';
+import type { Quote } from '@/types/quote';
 
 const SITE_TZ = 'Europe/Copenhagen';
 
 export async function GET(req: NextRequest) {
   const base = new URL(req.url).origin;
   const quotesRes = await fetch(`${base}/quotes.json`);
-  const quotes = (await quotesRes.json()) as Array<any>;
+  const quotes = (await quotesRes.json()) as Quote[];
 
   if (!quotes?.length) {
     return NextResponse.json({ error: 'no_quotes' }, { status: 500 });

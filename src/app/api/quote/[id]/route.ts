@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import type { Quote } from '@/types/quote';
 
 export async function GET(
   req: NextRequest,
@@ -7,7 +8,7 @@ export async function GET(
   const { id } = await params;
   const base = new URL(req.url).origin;
   const quotesRes = await fetch(`${base}/quotes.json`);
-  const quotes = (await quotesRes.json()) as Array<any>;
+  const quotes = (await quotesRes.json()) as Quote[];
   const q = quotes.find((x) => x.id === id);
 
   if (!q) {
