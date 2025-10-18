@@ -1,5 +1,4 @@
 /// <reference types="@cloudflare/workers-types" />
-import type { PagesFunction } from '@cloudflare/workers-types';
 import { Hono } from 'hono';
 import satori from 'satori';
 import { Resvg } from '@resvg/resvg-wasm';
@@ -89,7 +88,7 @@ app.get('/:id.png', async (c) => {
   });
 });
 
-export const onRequest: PagesFunction<Env> = async (context) => {
+export const onRequest = async (context) => {
   return app.fetch(context.request, context.env, context);
 };
 

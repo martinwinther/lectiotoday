@@ -1,8 +1,5 @@
 /// <reference types="@cloudflare/workers-types" />
-import type { PagesFunction } from '@cloudflare/workers-types';
 import { Hono } from 'hono';
-
-type Env = Record<string, never>;
 
 const app = new Hono();
 
@@ -43,7 +40,7 @@ fetch('${origin}/api/quote/today').then(r=>r.json()).then(({quote})=>{
   });
 });
 
-export const onRequest: PagesFunction<Env> = async (context) => {
+export const onRequest = async (context) => {
   return app.fetch(context.request, context.env, context);
 };
 

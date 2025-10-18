@@ -1,5 +1,4 @@
 /// <reference types="@cloudflare/workers-types" />
-import type { PagesFunction } from '@cloudflare/workers-types';
 import { Hono, Context } from 'hono';
 import { z } from 'zod';
 
@@ -39,6 +38,6 @@ app.post('/comments/hide', async (c) => {
   return c.json({ ok: true });
 });
 
-export const onRequest: PagesFunction<Env> = async (context) => {
+export const onRequest = async (context) => {
   return app.fetch(context.request, context.env, context);
 };

@@ -1,5 +1,4 @@
 /// <reference types="@cloudflare/workers-types" />
-import type { PagesFunction } from '@cloudflare/workers-types';
 import { Hono } from 'hono';
 
 type Env = {
@@ -18,6 +17,6 @@ app.get('/', async (c) => {
   return c.json({ quote: q });
 });
 
-export const onRequest: PagesFunction<Env> = async (context) => {
+export const onRequest = async (context) => {
   return app.fetch(context.request, context.env, context);
 };
