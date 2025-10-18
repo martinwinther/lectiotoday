@@ -35,6 +35,7 @@ OpenNext configuration for Cloudflare Workers runtime. This file configures:
 
 ### `wrangler.toml`
 Cloudflare Pages configuration:
+- `[build]` section with `command = "npm run pages:build"` - Tells Cloudflare what to run
 - `pages_build_output_dir`: `.open-next` - The build output directory
 - `compatibility_date`: `2025-01-01`
 - D1 database bindings
@@ -44,12 +45,14 @@ Cloudflare Pages configuration:
 
 When connecting to Cloudflare Pages via GitHub:
 
-1. **Build command**: `npm run pages:build`
-2. **Build output directory**: `.open-next`
+1. **Build command**: Automatically configured via `wrangler.toml` (`npm run pages:build`)
+2. **Build output directory**: Automatically configured via `wrangler.toml` (`.open-next`)
 3. **Environment variables**: Set in Cloudflare Pages dashboard
    - `TURNSTILE_SECRET`
    - `NEXT_PUBLIC_TURNSTILE_SITE_KEY`
    - `HASH_SALT`
+
+**Note**: The `wrangler.toml` file now includes a `[build]` section that tells Cloudflare Pages to run the correct build command. You don't need to manually configure the build command in the dashboard - it will be read from the config file.
 
 ## Why OpenNext?
 
