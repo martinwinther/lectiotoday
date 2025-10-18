@@ -72,12 +72,13 @@ OpenNext is the recommended adapter for deploying Next.js to Cloudflare Pages (r
 
 The `.open-next` directory contains:
 - `_worker.js` - Main Cloudflare Worker (renamed from `worker.js` for Pages compatibility)
-- `assets/` - Static assets
+- `_routes.json` - Routing configuration (generated to exclude static assets)
+- Static assets (flattened from `assets/` directory)
 - `cache/` - Pre-rendered pages
 - `server-functions/` - Server-side functions
 - `cloudflare/` - Cloudflare-specific code
 
-**Note**: The build process automatically renames `worker.js` to `_worker.js` because Cloudflare Pages requires the underscore prefix to execute the file as a Worker (otherwise it treats everything as static files).
+**Note**: The build process automatically renames `worker.js` to `_worker.js` and flattens the assets directory because Cloudflare Pages requires this structure. All API routes are handled by the Next.js App Router within the Worker.
 
 ## Troubleshooting
 
@@ -93,8 +94,12 @@ This happens if the worker file isn't being executed. Make sure:
 2. The `_worker.js` file exists in `.open-next/` after building
 3. Cloudflare Pages recognizes files starting with `_` as Workers
 
-### Functions not working
-Check that your D1 database bindings are correctly configured in `wrangler.toml`.
+### API routes not working
+Ensure:
+1. API routes are in `src/app/api/` using Next.js App Router
+2. D1 database bindings are correctly configured in `wrangler.toml`
+3. `getCloudflareContext()` from `@opennextjs/cloudflare` is used to access bindings
+4. No `runtime = 'edge'` exports in route handlers (OpenNext handles this automatically)
 
 ## Local Development
 
@@ -104,12 +109,12 @@ For local development, use the standard Next.js dev server:
 npm run dev
 ```
 
-For testing Cloudflare Functions (like comments API):
+For testing with Cloudflare bindings (D1 database, Turnstile):
 ```bash
-npm run cf:dev
+npm run dev:cf
 ```
 
-This runs the Cloudflare Pages development server with D1 database access.
+This builds the app with OpenNext and runs the Cloudflare Pages development server with D1 database access.
 
 ---
 
