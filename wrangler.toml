@@ -2,9 +2,6 @@ name = "lectiotoday"
 compatibility_date = "2025-01-01"
 pages_build_output_dir = ".open-next"
 
-[build]
-command = "npm run pages:build"
-
 [vars]
 HASH_SALT = "replace-with-a-long-random-string"
 # Set these in CF dashboard → Pages → Settings → Environment variables
