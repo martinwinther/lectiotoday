@@ -38,4 +38,4 @@ app.post('/comments/hide', async (c) => {
   return c.json({ ok: true });
 });
 
-export default app;
+export const onRequest = app.fetch;

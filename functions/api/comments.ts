@@ -111,5 +111,5 @@ app.post('/', async (c) => {
   return c.json({ ok: true, id, created_at: now });
 });
 
-export default app;
+export const onRequest = app.fetch;
 

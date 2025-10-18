@@ -40,5 +40,5 @@ fetch('${origin}/api/quote/today').then(r=>r.json()).then(({quote})=>{
   });
 });
 
-export default app;
+export const onRequest = app.fetch;
 

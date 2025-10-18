@@ -17,5 +17,4 @@ app.get('/', async (c) => {
   return c.json({ quote: q });
 });
 
-export default app;
-
+export const onRequest = app.fetch;

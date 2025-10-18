@@ -87,5 +87,5 @@ app.get('/:id.png', async (c) => {
   });
 });
 
-export default app;
+export const onRequest = app.fetch;
 

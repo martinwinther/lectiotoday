@@ -25,5 +25,4 @@ app.get('/', async (c) => {
   return c.json({ quote: item, index: idx, dateYmd: ymd, tz: SITE_TZ });
 });
 
-export default app;
-
+export const onRequest = app.fetch;
