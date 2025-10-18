@@ -1,80 +1,86 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
-interface Report {
+type Scope = 'today' | 'reported' | 'all' | 'hidden' | 'deleted';
+
+type Item = {
   id: string;
-  comment_id: string;
   quote_id: string;
-  reason: string;
-  details: string | null;
-  created_at: number;
   body: string;
-  display_name: string | null;
+  display_name?: string;
+  created_at: number;
   hidden: number;
-}
+  deleted_at?: number | null;
+  reports_count: number;
+  quote_preview?: string | null;
+  quote_source?: string | null;
+};
 
 export default function AdminPage() {
-  const [token, setToken] = useState<string>('');
-  const [reports, setReports] = useState<Report[]>([]);
+  const [token, setToken] = useState('');
+  const [scope, setScope] = useState<Scope>('today');
+  const [q, setQ] = useState('');
+  const [quoteId, setQuoteId] = useState('');
+  const [since, setSince] = useState<string>('');
+  const [until, setUntil] = useState<string>('');
+  const [items, setItems] = useState<Item[]>([]);
+  const [nextCursor, setNextCursor] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
 
-  async function loadReports() {
-    if (!token) {
-      setError('Please enter admin token');
-      return;
-    }
-
+  async function load(reset = true) {
+    if (!token) return alert('Enter admin token');
     setLoading(true);
-    setError('');
-
     try {
-      const res = await fetch('/api/admin/reports', {
-        headers: { Authorization: `Bearer ${token}` },
+      const params = new URLSearchParams();
+      params.set('scope', scope);
+      if (q) params.set('q', q);
+      if (quoteId) params.set('quoteId', quoteId);
+      if (since) params.set('since', String(new Date(since).getTime()));
+      if (until) params.set('until', String(new Date(until).getTime()));
+      if (!reset && nextCursor) params.set('cursor', nextCursor);
+      const res = await fetch(`/api/admin/comments?${params.toString()}`, {
+        headers: { authorization: `Bearer ${token}` },
       });
-
-      if (!res.ok) {
-        if (res.status === 401) {
-          setError('Invalid admin token');
-        } else {
-          setError('Failed to load reports');
-        }
-        return;
-      }
-
-      const data = (await res.json()) as { reports: Report[] };
-      setReports(data.reports || []);
-    } catch {
-      setError('Failed to load reports');
+      if (!res.ok) throw new Error('Auth or server error');
+      const j = (await res.json()) as { items: Item[]; nextCursor?: string };
+      setItems((prev) => (reset ? j.items : [...prev, ...j.items]));
+      setNextCursor(j.nextCursor);
     } finally {
       setLoading(false);
     }
   }
 
-  async function setHidden(commentId: string, hide: boolean) {
-    if (!token) return;
-
-    try {
-      const res = await fetch('/api/admin/comments/hide', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ commentId, hide }),
-      });
-
-      if (res.ok) {
-        setReports((prev) =>
-          prev.map((r) => (r.comment_id === commentId ? { ...r, hidden: hide ? 1 : 0 } : r))
-        );
-      } else {
-        setError('Failed to update comment');
-      }
-    } catch {
-      setError('Failed to update comment');
-    }
+  async function action(
+    commentId: string,
+    a: 'hide' | 'unhide' | 'delete' | 'restore' | 'purge'
+  ) {
+    if (!token) return alert('Enter admin token');
+    if (a === 'purge' && !confirm('Permanently delete this comment?')) return;
+    const res = await fetch('/api/admin/comments/action', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ action: a, commentId }),
+    });
+    if (!res.ok) return alert('Action failed');
+    load(true);
   }
+
+  useEffect(() => {
+    /* don't auto-load on mount */
+  }, []);
+
+  const groups = useMemo(() => {
+    const byQ = new Map<string, Item[]>();
+    for (const it of items) {
+      const arr = byQ.get(it.quote_id) || [];
+      arr.push(it);
+      byQ.set(it.quote_id, arr);
+    }
+    return Array.from(byQ.entries());
+  }, [items]);
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-10 text-zinc-100">
@@ -89,79 +95,171 @@ export default function AdminPage() {
           className="rounded bg-zinc-900/40 border border-white/10 px-3 py-2 w-80"
         />
         <button
-          onClick={loadReports}
-          className="px-4 py-2 rounded bg-white/10 border border-white/10 hover:bg-white/20 transition-colors"
-          disabled={loading}
+          onClick={() => load(true)}
+          className="px-4 py-2 rounded bg-white/10 border border-white/10"
         >
-          {loading ? 'Loading…' : 'Load reports'}
+          {loading ? 'Loading…' : 'Load'}
         </button>
+        {nextCursor && (
+          <button
+            onClick={() => load(false)}
+            className="px-4 py-2 rounded bg-white/10 border border-white/10"
+          >
+            Load more
+          </button>
+        )}
       </div>
 
-      {error && (
-        <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-4 mb-6">
-          <p className="text-red-200 text-sm">{error}</p>
-        </div>
-      )}
+      <div className="flex gap-2 mb-4">
+        {(['today', 'reported', 'all', 'hidden', 'deleted'] as Scope[]).map(
+          (s) => (
+            <button
+              key={s}
+              onClick={() => {
+                setScope(s);
+                setNextCursor(undefined);
+                setItems([]);
+              }}
+              className={`px-3 py-1.5 rounded border ${scope === s ? 'bg-white/15' : 'bg-white/5'} border-white/10 text-sm capitalize`}
+            >
+              {s}
+            </button>
+          )
+        )}
+      </div>
 
-      {reports.length > 0 && (
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold">Reports ({reports.length})</h2>
-          {reports.map((r) => (
-            <div key={r.id} className="bg-zinc-900/40 border border-white/10 rounded-lg p-4">
-              <div className="flex justify-between items-start mb-2">
-                <div>
-                  <span className="text-xs text-white/40">
-                    {new Date(r.created_at).toLocaleString()}
-                  </span>
-                  <span className="ml-2 px-2 py-1 rounded bg-red-900/40 text-red-200 text-xs">
-                    {r.reason}
-                  </span>
-                  {r.hidden === 1 && (
-                    <span className="ml-2 px-2 py-1 rounded bg-yellow-900/40 text-yellow-200 text-xs">
-                      Hidden
-                    </span>
-                  )}
-                </div>
-                <div className="flex gap-2">
-                  {r.hidden === 0 ? (
-                    <button
-                      onClick={() => setHidden(r.comment_id, true)}
-                      className="px-3 py-1 rounded bg-red-900/40 text-red-200 text-xs hover:bg-red-900/60 transition-colors"
-                    >
-                      Hide
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => setHidden(r.comment_id, false)}
-                      className="px-3 py-1 rounded bg-green-900/40 text-green-200 text-xs hover:bg-green-900/60 transition-colors"
-                    >
-                      Unhide
-                    </button>
-                  )}
-                </div>
+      <div className="flex flex-wrap gap-2 mb-6">
+        <input
+          placeholder="Search body/name…"
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          className="rounded bg-zinc-900/40 border border-white/10 px-3 py-2 w-64"
+        />
+        <input
+          placeholder="Filter by quoteId…"
+          value={quoteId}
+          onChange={(e) => setQuoteId(e.target.value)}
+          className="rounded bg-zinc-900/40 border border-white/10 px-3 py-2 w-64"
+        />
+        <input
+          type="date"
+          value={since}
+          onChange={(e) => setSince(e.target.value)}
+          className="rounded bg-zinc-900/40 border border-white/10 px-3 py-2"
+        />
+        <input
+          type="date"
+          value={until}
+          onChange={(e) => setUntil(e.target.value)}
+          className="rounded bg-zinc-900/40 border border-white/10 px-3 py-2"
+        />
+      </div>
+
+      <div className="space-y-6">
+        {groups.map(([qid, list]) => (
+          <section
+            key={qid}
+            className="rounded-2xl border border-white/10 bg-white/[0.03]"
+          >
+            <header className="px-4 py-3 border-b border-white/10">
+              <div className="text-sm text-zinc-300/80">
+                <span className="font-semibold">Quote:</span>{' '}
+                <span className="italic">
+                  {list[0]?.quote_preview || '(unknown)'}
+                </span>{' '}
+                <span className="text-zinc-400">
+                  — {list[0]?.quote_source || ''}
+                </span>
+                <span className="text-zinc-500 ml-2">(id: {qid})</span>
               </div>
-              <p className="text-white/90 mb-2">&quot;{r.body}&quot;</p>
-              {r.display_name && (
-                <p className="text-xs text-white/50">— {r.display_name}</p>
-              )}
-              {r.details && (
-                <p className="text-sm text-white/60 mt-2">
-                  <strong>Details:</strong> {r.details}
-                </p>
-              )}
-              <p className="text-xs text-white/40 mt-2">
-                Comment ID: {r.comment_id} · Quote ID: {r.quote_id}
-              </p>
-            </div>
-          ))}
-        </div>
-      )}
+            </header>
+            <ul className="divide-y divide-white/10">
+              {list.map((it) => (
+                <li
+                  key={it.id}
+                  className="p-4 flex items-start justify-between gap-4"
+                >
+                  <div>
+                    <div className="text-[15px]">{it.body}</div>
+                    <div className="text-xs text-zinc-400 mt-1">
+                      — {it.display_name || 'anon'} •{' '}
+                      {new Date(it.created_at).toLocaleString()}
+                    </div>
+                    <div className="mt-1 flex gap-2">
+                      {it.reports_count ? (
+                        <span className="text-[10px] bg-red-500/20 text-red-300 px-2 py-0.5 rounded">
+                          reports {it.reports_count}
+                        </span>
+                      ) : null}
+                      {it.hidden ? (
+                        <span className="text-[10px] bg-yellow-500/20 text-yellow-300 px-2 py-0.5 rounded">
+                          hidden
+                        </span>
+                      ) : null}
+                      {it.deleted_at ? (
+                        <span className="text-[10px] bg-zinc-500/20 text-zinc-200 px-2 py-0.5 rounded">
+                          deleted
+                        </span>
+                      ) : null}
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    {it.hidden ? (
+                      <button
+                        onClick={() => action(it.id, 'unhide')}
+                        className="text-xs px-3 py-1.5 rounded bg-white/10 border border-white/10"
+                      >
+                        Unhide
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => action(it.id, 'hide')}
+                        className="text-xs px-3 py-1.5 rounded bg-white/10 border border-white/10"
+                      >
+                        Hide
+                      </button>
+                    )}
+                    {!it.deleted_at ? (
+                      <button
+                        onClick={() => action(it.id, 'delete')}
+                        className="text-xs px-3 py-1.5 rounded bg-white/10 border border-white/10"
+                      >
+                        Delete
+                      </button>
+                    ) : (
+                      <>
+                        <button
+                          onClick={() => action(it.id, 'restore')}
+                          className="text-xs px-3 py-1.5 rounded bg-white/10 border border-white/10"
+                        >
+                          Restore
+                        </button>
+                        <button
+                          onClick={() => action(it.id, 'purge')}
+                          className="text-xs px-3 py-1.5 rounded bg-red-500/20 border border-red-400/30"
+                        >
+                          Purge
+                        </button>
+                      </>
+                    )}
+                    <a
+                      href={`/q/${qid}`}
+                      target="_blank"
+                      className="text-xs px-3 py-1.5 rounded bg-white/5 border border-white/10 underline"
+                    >
+                      Open
+                    </a>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
 
-      {reports.length === 0 && !loading && !error && (
-        <div className="text-center text-white/50 py-10">
-          Enter your admin token and click Load reports to view.
-        </div>
-      )}
+        {!items.length && !loading && (
+          <div className="text-sm text-zinc-400">No results.</div>
+        )}
+      </div>
     </main>
   );
 }
