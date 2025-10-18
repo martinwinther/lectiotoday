@@ -37,10 +37,13 @@ OpenNext configuration for Cloudflare Workers runtime. This file configures:
 Cloudflare Pages configuration:
 - `pages_build_output_dir`: `.open-next` - The build output directory
 - `compatibility_date`: `2025-01-01`
+- `compatibility_flags`: `["nodejs_compat"]` - **REQUIRED** to enable Node.js built-in modules
 - D1 database bindings
 - Environment variables
 
 **Note**: The build command must be set in the Cloudflare Pages dashboard, not in `wrangler.toml` (the `[build]` section is only for Workers, not Pages).
+
+**Important**: The `nodejs_compat` flag is essential for OpenNext to work, as it uses Node.js built-in modules like `fs`, `path`, `crypto`, etc.
 
 ## Cloudflare Pages Setup
 
