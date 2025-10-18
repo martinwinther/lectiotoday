@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cfEnv } from '@/lib/cf';
 import { pickDaily } from '@/lib/quotes';
-import quotesData from '../../../public/quotes.json';
 import type { Quote } from '@/types/quote';
 
 function encodeCursor(c: { t: number; id: string }) {
@@ -20,12 +19,18 @@ function decodeCursor(s?: string | null) {
   }
 }
 
-function loadQuotesMap() {
-  const quotes = quotesData as Quote[];
-  const map = new Map(
-    quotes.map((q) => [q.id, { quote: q.quote, source: q.source }])
-  );
-  return map;
+async function loadQuotesMap(req: NextRequest) {
+  try {
+    const r = await fetch(new URL('/quotes.json', req.url).toString());
+    const quotes = (await r.json()) as Quote[];
+    const map = new Map(
+      quotes.map((q) => [q.id, { quote: q.quote, source: q.source }])
+    );
+    return map;
+  } catch {
+    // Fallback: return empty map if quotes.json can't be loaded
+    return new Map();
+  }
 }
 
 function isAuth(req: NextRequest, secret: string) {
@@ -62,9 +67,15 @@ export async function GET(req: NextRequest) {
 
   let quoteId = quoteIdParam;
   if (!quoteId && scope === 'today') {
-    const quotes = quotesData as Quote[];
-    const { item } = pickDaily(quotes);
-    quoteId = item?.id || '';
+    try {
+      const r = await fetch(new URL('/quotes.json', req.url).toString());
+      const quotes = (await r.json()) as Quote[];
+      const { item } = pickDaily(quotes);
+      quoteId = item?.id || '';
+    } catch {
+      // If we can't load quotes, just use empty string
+      quoteId = '';
+    }
   }
 
   const where: string[] = [];
@@ -137,7 +148,7 @@ export async function GET(req: NextRequest) {
     rows.length = limit;
   }
 
-  const map = loadQuotesMap();
+  const map = await loadQuotesMap(req);
   const items = rows.map((r: Record<string, unknown>) => {
     const qv = map.get(String(r.quote_id)) || null;
     return {
