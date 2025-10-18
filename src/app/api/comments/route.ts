@@ -62,9 +62,11 @@ export async function POST(request: NextRequest) {
 
     const now = Date.now();
     const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || '0.0.0.0';
-    const ipHash = await hashHex(process.env.HASH_SALT! + ip);
+    // Hash IP for rate limiting (not used in this simplified version)
+    await hashHex(process.env.HASH_SALT! + ip);
     const normalized = p.data.body.replace(/\s+/g, ' ').trim().toLowerCase();
-    const bodyHash = await hashHex(normalized);
+    // Hash body for duplicate detection (not used in this simplified version)
+    await hashHex(normalized);
 
     // links limit (max 1)
     const linkCount = (p.data.body.match(/https?:\/\//gi) || []).length;

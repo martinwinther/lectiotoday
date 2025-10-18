@@ -1,21 +1,11 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-interface Report {
-  id: string;
-  comment_id: string;
-  quote_id: string;
-  reason: string;
-  details: string | null;
-  created_at: number;
-  body: string;
-  display_name: string | null;
-  hidden: number;
-}
+// Note: Report interface removed as reports functionality requires Cloudflare Functions
 
 export default function AdminPage() {
   const [token, setToken] = useState<string>('');
-  const [reports, setReports] = useState<Report[]>([]);
+  // Note: reports functionality removed as it requires Cloudflare Functions
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -32,18 +22,14 @@ export default function AdminPage() {
       // Since we can't use API routes, we'll use a different approach
       // For now, show a message that the admin panel is not yet functional
       setError('Admin functionality requires Cloudflare Functions which are not available with OpenNext. This is a known limitation.');
-      setReports([]);
-    } catch (e) {
+    } catch {
       setError('Failed to load reports');
     } finally {
       setLoading(false);
     }
   }
 
-  async function setHidden(commentId: string, hide: boolean) {
-    // This would also need Cloudflare Functions
-    alert('Hide/unhide functionality requires Cloudflare Functions which are not available with OpenNext.');
-  }
+  // Note: setHidden function removed as it's not used in this simplified admin panel
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-10 text-zinc-100">
@@ -53,7 +39,7 @@ export default function AdminPage() {
         <h2 className="text-yellow-200 font-semibold mb-2">⚠️ Admin Panel Limitation</h2>
         <p className="text-yellow-100 text-sm">
           The admin panel requires Cloudflare Functions, but OpenNext (used for Cloudflare Pages deployment) 
-          doesn't support Cloudflare Functions. This is a known limitation.
+          doesn&apos;t support Cloudflare Functions. This is a known limitation.
         </p>
         <p className="text-yellow-100 text-sm mt-2">
           <strong>Workaround:</strong> You can still manage the database directly using Wrangler commands.
@@ -87,22 +73,22 @@ export default function AdminPage() {
         <div className="text-blue-100 text-sm space-y-2">
           <p><strong>View reports:</strong></p>
           <code className="block bg-black/40 p-2 rounded text-xs">
-            npx wrangler d1 execute LectioTodayDB --remote --command "SELECT * FROM reports ORDER BY created_at DESC LIMIT 10"
+            npx wrangler d1 execute LectioTodayDB --remote --command &quot;SELECT * FROM reports ORDER BY created_at DESC LIMIT 10&quot;
           </code>
           
           <p><strong>Hide a comment:</strong></p>
           <code className="block bg-black/40 p-2 rounded text-xs">
-            npx wrangler d1 execute LectioTodayDB --remote --command "UPDATE comments SET hidden = 1 WHERE id = 'COMMENT_ID'"
+            npx wrangler d1 execute LectioTodayDB --remote --command &quot;UPDATE comments SET hidden = 1 WHERE id = &apos;COMMENT_ID&apos;&quot;
           </code>
           
           <p><strong>Unhide a comment:</strong></p>
           <code className="block bg-black/40 p-2 rounded text-xs">
-            npx wrangler d1 execute LectioTodayDB --remote --command "UPDATE comments SET hidden = 0 WHERE id = 'COMMENT_ID'"
+            npx wrangler d1 execute LectioTodayDB --remote --command &quot;UPDATE comments SET hidden = 0 WHERE id = &apos;COMMENT_ID&apos;&quot;
           </code>
           
           <p><strong>View hidden comments:</strong></p>
           <code className="block bg-black/40 p-2 rounded text-xs">
-            npx wrangler d1 execute LectioTodayDB --remote --command "SELECT * FROM comments WHERE hidden = 1"
+            npx wrangler d1 execute LectioTodayDB --remote --command &quot;SELECT * FROM comments WHERE hidden = 1&quot;
           </code>
         </div>
       </div>

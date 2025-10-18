@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
   }
 
-  const body = await request.json();
+  const body = await request.json() as { commentId?: string; hide?: boolean };
   const { commentId, hide } = body;
 
   if (!commentId || typeof hide !== 'boolean') {
