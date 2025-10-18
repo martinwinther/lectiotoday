@@ -6,7 +6,7 @@
     "dev": "next dev --turbopack",
     "dev:cf": "npm run pages:build && npm run cf:dev",
     "build": "next build",
-    "pages:build": "opennextjs-cloudflare build && npm run pages:fix-worker && npm run pages:flatten-assets && npm run pages:copy-functions && npm run pages:add-routes",
+    "pages:build": "opennextjs-cloudflare build && npm run pages:fix-worker && npm run pages:flatten-assets && npm run pages:add-routes",
     "pages:fix-worker": "mv .open-next/worker.js .open-next/_worker.js",
     "pages:flatten-assets": "cp -R .open-next/assets/* .open-next/ && rm -rf .open-next/assets",
     "pages:copy-functions": "cp -R functions .open-next/",

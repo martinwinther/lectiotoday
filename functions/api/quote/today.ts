@@ -1,4 +1,5 @@
 /// <reference types="@cloudflare/workers-types" />
+import type { PagesFunction } from '@cloudflare/workers-types';
 import { Hono } from 'hono';
 import { toZonedTime } from 'date-fns-tz';
 
@@ -25,4 +26,6 @@ app.get('/', async (c) => {
   return c.json({ quote: item, index: idx, dateYmd: ymd, tz: SITE_TZ });
 });
 
-export const onRequest = app.fetch;
+export const onRequest: PagesFunction<Env> = async (context) => {
+  return app.fetch(context.request, context.env, context);
+};
