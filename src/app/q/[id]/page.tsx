@@ -1,50 +1,51 @@
-'use client';
-
-import { useState, useEffect, use } from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { QuoteCard } from '@/components/QuoteCard';
 import { DiscussionBox } from '@/components/DiscussionBox';
+import { QuoteNavigation } from '@/components/QuoteNavigation';
+import { ShareControls } from '@/components/ShareControls';
 import type { Quote } from '@/types/quote';
 import quotesData from '../../../../public/quotes.json';
 
 const quotes = quotesData as Quote[];
 
-export default function QuotePage({
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  
+  const q = quotes.find((x) => x.id === id);
+  if (!q) {
+    return {
+      title: 'LectioToday',
+      description: 'Daily reflections',
+    };
+  }
+
+  const title = q.quote.length > 80 ? q.quote.slice(0, 77) + '…' : q.quote;
+  const description = `${q.quote} — ${q.source}`.slice(0, 200);
+
+  return {
+    title: `${title} — LectioToday`,
+    description,
+    openGraph: {
+      images: [`/og/${id}.png`],
+    },
+    alternates: {
+      canonical: `/q/${id}`,
+    },
+  };
+}
+
+export default async function QuotePage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { id } = use(params);
-  const [currentIndex, setCurrentIndex] = useState<number>(-1);
+  const { id } = await params;
+  const currentQuote = quotes.find((q) => q.id === id);
 
-  useEffect(() => {
-    const index = quotes.findIndex((q) => q.id === id);
-    if (index === -1) {
-      notFound();
-    }
-    setCurrentIndex(index);
-  }, [id]);
-
-  if (currentIndex === -1) {
-    return null;
+  if (!currentQuote) {
+    notFound();
   }
-
-  const currentQuote = quotes[currentIndex];
-  const hasPrev = currentIndex > 0;
-  const hasNext = currentIndex < quotes.length - 1;
-
-  const handlePrev = () => {
-    if (hasPrev) {
-      setCurrentIndex(currentIndex - 1);
-    }
-  };
-
-  const handleNext = () => {
-    if (hasNext) {
-      setCurrentIndex(currentIndex + 1);
-    }
-  };
 
   return (
     <>
@@ -56,30 +57,16 @@ export default function QuotePage({
             </h1>
           </Link>
 
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handlePrev}
-              disabled={!hasPrev}
-              className="glass-button px-4 py-2 rounded-lg text-sm font-medium text-zinc-300 hover:text-white"
-              aria-label="Previous quote"
-            >
-              ← Prev
-            </button>
-            <button
-              onClick={handleNext}
-              disabled={!hasNext}
-              className="glass-button px-4 py-2 rounded-lg text-sm font-medium text-zinc-300 hover:text-white"
-              aria-label="Next quote"
-            >
-              Next →
-            </button>
-          </div>
+          <QuoteNavigation quotes={quotes} currentId={id} />
         </div>
       </header>
 
       <main className="max-w-4xl mx-auto px-6 py-12 md:py-20">
         <div className="space-y-8">
           <QuoteCard quote={currentQuote} />
+
+          <ShareControls quoteId={id} />
+
           <DiscussionBox quoteId={currentQuote.id} />
         </div>
       </main>
