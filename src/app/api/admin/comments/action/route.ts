@@ -12,7 +12,9 @@ export async function POST(req: NextRequest) {
   if (!isAuth(req, ADMIN_SECRET))
     return new NextResponse('unauthorized', { status: 401 });
 
-  const body = await req.json().catch(() => ({}));
+  const body = (await req
+    .json()
+    .catch(() => ({}))) as { action?: string; commentId?: string };
   const action = String(body?.action || '');
   const commentId = String(body?.commentId || '');
   if (!commentId)
