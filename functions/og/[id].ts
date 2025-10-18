@@ -90,6 +90,6 @@ app.get('/:id.png', async (c) => {
 });
 
 export const onRequest = async (context: EventContext<{}, any, Record<string, unknown>>) => {
-  return app.fetch(context.request as any, context.env, context);
+  return app.fetch(context.request as any, context.env, context as any);
 };
 
