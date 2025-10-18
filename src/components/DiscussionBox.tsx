@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Turnstile } from '@/components/Turnstile';
 import { fetchComments, postComment } from '@/lib/comments';
 import { track } from '@/lib/track';
@@ -17,28 +17,53 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
   const [reportFor, setReportFor] = useState<Comment | null>(null);
   const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY as string;
 
+  // hold reset() so we can call it after post or on errors
+  const resetTurnstileRef = useRef<null | (() => void)>(null);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
   useEffect(() => {
-    fetchComments(quoteId)
-      .then((r) => setComments(r.comments || []))
-      .catch(() => {});
+    async function load() {
+      try {
+        const r = await fetchComments(quoteId);
+        setComments(r.comments || []);
+      } catch {
+        // ignore
+      }
+    }
+    load();
   }, [quoteId]);
 
-  const minTypingMs = 1200; // basic anti-bot: require some dwell time
+  // reset state whenever the quote changes
+  useEffect(() => {
+    setBody('');
+    setToken('');
+    setTypingStart(null);
+    resetTurnstileRef.current?.();
+  }, [quoteId]);
+
+  const minTypingMs = 900; // reduced to be less strict
 
   async function submit() {
+    if (busy) return;
     const text = body.trim();
     if (text.length < 2) {
       setError('Say a little more.');
       return;
     }
+
+    // if no token yet, guide user instead of disabling button
     if (!token) {
-      setError('Please complete the check.');
+      setError('Please complete the check below first.');
+      // try to nudge a refresh in case widget didn't auto-issue token
+      resetTurnstileRef.current?.();
       return;
     }
+
     if (!typingStart || Date.now() - typingStart < minTypingMs) {
-      setError('Take a moment, then post.');
+      setError('Take a moment to gather your thought, then post.');
       return;
     }
+
     setBusy(true);
     setError(null);
     try {
@@ -47,20 +72,33 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
         body: text,
         displayName: displayName.trim() || undefined,
         turnstileToken: token,
-        honeypot: '', // kept empty; bots might fill this
+        honeypot: '',
       });
       track('post_ok', quoteId);
+      // success: refresh list & fully reset UI for another post
+      const r = await fetchComments(quoteId);
+      setComments(r.comments || []);
       setBody('');
-      setDisplayName('');
       setTypingStart(null);
-      // refresh list
-      fetchComments(quoteId).then((r) => setComments(r.comments || []));
+      setToken('');
+      resetTurnstileRef.current?.(); // force a fresh token
+      // focus back to textarea for quick second post
+      requestAnimationFrame(() => textareaRef.current?.focus());
     } catch (e) {
       track('post_blocked', quoteId);
-      setError(e instanceof Error ? e.message : 'Could not post.');
+      const msg = e instanceof Error ? e.message : 'Could not post.';
+      setError(msg);
+      // any token-related failure → get a new token
+      if (
+        msg.includes('bot') ||
+        msg.includes('token') ||
+        msg.includes('check')
+      ) {
+        resetTurnstileRef.current?.();
+        setToken('');
+      }
     } finally {
       setBusy(false);
-      setToken(''); // force a new token
     }
   }
 
@@ -81,6 +119,7 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
           onChange={(e) => setDisplayName(e.target.value)}
         />
         <textarea
+          ref={textareaRef}
           className="w-full rounded-xl bg-black/20 border border-white/10 px-4 py-3 text-[15px] leading-6 text-zinc-200 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-transparent resize-none transition-all"
           placeholder="Add a thoughtful, kind comment…"
           rows={3}
@@ -94,13 +133,19 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
           <div className="text-[11px] text-zinc-500">Keep it kind. Max one link.</div>
           <div className="flex items-center gap-3">
             {siteKey ? (
-              <Turnstile siteKey={siteKey} onToken={setToken} />
+              <Turnstile
+                siteKey={siteKey}
+                onToken={setToken}
+                onReady={(api) => {
+                  resetTurnstileRef.current = api.reset;
+                }}
+              />
             ) : (
               <span className="text-xs text-zinc-500">Add Turnstile key</span>
             )}
             <button
               onClick={submit}
-              disabled={busy || !body.trim() || !token}
+              disabled={busy || body.trim().length < 2}
               className="glass-button px-6 py-2 rounded-lg text-sm font-medium text-zinc-300 hover:text-white disabled:opacity-40"
             >
               {busy ? 'Posting…' : 'Post'}

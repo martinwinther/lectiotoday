@@ -1,55 +1,68 @@
 'use client';
 import { useEffect, useRef } from 'react';
 
-interface TurnstileWidget {
-  render: (
-    container: HTMLElement,
-    options: {
-      sitekey: string;
-      callback: (token: string) => void;
-      'error-callback': () => void;
-      'expired-callback': () => void;
-    }
-  ) => void;
-}
-
 declare global {
   interface Window {
-    turnstile?: TurnstileWidget;
+    turnstile?: {
+      render: (el: HTMLElement, opts: Record<string, unknown>) => string;
+      reset: (id?: string) => void;
+    };
   }
 }
 
-export function Turnstile({
-  siteKey,
-  onToken,
-}: {
+interface TurnstileProps {
   siteKey: string;
   onToken: (t: string) => void;
-}) {
-  const ref = useRef<HTMLDivElement | null>(null);
+  onReady?: (api: { reset: () => void }) => void;
+}
+
+export function Turnstile({ siteKey, onToken, onReady }: TurnstileProps) {
+  const hostRef = useRef<HTMLDivElement | null>(null);
+  const widgetIdRef = useRef<string | null>(null);
 
   useEffect(() => {
-    const load = () => {
-      if (!window.turnstile || !ref.current) return;
-      window.turnstile.render(ref.current, {
+    function renderWidget() {
+      if (!window.turnstile || !hostRef.current) return;
+      // clear any previous child to avoid double-render
+      hostRef.current.innerHTML = '';
+      widgetIdRef.current = window.turnstile.render(hostRef.current, {
         sitekey: siteKey,
         callback: (t: string) => onToken(t),
-        'error-callback': () => onToken(''),
         'expired-callback': () => onToken(''),
+        'error-callback': () => onToken(''),
       });
-    };
-    if (!window.turnstile) {
+      // expose reset method to parent
+      onReady?.({
+        reset: () => {
+          try {
+            if (widgetIdRef.current && window.turnstile) {
+              window.turnstile.reset(widgetIdRef.current);
+            } else {
+              // fallback: re-render
+              renderWidget();
+            }
+          } catch {
+            renderWidget();
+          }
+        },
+      });
+    }
+
+    const ensureScriptAndRender = () => {
+      if (window.turnstile) {
+        renderWidget();
+        return;
+      }
       const s = document.createElement('script');
       s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
       s.async = true;
       s.defer = true;
-      s.onload = load;
+      s.onload = () => renderWidget();
       document.head.appendChild(s);
-    } else {
-      load();
-    }
-  }, [siteKey, onToken]);
+    };
+    ensureScriptAndRender();
+  }, [siteKey, onToken, onReady]);
 
-  return <div ref={ref} />;
+  return <div ref={hostRef} />;
 }
 
