@@ -1,9 +1,21 @@
 'use client';
 import { useEffect, useState } from 'react';
 
+interface Report {
+  id: string;
+  comment_id: string;
+  quote_id: string;
+  reason: string;
+  details: string | null;
+  created_at: number;
+  body: string;
+  display_name: string | null;
+  hidden: number;
+}
+
 export default function AdminPage() {
   const [token, setToken] = useState<string>('');
-  const [reports, setReports] = useState<any[]>([]);
+  const [reports, setReports] = useState<Report[]>([]);
   const [loading, setLoading] = useState(false);
 
   async function load() {
@@ -50,7 +62,7 @@ export default function AdminPage() {
         </button>
       </div>
       <ul className="space-y-3">
-        {reports.map((r: any) => (
+        {reports.map((r) => (
           <li
             key={r.id}
             className="rounded-2xl p-4 bg-white/6 border border-white/10"
