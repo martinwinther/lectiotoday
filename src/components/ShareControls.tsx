@@ -1,5 +1,7 @@
 'use client';
 
+import { track } from '@/lib/track';
+
 interface ShareControlsProps {
   quoteId: string;
 }
@@ -7,6 +9,7 @@ interface ShareControlsProps {
 export function ShareControls({ quoteId }: ShareControlsProps) {
   const handleCopyLink = async () => {
     await navigator.clipboard.writeText(window.location.href);
+    track('copy_link', quoteId);
     alert('Link copied');
   };
 
@@ -17,11 +20,13 @@ export function ShareControls({ quoteId }: ShareControlsProps) {
           title: document.title,
           url: window.location.href,
         });
+        track('share', quoteId);
       } catch {
         // User cancelled or error occurred
       }
     } else {
       await navigator.clipboard.writeText(window.location.href);
+      track('copy_link', quoteId);
       alert('Link copied');
     }
   };

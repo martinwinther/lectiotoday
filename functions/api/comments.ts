@@ -17,7 +17,7 @@ app.get('/', async (c) => {
   if (!p.success) return c.json({ error: 'invalid' }, 400);
   const { results } = await c.env.DB.prepare(
     `SELECT id, quote_id, parent_id, body, display_name, created_at, updated_at, score
-     FROM comments WHERE quote_id = ? ORDER BY created_at DESC`
+     FROM comments WHERE quote_id = ? AND hidden = 0 ORDER BY created_at DESC`
   )
     .bind(p.data.quoteId)
     .all();

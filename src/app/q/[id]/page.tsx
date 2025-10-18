@@ -4,6 +4,7 @@ import { QuoteCard } from '@/components/QuoteCard';
 import { DiscussionBox } from '@/components/DiscussionBox';
 import { QuoteNavigation } from '@/components/QuoteNavigation';
 import { ShareControls } from '@/components/ShareControls';
+import { QuotePageClient } from './QuotePageClient';
 import type { Quote } from '@/types/quote';
 import quotesData from '../../../../public/quotes.json';
 
@@ -49,6 +50,7 @@ export default async function QuotePage({
 
   return (
     <>
+      <QuotePageClient quoteId={id} />
       <header className="glass-header sticky top-0 z-50">
         <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="inline-block">

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Turnstile } from '@/components/Turnstile';
 import { fetchComments, postComment } from '@/lib/comments';
+import { track } from '@/lib/track';
 import type { Comment } from '@/types/comment';
 
 export function DiscussionBox({ quoteId }: { quoteId: string }) {
@@ -13,6 +14,7 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [typingStart, setTypingStart] = useState<number | null>(null);
+  const [reportFor, setReportFor] = useState<Comment | null>(null);
   const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY as string;
 
   useEffect(() => {
@@ -47,12 +49,14 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
         turnstileToken: token,
         honeypot: '', // kept empty; bots might fill this
       });
+      track('post_ok', quoteId);
       setBody('');
       setDisplayName('');
       setTypingStart(null);
       // refresh list
       fetchComments(quoteId).then((r) => setComments(r.comments || []));
     } catch (e) {
+      track('post_blocked', quoteId);
       setError(e instanceof Error ? e.message : 'Could not post.');
     } finally {
       setBusy(false);
@@ -126,8 +130,149 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
             {c.display_name && (
               <div className="text-xs text-zinc-500 mt-2">— {c.display_name}</div>
             )}
+            <button
+              onClick={() => setReportFor(c)}
+              className="text-xs text-zinc-400 hover:text-zinc-200 underline mt-2"
+            >
+              Report
+            </button>
           </div>
         ))}
+      </div>
+
+      {reportFor && (
+        <ReportModal
+          comment={reportFor}
+          quoteId={quoteId}
+          onClose={() => setReportFor(null)}
+        />
+      )}
+    </div>
+  );
+}
+
+function ReportModal({
+  comment,
+  quoteId,
+  onClose,
+}: {
+  comment: Comment;
+  quoteId: string;
+  onClose: () => void;
+}) {
+  const [reason, setReason] = useState<'spam' | 'abuse' | 'offtopic' | 'other'>('spam');
+  const [details, setDetails] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
+
+  async function submit() {
+    setBusy(true);
+    setError('');
+    try {
+      const res = await fetch('/api/report', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          commentId: comment.id,
+          quoteId,
+          reason,
+          details: details.trim() || undefined,
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({ error: 'unknown' }));
+        throw new Error(data.error || 'Failed to submit report');
+      }
+      onClose();
+      alert('Thanks for the report.');
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Failed to submit');
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+      onClick={(e) => e.target === e.currentTarget && onClose()}
+    >
+      <div className="glass-card rounded-2xl max-w-md w-full p-6">
+        <h3 className="text-lg font-semibold text-zinc-100 mb-4">Report Comment</h3>
+        <div className="text-sm text-zinc-400 mb-4 p-3 bg-black/20 rounded-lg">
+          {comment.body}
+        </div>
+
+        <div className="space-y-3 mb-4">
+          <label className="flex items-center gap-2 text-sm text-zinc-300">
+            <input
+              type="radio"
+              name="reason"
+              checked={reason === 'spam'}
+              onChange={() => setReason('spam')}
+              className="text-white"
+            />
+            Spam
+          </label>
+          <label className="flex items-center gap-2 text-sm text-zinc-300">
+            <input
+              type="radio"
+              name="reason"
+              checked={reason === 'abuse'}
+              onChange={() => setReason('abuse')}
+              className="text-white"
+            />
+            Abuse or harassment
+          </label>
+          <label className="flex items-center gap-2 text-sm text-zinc-300">
+            <input
+              type="radio"
+              name="reason"
+              checked={reason === 'offtopic'}
+              onChange={() => setReason('offtopic')}
+              className="text-white"
+            />
+            Off-topic
+          </label>
+          <label className="flex items-center gap-2 text-sm text-zinc-300">
+            <input
+              type="radio"
+              name="reason"
+              checked={reason === 'other'}
+              onChange={() => setReason('other')}
+              className="text-white"
+            />
+            Other
+          </label>
+        </div>
+
+        <textarea
+          className="w-full rounded-xl bg-black/20 border border-white/10 px-4 py-3 text-sm text-zinc-200 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-white/20 resize-none mb-4"
+          placeholder="Additional details (optional)"
+          rows={3}
+          maxLength={400}
+          value={details}
+          onChange={(e) => setDetails(e.target.value)}
+        />
+
+        {error && <div className="text-xs text-red-400 mb-4">{error}</div>}
+
+        <div className="flex gap-3 justify-end">
+          <button
+            onClick={onClose}
+            disabled={busy}
+            className="px-4 py-2 rounded-lg text-sm text-zinc-400 hover:text-zinc-200 disabled:opacity-40"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={submit}
+            disabled={busy}
+            className="glass-button px-4 py-2 rounded-lg text-sm font-medium text-zinc-300 hover:text-white disabled:opacity-40"
+          >
+            {busy ? 'Submitting…' : 'Submit Report'}
+          </button>
+        </div>
       </div>
     </div>
   );
