@@ -9,7 +9,7 @@ This project uses **OpenNext** for Cloudflare Pages deployment.
 npm run pages:build
 ```
 
-This builds the Next.js app and packages it for Cloudflare Workers using OpenNext.
+This builds the Next.js app and packages it for Cloudflare Workers using OpenNext, then renames the worker file to `_worker.js` (required by Cloudflare Pages to execute it as a Worker).
 
 ### Local Preview
 ```bash
@@ -68,11 +68,13 @@ OpenNext is the recommended adapter for deploying Next.js to Cloudflare Pages (r
 ## Build Output
 
 The `.open-next` directory contains:
-- `worker.js` - Main Cloudflare Worker
+- `_worker.js` - Main Cloudflare Worker (renamed from `worker.js` for Pages compatibility)
 - `assets/` - Static assets
 - `cache/` - Pre-rendered pages
 - `server-functions/` - Server-side functions
 - `cloudflare/` - Cloudflare-specific code
+
+**Note**: The build process automatically renames `worker.js` to `_worker.js` because Cloudflare Pages requires the underscore prefix to execute the file as a Worker (otherwise it treats everything as static files).
 
 ## Troubleshooting
 
@@ -81,6 +83,12 @@ Make sure the config file has the required structure with `default`, `edgeExtern
 
 ### "No routes found" error
 Ensure `pages_build_output_dir = ".open-next"` is set in `wrangler.toml`.
+
+### Site shows 404 error after successful deployment
+This happens if the worker file isn't being executed. Make sure:
+1. The build script includes the `pages:fix-worker` step that renames `worker.js` to `_worker.js`
+2. The `_worker.js` file exists in `.open-next/` after building
+3. Cloudflare Pages recognizes files starting with `_` as Workers
 
 ### Functions not working
 Check that your D1 database bindings are correctly configured in `wrangler.toml`.

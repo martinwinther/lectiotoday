@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "pages:build": "opennextjs-cloudflare build",
+    "pages:build": "opennextjs-cloudflare build && npm run pages:fix-worker",
+    "pages:fix-worker": "mv .open-next/worker.js .open-next/_worker.js",
     "preview": "opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare deploy",
     "start": "next start",
