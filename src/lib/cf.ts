@@ -1,3 +1,5 @@
+/// <reference types="@cloudflare/workers-types" />
+
 import { getCloudflareContext } from '@opennextjs/cloudflare';
 
 export interface CloudflareEnv {
