@@ -45,4 +45,5 @@ CLOUDFLARE_SETUP.md
 DEPLOYMENT.md
 .dev.vars.example
 wrangler.toml
-wrangler.toml
+DEVELOPMENT.md
+
