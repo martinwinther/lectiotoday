@@ -125,24 +125,26 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
             if (!typingStart) setTypingStart(Date.now());
           }}
         />
-        <div className="flex items-center justify-between gap-3">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="text-[11px] text-zinc-500">Keep it kind. Max one link.</div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             {siteKey ? (
-              <Turnstile
-                siteKey={siteKey}
-                onToken={setToken}
-                onReady={(api) => {
-                  resetTurnstileRef.current = api.reset;
-                }}
-              />
+              <div className="flex justify-center sm:justify-start">
+                <Turnstile
+                  siteKey={siteKey}
+                  onToken={setToken}
+                  onReady={(api) => {
+                    resetTurnstileRef.current = api.reset;
+                  }}
+                />
+              </div>
             ) : (
               <span className="text-xs text-zinc-500">Add Turnstile key</span>
             )}
             <button
               onClick={submit}
               disabled={busy || body.trim().length < 2}
-              className="glass-button px-6 py-2 rounded-lg text-sm font-medium text-zinc-300 hover:text-white disabled:opacity-40"
+              className="glass-button px-6 py-2 rounded-lg text-sm font-medium text-zinc-300 hover:text-white disabled:opacity-40 w-full sm:w-auto"
             >
               {busy ? 'Posting…' : 'Post'}
             </button>

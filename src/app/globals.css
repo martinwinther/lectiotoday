@@ -117,3 +117,18 @@ body::after {
   line-height: 1.6;
   letter-spacing: -0.01em;
 }
+
+/* Mobile-specific fixes for Turnstile widget */
+@media (max-width: 640px) {
+  /* Ensure Turnstile widget doesn't overflow on mobile */
+  .cf-turnstile {
+    max-width: 100% !important;
+    transform: scale(0.9);
+    transform-origin: center;
+  }
+  
+  /* Make sure the widget container doesn't cause horizontal overflow */
+  .cf-turnstile iframe {
+    max-width: 100% !important;
+  }
+}
