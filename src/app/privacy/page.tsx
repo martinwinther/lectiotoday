@@ -18,13 +18,6 @@ export default function PrivacyPage() {
         shows one philosophical or religious passage per day with a public discussion area.
       </p>
 
-      <h2 className="text-lg font-medium mt-8 mb-2">Who we are</h2>
-      <p className="text-zinc-300">
-        Controller: <strong>LectioToday</strong> (replace with your legal name if different).<br />
-        Contact: <a className="underline" href="mailto:contact@lectiotoday.com">contact@lectiotoday.com</a> (replace as appropriate).<br />
-        Location: Aarhus, Denmark.
-      </p>
-
       <h2 className="text-lg font-medium mt-8 mb-2">What we collect</h2>
       <ul className="list-disc ml-6 text-zinc-300 space-y-2">
         <li>
