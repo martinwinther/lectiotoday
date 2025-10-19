@@ -84,6 +84,16 @@ export default function AdminPage() {
     /* don't auto-load on mount */
   }, []);
 
+  // Auto-reload when filters change (but not on initial load)
+  useEffect(() => {
+    if (authenticated && token) {
+      const timeoutId = setTimeout(() => {
+        load(true);
+      }, 500); // Debounce by 500ms
+      return () => clearTimeout(timeoutId);
+    }
+  }, [scope, q, quoteId, since, until]);
+
   const groups = useMemo(() => {
     const byQ = new Map<string, Item[]>();
     for (const it of items) {
@@ -147,12 +157,14 @@ export default function AdminPage() {
               placeholder="Search body/name…"
               value={q}
               onChange={(e) => setQ(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && load(true)}
               className="rounded bg-zinc-900/40 border border-white/10 px-3 py-2 w-64"
             />
             <input
               placeholder="Filter by quoteId…"
               value={quoteId}
               onChange={(e) => setQuoteId(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && load(true)}
               className="rounded bg-zinc-900/40 border border-white/10 px-3 py-2 w-64"
             />
             <input
@@ -167,6 +179,12 @@ export default function AdminPage() {
               onChange={(e) => setUntil(e.target.value)}
               className="rounded bg-zinc-900/40 border border-white/10 px-3 py-2"
             />
+            <button
+              onClick={() => load(true)}
+              className="px-4 py-2 rounded bg-white/10 border border-white/10 text-sm"
+            >
+              Search
+            </button>
           </div>
 
           <div className="space-y-6">
