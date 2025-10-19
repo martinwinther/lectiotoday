@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 type Scope = 'today' | 'reported' | 'all' | 'hidden' | 'deleted';
 
@@ -28,7 +28,7 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
 
-  async function load(reset = true) {
+  const load = useCallback(async (reset = true) => {
     if (!token) return alert('Enter admin token');
     setLoading(true);
     try {
@@ -55,7 +55,7 @@ export default function AdminPage() {
     } finally {
       setLoading(false);
     }
-  }
+  }, [token, scope, q, quoteId, since, until, nextCursor]);
 
   async function action(
     commentId: string,
@@ -92,7 +92,7 @@ export default function AdminPage() {
       }, 500); // Debounce by 500ms
       return () => clearTimeout(timeoutId);
     }
-  }, [scope, q, quoteId, since, until]);
+  }, [authenticated, token, scope, q, quoteId, since, until, load]);
 
   const groups = useMemo(() => {
     const byQ = new Map<string, Item[]>();

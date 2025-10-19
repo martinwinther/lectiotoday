@@ -1,10 +1,10 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 declare global {
   interface Window {
     turnstile?: {
-      render: (el: HTMLElement, opts: any) => string;
+      render: (el: HTMLElement, opts: Record<string, unknown>) => string;
       reset: (id?: string) => void;
     };
   }
@@ -36,15 +36,15 @@ export function Turnstile({
   const hostRef = useRef<HTMLDivElement | null>(null);
   const widgetIdRef = useRef<string | null>(null);
 
-  function currentSize(): 'normal' | 'compact' | 'flexible' {
-    if (size) return size;
-    // Compact on narrow screens, flexible otherwise
-    return typeof window !== 'undefined' && window.matchMedia('(max-width: 480px)').matches
-      ? 'compact'
-      : 'flexible';
-  }
+  const renderWidget = useCallback(() => {
+    function currentSize(): 'normal' | 'compact' | 'flexible' {
+      if (size) return size;
+      // Compact on narrow screens, flexible otherwise
+      return typeof window !== 'undefined' && window.matchMedia('(max-width: 480px)').matches
+        ? 'compact'
+        : 'flexible';
+    }
 
-  function renderWidget() {
     if (!window.turnstile || !hostRef.current) return;
     hostRef.current.innerHTML = '';
     widgetIdRef.current = window.turnstile.render(hostRef.current, {
@@ -69,7 +69,7 @@ export function Turnstile({
         }
       },
     });
-  }
+  }, [siteKey, onToken, onReady, appearance, theme, size]);
 
   useEffect(() => {
     if (!shouldRender) return;
@@ -83,7 +83,7 @@ export function Turnstile({
     };
     ensureScriptAndRender();
     // re-render if the theme/appearance changes on hot reloads
-  }, [shouldRender, siteKey, appearance, theme]);
+  }, [shouldRender, renderWidget]);
 
   return <div ref={hostRef} className="min-h-10" />; // keeps layout stable
 }
