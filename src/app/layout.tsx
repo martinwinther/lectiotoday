@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
+import SiteFooter from '@/components/SiteFooter';
 
 export const metadata: Metadata = {
   title: 'LectioToday — Daily reflection',
@@ -15,9 +16,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className="min-h-dvh bg-[#0b0b0f] text-zinc-100 flex flex-col">
         <ServiceWorkerRegister />
-        {children}
+        <div className="flex-1">
+          {children}
+        </div>
+        <SiteFooter />
       </body>
     </html>
   );

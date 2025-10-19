@@ -18,7 +18,7 @@ export default async function HomePage() {
   }
 
   return (
-    <main className="min-h-dvh">
+    <main>
       <QuoteHero
         quote={item.quote}
         source={item.source}
