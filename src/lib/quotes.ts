@@ -1,15 +1,16 @@
 import type { Quote } from '@/types/quote';
-import { toZonedTime } from 'date-fns-tz';
 
-const SITE_TZ = 'Europe/Copenhagen';
+const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
 
 export function pickDaily(quotes: Quote[]) {
-  if (!quotes?.length) return { item: undefined, index: 0, ymd: 0 };
-  const zoned = toZonedTime(new Date(), SITE_TZ);
-  const y = zoned.getFullYear();
-  const m = String(zoned.getMonth() + 1).padStart(2, '0');
-  const d = String(zoned.getDate()).padStart(2, '0');
-  const ymd = Number(`${y}${m}${d}`);
-  const index = Math.abs(ymd % quotes.length);
-  return { item: quotes[index], index, ymd };
+  if (!quotes?.length) return { item: undefined, index: 0, dayNumber: 0 };
+  
+  // Calculate days since Unix epoch (Jan 1, 1970) in UTC
+  const now = new Date();
+  const daysSinceEpoch = Math.floor(now.getTime() / MILLISECONDS_PER_DAY);
+  
+  // Simple modulo ensures even distribution regardless of array size
+  const index = daysSinceEpoch % quotes.length;
+  
+  return { item: quotes[index], index, dayNumber: daysSinceEpoch };
 }
