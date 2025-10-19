@@ -14,6 +14,7 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
   const [error, setError] = useState<string | null>(null);
   const [typingStart, setTypingStart] = useState<number | null>(null);
   const [reportFor, setReportFor] = useState<Comment | null>(null);
+  const [showCaptcha, setShowCaptcha] = useState(false);
   const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY as string;
 
   // hold reset() so we can call it after post or on errors
@@ -37,6 +38,7 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
     setBody('');
     setToken('');
     setTypingStart(null);
+    setShowCaptcha(false);
     resetTurnstileRef.current?.();
   }, [quoteId]);
 
@@ -79,6 +81,7 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
       setBody('');
       setTypingStart(null);
       setToken('');
+      setShowCaptcha(false);
       resetTurnstileRef.current?.(); // force a fresh token
       // focus back to textarea for quick second post
       requestAnimationFrame(() => textareaRef.current?.focus());
@@ -120,6 +123,7 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
           placeholder="Add a thoughtful, kind comment…"
           rows={3}
           value={body}
+          onFocus={() => setShowCaptcha(true)}
           onChange={(e) => {
             setBody(e.target.value);
             if (!typingStart) setTypingStart(Date.now());
@@ -136,6 +140,10 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
                   onReady={(api) => {
                     resetTurnstileRef.current = api.reset;
                   }}
+                  shouldRender={showCaptcha}
+                  appearance="interaction-only"
+                  theme="auto"
+                  // omit size to auto-switch: compact on narrow screens, flexible otherwise
                 />
               </div>
             ) : (

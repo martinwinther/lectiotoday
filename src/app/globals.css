@@ -123,8 +123,6 @@ body::after {
   /* Ensure Turnstile widget doesn't overflow on mobile */
   .cf-turnstile {
     max-width: 100% !important;
-    transform: scale(0.9);
-    transform-origin: center;
   }
   
   /* Make sure the widget container doesn't cause horizontal overflow */
