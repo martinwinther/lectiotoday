@@ -74,7 +74,7 @@ export default function PrivacyPage() {
 
       <h2 className="text-lg font-medium mt-8 mb-2">International transfers</h2>
       <p className="text-zinc-300">
-        Cloudflare's anycast network may route traffic outside your country. We implement safeguards consistent with GDPR for such
+        Cloudflare&apos;s anycast network may route traffic outside your country. We implement safeguards consistent with GDPR for such
         transfers.
       </p>
 
@@ -89,7 +89,7 @@ export default function PrivacyPage() {
       <h2 className="text-lg font-medium mt-8 mb-2">Children</h2>
       <p className="text-zinc-300">
         This is a general-audience site. If you are under 13, please do not submit personal information in public comments. Parents or
-        guardians may request removal of a child's comment via the contact above.
+        guardians may request removal of a child&apos;s comment via the contact above.
       </p>
 
       <h2 className="text-lg font-medium mt-8 mb-2">Security</h2>
@@ -100,7 +100,7 @@ export default function PrivacyPage() {
 
       <h2 className="text-lg font-medium mt-8 mb-2">Changes</h2>
       <p className="text-zinc-300">
-        We may revise this policy as the service evolves. We will update the "Last updated" date above when changes are made.
+        We may revise this policy as the service evolves. We will update the &quot;Last updated&quot; date above when changes are made.
       </p>
 
       <p className="text-zinc-500 mt-8">Last updated: 19 October 2025</p>
