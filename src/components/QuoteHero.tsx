@@ -29,12 +29,12 @@ export default function QuoteHero({
           py-14 md:py-24
         "
       >
-        <blockquote className="font-serif text-balance text-3xl md:text-4xl leading-tight">
+        <blockquote className="font-serif text-balance text-3xl md:text-4xl leading-tight text-center">
           &ldquo;{quote}&rdquo;
         </blockquote>
 
         {(source || translationSource || translationAuthor) && (
-          <div className="mt-6 text-sm text-zinc-300/85">
+          <div className="mt-6 text-sm text-zinc-300/85 text-center">
             <div>
               {source}
               {translationSource && (

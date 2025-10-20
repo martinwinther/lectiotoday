@@ -110,6 +110,36 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
         </div>
       </div>
 
+      <div className="border-b border-white/10">
+        {comments.length === 0 && (
+          <div className="p-6 text-sm text-zinc-500 text-center">
+            Be the first to add a thought.
+          </div>
+        )}
+        {comments.map((c) => (
+          <div
+            key={c.id}
+            className="p-6 border-b border-white/8 last:border-0 hover:bg-white/[0.02] transition-colors"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <p className="text-zinc-200 text-[15px] leading-relaxed flex-1">{c.body}</p>
+              <time className="text-xs text-zinc-500 whitespace-nowrap">
+                {new Date(c.created_at).toLocaleDateString()}
+              </time>
+            </div>
+            {c.display_name && (
+              <div className="text-xs text-zinc-500 mt-2">— {c.display_name}</div>
+            )}
+            <button
+              onClick={() => setReportFor(c)}
+              className="text-xs text-zinc-400 hover:text-zinc-200 underline mt-2"
+            >
+              Report
+            </button>
+          </div>
+        ))}
+      </div>
+
       <div className="p-6 space-y-4">
         <input
           className="w-full rounded-xl bg-black/20 border border-white/10 px-4 py-2.5 text-sm text-zinc-200 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-transparent transition-all"
@@ -159,36 +189,6 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
           </div>
         </div>
         {error && <div className="text-xs text-red-400 mt-2">{error}</div>}
-      </div>
-
-      <div className="border-t border-white/10">
-        {comments.length === 0 && (
-          <div className="p-6 text-sm text-zinc-500 text-center">
-            Be the first to add a thought.
-          </div>
-        )}
-        {comments.map((c) => (
-          <div
-            key={c.id}
-            className="p-6 border-b border-white/8 last:border-0 hover:bg-white/[0.02] transition-colors"
-          >
-            <div className="flex items-start justify-between gap-4">
-              <p className="text-zinc-200 text-[15px] leading-relaxed flex-1">{c.body}</p>
-              <time className="text-xs text-zinc-500 whitespace-nowrap">
-                {new Date(c.created_at).toLocaleDateString()}
-              </time>
-            </div>
-            {c.display_name && (
-              <div className="text-xs text-zinc-500 mt-2">— {c.display_name}</div>
-            )}
-            <button
-              onClick={() => setReportFor(c)}
-              className="text-xs text-zinc-400 hover:text-zinc-200 underline mt-2"
-            >
-              Report
-            </button>
-          </div>
-        ))}
       </div>
 
       {reportFor && (
