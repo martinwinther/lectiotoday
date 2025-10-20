@@ -1,65 +1,1079 @@
 [
   {
-    "id": "1e4ef8de5d58",
-    "quote": "How long are you going to wait before you demand the best for yourself?",
-    "source": "Epictetus, Discourses",
-    "translationAuthor": "Robin Hard"
+    "id": "e598761e3446",
+    "quote": "There are only two ways to live your life. One is as though nothing is a miracle. The other is as though everything is a miracle.",
+    "source": "Albert Einstein (attributed)",
+    "translationSource": "The Quotable Einstein (Princeton University Press) – https://www.amazon.com/dp/0691160147",
+    "translationAuthor": "Alice Calaprice (editor)",
+    "topComment": "keep the wonder. what would living this for a week change? noted."
   },
   {
-    "id": "53d97150ddfe",
-    "quote": "First say to yourself what you would be; and then do what you have to do.",
-    "source": "Epictetus, Discourses",
-    "translationAuthor": "Robin Hard"
+    "id": "218ac86ddb32",
+    "quote": "Our greatest glory is not in never falling, but in rising every time we fall.",
+    "source": "Analects (attributed), Confucius",
+    "translationSource": "The Wisdom of Confucius (Random House) – https://www.amazon.com/dp/0679601669",
+    "translationAuthor": "Lin Yutang (editor)",
+    "topComment": "this actually helps in real life. noted."
+  },
+  {
+    "id": "5d1f7d45efd4",
+    "quote": "Choose a job you love, and you will never have to work a day in your life.",
+    "source": "Analects (attributed), Confucius",
+    "translationSource": "The Analects (Oxford World's Classics) – https://www.amazon.com/dp/0199540616",
+    "translationAuthor": "Raymond Dawson",
+    "topComment": "start with the near duties. pick one person and practice this with them. open to pushback."
+  },
+  {
+    "id": "ac8d0e7ba885",
+    "quote": "Wheresoever you go, go with all your heart.",
+    "source": "Analects (attributed), Confucius",
+    "translationSource": "The Wisdom of Confucius (Random House) – https://www.amazon.com/dp/0679601669",
+    "translationAuthor": "Lin Yutang (editor)",
+    "topComment": "small rituals add up. rewrite this in your own words and use it once. noted."
+  },
+  {
+    "id": "08f11e9a375a",
+    "quote": "Real knowledge is to know the extent of one's ignorance.",
+    "source": "Analects, Confucius",
+    "translationSource": "The Analects (Penguin Classics) – https://www.amazon.com/dp/0140443487",
+    "translationAuthor": "D. C. Lau",
+    "topComment": "needed this today. will report back."
+  },
+  {
+    "id": "2452ad3ab865",
+    "quote": "What you do not wish for yourself, do not do to others.",
+    "source": "Analects, Confucius",
+    "translationSource": "The Analects (Penguin Classics) – https://www.amazon.com/dp/0140443487",
+    "translationAuthor": "D. C. Lau",
+    "topComment": "start with the near duties. this actually helps in real life."
+  },
+  {
+    "id": "3db79ef4c7f4",
+    "quote": "When you have faults, do not fear to abandon them.",
+    "source": "Analects, Confucius",
+    "translationSource": "The Analects (Penguin Classics) – https://www.amazon.com/dp/0140443487",
+    "translationAuthor": "D. C. Lau",
+    "topComment": "small rituals add up. makes more sense with age. open to pushback."
+  },
+  {
+    "id": "49675120ab3e",
+    "quote": "To study and not think is a waste. To think and not study is dangerous.",
+    "source": "Analects, Confucius",
+    "translationSource": "The Analects (Oxford World's Classics) – https://www.amazon.com/dp/0199540616",
+    "translationAuthor": "Raymond Dawson",
+    "topComment": "start with the near duties. to me this argues for small, repeatable moves. will report back."
+  },
+  {
+    "id": "581ce09a0557",
+    "quote": "Silence is a true friend who never betrays.",
+    "source": "Analects, Confucius",
+    "translationSource": "The Analects (Oxford World's Classics) – https://www.amazon.com/dp/0199540616",
+    "translationAuthor": "Raymond Dawson",
+    "topComment": "start with the near duties. bookmarking this. open to pushback."
+  },
+  {
+    "id": "5bb92d266635",
+    "quote": "When anger rises, think of the consequences.",
+    "source": "Analects, Confucius",
+    "translationSource": "The Analects (Penguin Classics) – https://www.amazon.com/dp/0140443487",
+    "translationAuthor": "D. C. Lau",
+    "topComment": "feels like a practice, not a take. will report back."
+  },
+  {
+    "id": "a7dea67ca3c7",
+    "quote": "To see what is right and not do it is a lack of courage.",
+    "source": "Analects, Confucius",
+    "translationSource": "The Analects (Oxford World's Classics) – https://www.amazon.com/dp/0199540616",
+    "translationAuthor": "Raymond Dawson",
+    "topComment": "small rituals add up. pick one person and practice this with them. noted."
+  },
+  {
+    "id": "2152ea01d9e7",
+    "quote": "The unexamined life is not worth living.",
+    "source": "Apology, Plato (Socrates)",
+    "translationSource": "Plato: Five Dialogues (Hackett Publishing) – https://www.amazon.com/dp/0872206335",
+    "translationAuthor": "G. M. A. Grube",
+    "topComment": "question the frame first. feels less abstract and more like a daily rule. gentle nudge."
+  },
+  {
+    "id": "9a4cb7379961",
+    "quote": "The only true wisdom is in knowing you know nothing.",
+    "source": "Apology, Plato (Socrates)",
+    "translationSource": "The Trial and Death of Socrates (Third Edition) – https://www.amazon.com/dp/0872205541",
+    "translationAuthor": "G. M. A. Grube",
+    "topComment": "socratic energy. pick one person and practice this with them. curious what others think."
+  },
+  {
+    "id": "850f19a4cc6c",
+    "quote": "We are what we repeatedly do. Excellence, then, is not an act, but a habit.",
+    "source": "Aristotle (attributed)",
+    "translationSource": "The Story of Philosophy (Simon & Schuster) – https://www.amazon.com/dp/0671739166",
+    "translationAuthor": "Will Durant",
+    "topComment": "aim for the mean, not the extremes. this one travels well. trying this quietly."
+  },
+  {
+    "id": "c8314ae89fa4",
+    "quote": "And if you gaze long into an abyss, the abyss also gazes into you.",
+    "source": "Beyond Good and Evil, Friedrich Nietzsche",
+    "translationSource": "Beyond Good and Evil (Vintage Books) – https://www.amazon.com/dp/0679724656",
+    "translationAuthor": "Walter Kaufmann",
+    "topComment": "make, don't just inherit. translate it into one sentence you'll say today. will report back."
+  },
+  {
+    "id": "2c8249878d14",
+    "quote": "No one who does good work will ever come to a bad end, either here or in the world to come.",
+    "source": "Bhagavad Gita",
+    "translationSource": "The Bhagavad Gita (Penguin Classics) – https://www.amazon.com/dp/0140449183",
+    "translationAuthor": "Laurie L. Patton",
+    "topComment": "bhakti/karma mix—steady hands. simple, not easy. adding this to my notes."
+  },
+  {
+    "id": "2fc79a5e23f3",
+    "quote": "When meditation is mastered, the mind is unwavering like the flame of a lamp in a windless place.",
+    "source": "Bhagavad Gita",
+    "translationSource": "The Bhagavad Gita (Penguin Classics) – https://www.amazon.com/dp/0140449183",
+    "translationAuthor": "Laurie L. Patton",
+    "topComment": "i like how practical this is. saving this."
+  },
+  {
+    "id": "539a11eb6577",
+    "quote": "Lust, anger, and greed are the three gates of hell leading to the ruin of the soul.",
+    "source": "Bhagavad Gita",
+    "translationSource": "Bhagavad-Gita: Krishna's Counsel in Time of War (Bantam Classics) – https://www.amazon.com/dp/0553213652",
+    "translationAuthor": "Barbara Stoler Miller",
+    "topComment": "duty > results vibe. pick one person and practice this with them. will report back."
+  },
+  {
+    "id": "6781b9059bc2",
+    "quote": "For one who has conquered the mind, the mind is the best of friends; for one who has failed to do so, the mind is the greatest enemy.",
+    "source": "Bhagavad Gita",
+    "translationSource": "Bhagavad Gita (Oxford World's Classics) – https://www.amazon.com/dp/0199538123",
+    "translationAuthor": "W. J. Johnson",
+    "topComment": "duty > results vibe. reads like a check on conquered vs mind. adding this to my notes."
+  },
+  {
+    "id": "74b23a3d0b50",
+    "quote": "Man is made by his belief. As he believes, so he is.",
+    "source": "Bhagavad Gita",
+    "translationSource": "Bhagavad-Gita: As It Is – https://www.amazon.com/dp/089213285X",
+    "translationAuthor": "A. C. Bhaktivedanta Swami Prabhupada",
+    "topComment": "bhakti/karma mix—steady hands. mini-challenge: one action about made today."
+  },
+  {
+    "id": "a25a1bfb1fb0",
+    "quote": "Cold and heat, pleasure and pain arise from the contact of the senses with their objects. They are fleeting; endure them.",
+    "source": "Bhagavad Gita",
+    "translationSource": "Bhagavad Gita (Oxford World's Classics) – https://www.amazon.com/dp/0199538123",
+    "translationAuthor": "W. J. Johnson",
+    "topComment": "do the work, hold outcomes lightly. mini-challenge: one action about cold today. noted."
+  },
+  {
+    "id": "b13911fdbe5a",
+    "quote": "From anger comes delusion; from delusion, loss of memory; from loss of memory, the destruction of discernment; from the destruction of discernment, one is lost.",
+    "source": "Bhagavad Gita",
+    "translationSource": "Bhagavad-Gita: As It Is – https://www.amazon.com/dp/089213285X",
+    "translationAuthor": "A. C. Bhaktivedanta Swami Prabhupada",
+    "topComment": "bhakti/karma mix—steady hands. mini-challenge: one action about anger today. trying this quietly."
+  },
+  {
+    "id": "c748d1263435",
+    "quote": "You have the right to work, but never to the fruit of the work.",
+    "source": "Bhagavad Gita",
+    "translationSource": "Bhagavad-Gita: Krishna's Counsel in Time of War (Bantam Classics) – https://www.amazon.com/dp/0553213652",
+    "translationAuthor": "Barbara Stoler Miller",
+    "topComment": "duty > results vibe. sounds simple; the rhythm is the work. noted."
+  },
+  {
+    "id": "f06fd27577ed",
+    "quote": "Better to do one's own duty imperfectly than to do another's perfectly.",
+    "source": "Bhagavad Gita",
+    "translationSource": "Bhagavad Gita (Penguin Classics) – https://www.amazon.com/dp/0140449183",
+    "translationAuthor": "Laurie L. Patton",
+    "topComment": "duty > results vibe. what would living this for a week change? saving this."
+  },
+  {
+    "id": "16d972b5568e",
+    "quote": "And you will know the truth, and the truth will set you free.",
+    "source": "Bible (John 8:32)",
+    "translationSource": "Holy Bible (English Standard Version) – https://www.amazon.com/dp/1433551537",
+    "translationAuthor": "English Standard Version",
+    "topComment": "soul over scoreboard. this is more about practice than belief. gentle nudge."
+  },
+  {
+    "id": "a0308406e8fd",
+    "quote": "For what shall it profit a man, if he shall gain the whole world, and lose his own soul?",
+    "source": "Bible (Mark 8:36)",
+    "translationSource": "Holy Bible (King James Version) – https://www.amazon.com/dp/0718074252",
+    "translationAuthor": "King James Version (Public Domain)",
+    "topComment": "keeping this close. saving this."
+  },
+  {
+    "id": "e73bf8f9fe7d",
+    "quote": "Wisdom is the principal thing; therefore get wisdom: and with all thy getting get understanding.",
+    "source": "Bible (Proverbs 4:7)",
+    "translationSource": "Holy Bible (King James Version) – https://www.amazon.com/dp/0718074252",
+    "translationAuthor": "King James Version (Public Domain)",
+    "topComment": "soul over scoreboard. leave a sticky note with this where it matters. thoughts?"
+  },
+  {
+    "id": "ebe4c9333211",
+    "quote": "You are what your deep, driving desire is. As your desire is, so is your will. As your will is, so is your deed. As your deed is, so is your destiny.",
+    "source": "Brihadaranyaka Upanishad",
+    "translationSource": "The Upanishads (Penguin Classics) – https://www.amazon.com/dp/0140447490",
+    "translationAuthor": "Juan Mascaró",
+    "topComment": "self as inquiry. mini-challenge: one action about deep today. noted."
+  },
+  {
+    "id": "5b417d1b5620",
+    "quote": "It is better to light a single candle than to curse the darkness.",
+    "source": "Chinese Proverb",
+    "translationSource": "Treasury of Chinese Proverbs – https://www.amazon.com/dp/1588140616",
+    "topComment": "say it, then do it. rewrite this in your own words and use it once. noted."
+  },
+  {
+    "id": "6b9395837a02",
+    "quote": "You have made us for yourself, O Lord, and our hearts are restless until they rest in you.",
+    "source": "Confessions, Saint Augustine",
+    "translationSource": "Confessions (Penguin Classics) – https://www.amazon.com/dp/014044114X",
+    "translationAuthor": "R. S. Pine-Coffin",
+    "topComment": "order the loves. tiny line, big ask. curious what others think."
+  },
+  {
+    "id": "67b08853bd62",
+    "quote": "Two things fill the mind with ever new and increasing admiration and awe, the more often and steadily we reflect upon them: the starry heavens above me and the moral law within me.",
+    "source": "Critique of Practical Reason, Immanuel Kant",
+    "translationSource": "Critique of Practical Reason (Dover Thrift Editions) – https://www.amazon.com/dp/0486432548",
+    "translationAuthor": "Thomas Kingsmill Abbott",
+    "topComment": "duty over outcome. 24h experiment: drop one habit tied to things. adding this to my notes."
+  },
+  {
+    "id": "67dd9a34aaed",
+    "quote": "Not life, but good life, is to be chiefly valued.",
+    "source": "Crito, Plato (Socrates)",
+    "translationSource": "The Trial and Death of Socrates (Hackett Publishing) – https://www.amazon.com/dp/0872205541",
+    "translationAuthor": "G. M. A. Grube",
+    "topComment": "go after definitions, not vibes. rewrite this in your own words and use it once."
+  },
+  {
+    "id": "3dddd99fd4dd",
+    "quote": "As irrigators guide water to their fields, as archers aim their arrows, and as carpenters carve wood, the wise shape their minds.",
+    "source": "Dhammapada (Buddhist scripture)",
+    "translationSource": "The Dhammapada (Shambhala Library) – https://www.amazon.com/dp/1590303806",
+    "translationAuthor": "Gil Fronsdal",
+    "topComment": "gentle, not passive. going to sit with this. adding this to my notes."
+  },
+  {
+    "id": "4b917ebfa96d",
+    "quote": "All tremble at violence; life is dear to all. Putting oneself in another's place, one should not kill nor cause another to kill.",
+    "source": "Dhammapada (Buddhist scripture)",
+    "translationSource": "The Dhammapada (Shambhala Library) – https://www.amazon.com/dp/1590303806",
+    "translationAuthor": "Gil Fronsdal",
+    "topComment": "choose non-harm, even in tone. this actually helps in real life. thoughts?"
+  },
+  {
+    "id": "671f5f9ba708",
+    "quote": "All conditioned things are impermanent. When one sees this with wisdom, one turns away from suffering.",
+    "source": "Dhammapada (Buddhist scripture)",
+    "translationSource": "The Dhammapada: The Sayings of Buddha (Oxford World's Classics) – https://www.amazon.com/dp/0192839111",
+    "translationAuthor": "Carter & Palihawadana",
+    "topComment": "notice the mind before the moment. field test: try this once before noon. curious what others think."
+  },
+  {
+    "id": "7ed79dc4bd32",
+    "quote": "Hatred is never appeased by hatred in this world. By non-hatred alone is hatred appeased. This is an eternal law.",
+    "source": "Dhammapada (Buddhist scripture)",
+    "translationSource": "The Dhammapada: The Sayings of Buddha (Oxford World's Classics) – https://www.amazon.com/dp/0192839111",
+    "translationAuthor": "Carter & Palihawadana",
+    "topComment": "gentle, not passive. anyone got a story where this helped? curious what others think."
+  },
+  {
+    "id": "904e9f27cd26",
+    "quote": "All that we are is the result of what we have thought.",
+    "source": "Dhammapada (Buddhist scripture)",
+    "translationSource": "The Dhammapada (Penguin Classics) – https://www.amazon.com/dp/0140442847",
+    "translationAuthor": "Juan Mascaró",
+    "topComment": "gentle, not passive. field test: try this once before noon. curious what others think."
+  },
+  {
+    "id": "95726a04b893",
+    "quote": "Conquer anger by love, evil by good; conquer the miser by giving, and the liar by truth.",
+    "source": "Dhammapada (Buddhist scripture)",
+    "translationSource": "The Dhammapada: The Sayings of Buddha (Oxford World's Classics) – https://www.amazon.com/dp/0192839111",
+    "translationAuthor": "Carter & Palihawadana",
+    "topComment": "gentle, not passive. translate it into one sentence you'll say today. open to pushback."
+  },
+  {
+    "id": "cd465c14434e",
+    "quote": "If anything is worth doing, do it with all your heart.",
+    "source": "Dhammapada (Buddhist scripture)",
+    "translationSource": "The Dhammapada (Penguin Classics) – https://www.amazon.com/dp/0140442847",
+    "translationAuthor": "Juan Mascaró",
+    "topComment": "gentle, not passive. tiny line, big ask. gentle nudge."
+  },
+  {
+    "id": "f6eaa84fc09c",
+    "quote": "Better than a thousand hollow words is one word that brings peace.",
+    "source": "Dhammapada (Buddhist scripture)",
+    "translationSource": "The Dhammapada (Shambhala Library) – https://www.amazon.com/dp/1590303806",
+    "translationAuthor": "Gil Fronsdal",
+    "topComment": "this lands. curious what others think."
+  },
+  {
+    "id": "fa28c5443de1",
+    "quote": "If with a pure mind a person speaks or acts, happiness follows him like a shadow that never leaves him.",
+    "source": "Dhammapada (Buddhist scripture)",
+    "translationSource": "The Dhammapada (Penguin Classics) – https://www.amazon.com/dp/0140442847",
+    "translationAuthor": "Juan Mascaró",
+    "topComment": "choose non-harm, even in tone. i hear this as a push toward pure. open to pushback."
+  },
+  {
+    "id": "fd6312672def",
+    "quote": "Just as a solid rock is not shaken by the wind, so the wise are not shaken by praise or blame.",
+    "source": "Dhammapada (Buddhist scripture)",
+    "translationSource": "The Dhammapada (Shambhala Library) – https://www.amazon.com/dp/1590303806",
+    "translationAuthor": "Gil Fronsdal",
+    "topComment": "gentle, not passive. rewrite this in your own words and use it once. saving this."
+  },
+  {
+    "id": "a725e25d3db6",
+    "quote": "Time heals what reason cannot.",
+    "source": "Dialogues, Seneca",
+    "translationSource": "Dialogues and Essays (Oxford World's Classics) – https://www.amazon.com/dp/0199552401",
+    "translationAuthor": "John Davie",
+    "topComment": "control the controllables. leave a sticky note with this where it matters. curious what others think."
+  },
+  {
+    "id": "e36c53d07f79",
+    "quote": "I think, therefore I am.",
+    "source": "Discourse on the Method, René Descartes",
+    "translationSource": "Discourse on Method and Meditations (Hackett Publishing) – https://www.amazon.com/dp/0872204200",
+    "translationAuthor": "Donald A. Cress",
+    "topComment": "doubt, then rebuild. this lands. saving this."
+  },
+  {
+    "id": "b693bd5b1447",
+    "quote": "We have two ears and one mouth so that we can listen twice as much as we speak.",
+    "source": "Discourses (fragment), Epictetus",
+    "translationSource": "The Complete Works of Epictetus (Delphi Classics) – https://www.amazon.com/dp/B01BUADYWA",
+    "translationAuthor": "W. A. Oldfather",
+    "topComment": "tiny line, big ask. thoughts?"
+  },
+  {
+    "id": "1e4ef8de5d58",
+    "quote": "How long are you going to wait before you demand the best for yourself?",
+    "source": "Discourses, Epictetus",
+    "translationSource": "Discourses and Selected Writings (Penguin Classics) – https://www.amazon.com/dp/0140449469",
+    "translationAuthor": "Robert Dobbin",
+    "topComment": "own what you can, release what you can't. what would living this for a week change? thoughts?"
+  },
+  {
+    "id": "81f650a09f7e",
+    "quote": "Know, first, who you are; and then adorn yourself accordingly.",
+    "source": "Discourses, Epictetus",
+    "translationSource": "Discourses, Fragments, Handbook (Oxford World's Classics) – https://www.amazon.com/dp/0199595186",
+    "translationAuthor": "Robin Hard",
+    "topComment": "feels stoic in the best way. what would living this for a week change? trying this quietly."
+  },
+  {
+    "id": "852bb7a7e21c",
+    "quote": "Freedom is secured not by the fulfilling of one's desires, but by the removal of desire.",
+    "source": "Discourses, Epictetus",
+    "translationSource": "Discourses and Selected Writings (Penguin Classics) – https://www.amazon.com/dp/0140449469",
+    "translationAuthor": "Robert Dobbin",
+    "topComment": "this lands. noted."
   },
   {
     "id": "8c9c54a0a1e6",
     "quote": "Don't explain your philosophy. Embody it.",
-    "source": "Epictetus, Discourses",
-    "translationAuthor": "Robin Hard",
-    "topComment": "Actions speak louder than words."
+    "source": "Discourses, Epictetus",
+    "translationSource": "Discourses and Selected Writings (Penguin Classics) – https://www.amazon.com/dp/0140449469",
+    "translationAuthor": "Robert Dobbin",
+    "topComment": "own what you can, release what you can't. anyone got a story where this helped? noted."
   },
   {
-    "id": "e5aa5fe6f775",
-    "quote": "He who laughs at himself never runs out of things to laugh at.",
-    "source": "Epictetus, Discourses",
-    "translationAuthor": "Robin Hard"
+    "id": "97438077833f",
+    "quote": "Only the educated are free.",
+    "source": "Discourses, Epictetus",
+    "translationSource": "Discourses and Selected Writings (Penguin Classics) – https://www.amazon.com/dp/0140449469",
+    "translationAuthor": "Robert Dobbin",
+    "topComment": "this lands. saving this."
+  },
+  {
+    "id": "a51ead686acb",
+    "quote": "First learn the meaning of what you say, and then speak.",
+    "source": "Discourses, Epictetus",
+    "translationSource": "Discourses, Fragments, Handbook (Oxford World's Classics) – https://www.amazon.com/dp/0199595186",
+    "translationAuthor": "Robin Hard",
+    "topComment": "feels stoic in the best way. pick one person and practice this with them. thoughts?"
+  },
+  {
+    "id": "cfc4d7ed41a1",
+    "quote": "Difficulties are things that show a person what they are.",
+    "source": "Discourses, Epictetus",
+    "translationSource": "The Discourses of Epictetus (Everyman's Library) – https://www.amazon.com/dp/0679406786",
+    "translationAuthor": "George Long",
+    "topComment": "own what you can, release what you can't. keeping this close. saving this."
+  },
+  {
+    "id": "f0b3925aee1d",
+    "quote": "Wealth consists not in having great possessions, but in having few wants.",
+    "source": "Discourses, Epictetus",
+    "translationSource": "The Discourses of Epictetus (Everyman's Library) – https://www.amazon.com/dp/0679406786",
+    "translationAuthor": "George Long",
+    "topComment": "control the controllables. i hear this as a push toward wealth. gentle nudge."
+  },
+  {
+    "id": "12b40632b5ed",
+    "quote": "The only thing necessary for the triumph of evil is for good men to do nothing.",
+    "source": "Edmund Burke (attributed)",
+    "translationSource": "Burke: Selected Writings and Speeches (Regnery) – https://www.amazon.com/dp/0895263986",
+    "translationAuthor": "Peter J. Stanlis (editor)",
+    "topComment": "be a good neighbor. to me this argues for small, repeatable moves. trying this quietly."
   },
   {
     "id": "380a958ea698",
     "quote": "It's not what happens to you, but how you react to it that matters.",
-    "source": "Epictetus, Enchiridion",
-    "translationAuthor": "Elizabeth Carter"
+    "source": "Enchiridion, Epictetus",
+    "translationSource": "Discourses and Selected Writings (Penguin Classics) – https://www.amazon.com/dp/0140449469",
+    "translationAuthor": "Robert Dobbin",
+    "topComment": "own what you can, release what you can't. leave a sticky note with this where it matters."
   },
   {
-    "id": "eb9caeb5d0fe",
-    "quote": "Waste no more time arguing about what a good man should be. Be one.",
-    "source": "Marcus Aurelius, Meditations, Book 10",
-    "translationAuthor": "Gregory Hays"
+    "id": "47a46a5ba96b",
+    "quote": "The uneducated person accuses others; the partly educated person accuses themselves; the educated person accuses neither.",
+    "source": "Enchiridion, Epictetus",
+    "translationSource": "Enchiridion (Hackett Publishing) – https://www.amazon.com/dp/0915145693",
+    "translationAuthor": "W. A. Oldfather",
+    "topComment": "control the controllables. i hear this as a push toward uneducated. gentle nudge."
   },
   {
-    "id": "3a328a54d374",
-    "quote": "If it is not right, do not do it. If it is not true, do not say it.",
-    "source": "Marcus Aurelius, Meditations, Book 12",
-    "translationAuthor": "Gregory Hays"
+    "id": "53d97150ddfe",
+    "quote": "First say to yourself what you would be; and then do what you have to do.",
+    "source": "Enchiridion, Epictetus",
+    "translationSource": "Enchiridion (Dover Thrift Editions) – https://www.amazon.com/dp/0486433595",
+    "translationAuthor": "Elizabeth Carter",
+    "topComment": "quiet but strong. adding this to my notes."
+  },
+  {
+    "id": "8d95fbcd20ad",
+    "quote": "No man is free who is not master of himself.",
+    "source": "Enchiridion, Epictetus",
+    "translationSource": "Discourses and Selected Writings (Penguin Classics) – https://www.amazon.com/dp/0140449469",
+    "translationAuthor": "Robert Dobbin",
+    "topComment": "quiet but strong. open to pushback."
+  },
+  {
+    "id": "a01d1a831609",
+    "quote": "Don't seek to have events happen as you wish, but wish them to happen as they do happen, and your life will go smoothly.",
+    "source": "Enchiridion, Epictetus",
+    "translationSource": "Enchiridion (Dover Thrift Editions) – https://www.amazon.com/dp/0486433595",
+    "translationAuthor": "Elizabeth Carter",
+    "topComment": "own what you can, release what you can't. tiny line, big ask. open to pushback."
+  },
+  {
+    "id": "b7d93a99a598",
+    "quote": "If you want to improve, be content to be thought foolish and stupid.",
+    "source": "Enchiridion, Epictetus",
+    "translationSource": "Enchiridion (Hackett Publishing) – https://www.amazon.com/dp/0915145693",
+    "translationAuthor": "W. A. Oldfather",
+    "topComment": "own what you can, release what you can't. 24h experiment: drop one habit tied to want. noted."
+  },
+  {
+    "id": "bd20525903a8",
+    "quote": "Make the best use of what is in your power, and take the rest as it happens.",
+    "source": "Enchiridion, Epictetus",
+    "translationSource": "Enchiridion (Dover Thrift Editions) – https://www.amazon.com/dp/0486433595",
+    "translationAuthor": "Elizabeth Carter",
+    "topComment": "feels stoic in the best way. this actually helps in real life. noted."
+  },
+  {
+    "id": "82151b26af1e",
+    "quote": "Do not go where the path may lead, go instead where there is no path and leave a trail.",
+    "source": "Essays, Ralph Waldo Emerson",
+    "translationSource": "Selected Writings of Emerson (Modern Library) – https://www.amazon.com/dp/0679600417",
+    "topComment": "going to sit with this. adding this to my notes. (noted)"
+  },
+  {
+    "id": "25d4abec407b",
+    "quote": "All things excellent are as difficult as they are rare.",
+    "source": "Ethics, Baruch Spinoza",
+    "translationSource": "Ethics (Penguin Classics) – https://www.amazon.com/dp/0140435711",
+    "translationAuthor": "Edwin Curley",
+    "topComment": "less passion, more power. feels less abstract and more like a daily rule."
+  },
+  {
+    "id": "209b063e7dbb",
+    "quote": "Character is destiny.",
+    "source": "Fragments, Heraclitus",
+    "translationSource": "Fragments: The Collected Wisdom of Heraclitus – https://www.amazon.com/dp/0140437250",
+    "translationAuthor": "Brooks Haxton",
+    "topComment": "this lands. gentle nudge."
+  },
+  {
+    "id": "8346760090ac",
+    "quote": "No man ever steps in the same river twice, for it's not the same river and he's not the same man.",
+    "source": "Fragments, Heraclitus",
+    "translationSource": "Fragments: The Collected Wisdom of Heraclitus – https://www.amazon.com/dp/0140437250",
+    "translationAuthor": "Brooks Haxton",
+    "topComment": "ride the current. anyone got a story where this helped? curious what others think."
+  },
+  {
+    "id": "c949f5b54fe7",
+    "quote": "Everything changes and nothing remains still.",
+    "source": "Fragments, Heraclitus",
+    "translationSource": "Early Greek Philosophy (Penguin Classics) – https://www.amazon.com/dp/0140436319",
+    "translationAuthor": "Jonathan Barnes",
+    "topComment": "everything's moving. feels less abstract and more like a daily rule. saving this."
+  },
+  {
+    "id": "037b15b217d6",
+    "quote": "To study the self is to forget the self. To forget the self is to be enlightened by all things.",
+    "source": "Genjōkōan (Shōbōgenzō), Dōgen",
+    "translationSource": "Master Dogen's Shobogenzo (Gudo Nishijima translation) – https://www.amazon.com/dp/099603770X",
+    "translationAuthor": "Gudo Wafu Nishijima",
+    "topComment": "just practice, no extra. i hear this as a push toward study. noted."
+  },
+  {
+    "id": "84b85a5771b5",
+    "quote": "There is no easy way from the earth to the stars.",
+    "source": "Hercules Furens, Seneca",
+    "translationSource": "Seneca: Six Tragedies (Oxford World's Classics) – https://www.amazon.com/dp/0192807064",
+    "translationAuthor": "Emily Wilson",
+    "topComment": "own what you can, release what you can't. quiet but strong. gentle nudge. (noted)"
+  },
+  {
+    "id": "8c03d5da0edb",
+    "quote": "Injustice anywhere is a threat to justice everywhere.",
+    "source": "Letter from Birmingham Jail, Martin Luther King Jr.",
+    "translationSource": "Why We Can't Wait (Signet Classics) – https://www.amazon.com/dp/0451527534",
+    "topComment": "this one travels well. thoughts? (noted)"
+  },
+  {
+    "id": "05735f6d754e",
+    "quote": "It is not the man who has too little, but the man who craves more, that is poor.",
+    "source": "Letters to Lucilius, Seneca",
+    "translationSource": "Letters from a Stoic (Penguin Classics) – https://www.amazon.com/dp/0140442103",
+    "translationAuthor": "Robin Campbell",
+    "topComment": "control the controllables. simple, not easy. adding this to my notes."
+  },
+  {
+    "id": "0d2867b823a8",
+    "quote": "Luck is what happens when preparation meets opportunity.",
+    "source": "Letters to Lucilius, Seneca",
+    "translationSource": "Letters from a Stoic (Penguin Classics) – https://www.amazon.com/dp/0140442103",
+    "translationAuthor": "Robin Campbell",
+    "topComment": "own what you can, release what you can't. what would living this for a week change? adding this to my notes."
+  },
+  {
+    "id": "1866332ea7ed",
+    "quote": "We suffer more often in imagination than in reality.",
+    "source": "Letters to Lucilius, Seneca",
+    "translationSource": "Letters from a Stoic (Penguin Classics) – https://www.amazon.com/dp/0140442103",
+    "translationAuthor": "Robin Campbell",
+    "topComment": "own what you can, release what you can't. leave a sticky note with this where it matters. noted."
+  },
+  {
+    "id": "3ee70e780427",
+    "quote": "While we are postponing, life speeds by.",
+    "source": "Letters to Lucilius, Seneca",
+    "translationSource": "Letters from a Stoic (Penguin Classics) – https://www.amazon.com/dp/0140442103",
+    "translationAuthor": "Robin Campbell",
+    "topComment": "feels stoic in the best way. this is more about practice than belief. noted."
+  },
+  {
+    "id": "418d550bef5d",
+    "quote": "He suffers more than necessary, who suffers before it is necessary.",
+    "source": "Letters to Lucilius, Seneca",
+    "translationSource": "Letters from a Stoic (Penguin Classics) – https://www.amazon.com/dp/0140442103",
+    "translationAuthor": "Robin Campbell",
+    "topComment": "going to sit with this. adding this to my notes."
+  },
+  {
+    "id": "749bc2f51748",
+    "quote": "Begin at once to live, and count each separate day as a separate life.",
+    "source": "Letters to Lucilius, Seneca",
+    "translationSource": "Letters from a Stoic (Penguin Classics) – https://www.amazon.com/dp/0140442103",
+    "translationAuthor": "Robin Campbell",
+    "topComment": "control the controllables. this lands. gentle nudge."
+  },
+  {
+    "id": "b912256c35a5",
+    "quote": "As long as you live, keep learning how to live.",
+    "source": "Letters to Lucilius, Seneca",
+    "translationSource": "Letters from a Stoic (Penguin Classics) – https://www.amazon.com/dp/0140442103",
+    "translationAuthor": "Robin Campbell",
+    "topComment": "feels like a practice, not a take. saving this. (noted)"
+  },
+  {
+    "id": "bebf4baf9943",
+    "quote": "Sometimes even to live is an act of courage.",
+    "source": "Letters to Lucilius, Seneca",
+    "translationSource": "Letters from a Stoic (Penguin Classics) – https://www.amazon.com/dp/0140442103",
+    "translationAuthor": "Robin Campbell",
+    "topComment": "this lowered my shoulders. noted."
+  },
+  {
+    "id": "f6013407c661",
+    "quote": "Associate with people who are likely to improve you.",
+    "source": "Letters to Lucilius, Seneca",
+    "translationSource": "Letters from a Stoic (Penguin Classics) – https://www.amazon.com/dp/0140442103",
+    "translationAuthor": "Robin Campbell",
+    "topComment": "this lands. saving this. (noted)"
+  },
+  {
+    "id": "fd6257f00b39",
+    "quote": "If a man knows not to which port he sails, no wind is favorable.",
+    "source": "Letters to Lucilius, Seneca",
+    "translationSource": "Letters from a Stoic (Penguin Classics) – https://www.amazon.com/dp/0140442103",
+    "translationAuthor": "Robin Campbell",
+    "topComment": "control the controllables. hard truth, soft landing. noted."
+  },
+  {
+    "id": "eaa763b896be",
+    "quote": "Honesty is the first chapter in the book of wisdom.",
+    "source": "Letters, Thomas Jefferson",
+    "translationSource": "The Life and Selected Writings of Thomas Jefferson – https://www.amazon.com/dp/0679726238",
+    "translationAuthor": "Adrienne Koch & William Peden (editors)",
+    "topComment": "be a good neighbor. what would living this for a week change? noted."
+  },
+  {
+    "id": "07e18f82193a",
+    "quote": "How much more grievous are the consequences of anger than the causes of it.",
+    "source": "Meditations, Marcus Aurelius",
+    "translationSource": "Meditations (Penguin Classics) – https://www.amazon.com/dp/0140449337",
+    "translationAuthor": "Martin Hammond",
+    "topComment": "simple, not easy. trying this quietly."
+  },
+  {
+    "id": "12aaf34e6423",
+    "quote": "If it is not right, do not do it; if it is not true, do not say it.",
+    "source": "Meditations, Marcus Aurelius",
+    "translationSource": "Meditations (Penguin Classics) – https://www.amazon.com/dp/0140449337",
+    "translationAuthor": "Martin Hammond",
+    "topComment": "control the controllables. what would living this for a week change? noted."
+  },
+  {
+    "id": "1ff1f9fb5a9f",
+    "quote": "The impediment to action advances action. What stands in the way becomes the way.",
+    "source": "Meditations, Marcus Aurelius",
+    "translationSource": "Meditations (Modern Library) – https://www.amazon.com/dp/0812968255",
+    "translationAuthor": "Gregory Hays",
+    "topComment": "keeping this close. curious what others think."
+  },
+  {
+    "id": "20d56df5d2a0",
+    "quote": "The universe is change; our life is what our thoughts make it.",
+    "source": "Meditations, Marcus Aurelius",
+    "translationSource": "Meditations (Penguin Classics) – https://www.amazon.com/dp/0140449337",
+    "translationAuthor": "Martin Hammond",
+    "topComment": "own what you can, release what you can't. keeping this close. thoughts?"
+  },
+  {
+    "id": "22a46f15430b",
+    "quote": "The soul becomes dyed with the color of its thoughts.",
+    "source": "Meditations, Marcus Aurelius",
+    "translationSource": "Meditations (Penguin Classics) – https://www.amazon.com/dp/0140442103",
+    "translationAuthor": "Maxwell Staniforth",
+    "topComment": "own what you can, release what you can't. quiet but strong. gentle nudge."
+  },
+  {
+    "id": "24f49e2937d1",
+    "quote": "Everything that we hear is an opinion, not a fact. Everything we see is a perspective, not the truth.",
+    "source": "Meditations, Marcus Aurelius",
+    "translationSource": "Meditations (Oxford World's Classics) – https://www.amazon.com/dp/0199573204",
+    "translationAuthor": "Robin Hard",
+    "topComment": "own what you can, release what you can't. tiny line, big ask. saving this."
+  },
+  {
+    "id": "39667bb10b21",
+    "quote": "It is not death that a man should fear, but he should fear never beginning to live.",
+    "source": "Meditations, Marcus Aurelius",
+    "translationSource": "Meditations (Oxford World's Classics) – https://www.amazon.com/dp/0199573204",
+    "translationAuthor": "Robin Hard",
+    "topComment": "going to sit with this. open to pushback."
+  },
+  {
+    "id": "3bd369e51536",
+    "quote": "If you are distressed by anything external, the pain is not due to the thing itself, but to your estimate of it; and this you have the power to revoke at any moment.",
+    "source": "Meditations, Marcus Aurelius",
+    "translationSource": "Meditations (Modern Library) – https://www.amazon.com/dp/0812968255",
+    "translationAuthor": "Gregory Hays",
+    "topComment": "feels stoic in the best way. needed this today. gentle nudge."
+  },
+  {
+    "id": "5be2eac53d8c",
+    "quote": "You have power over your mind — not outside events. Realize this, and you will find strength.",
+    "source": "Meditations, Marcus Aurelius",
+    "translationSource": "Meditations (Modern Library) – https://www.amazon.com/dp/0812968255",
+    "translationAuthor": "Gregory Hays",
+    "topComment": "own what you can, release what you can't. feels like a practice, not a take. saving this."
+  },
+  {
+    "id": "606d3d20751f",
+    "quote": "Choose not to be harmed — and you won't feel harmed. Don't feel harmed — and you haven't been.",
+    "source": "Meditations, Marcus Aurelius",
+    "translationSource": "Meditations (Modern Library) – https://www.amazon.com/dp/0812968255",
+    "translationAuthor": "Gregory Hays",
+    "topComment": "feels like a practice, not a take. saving this."
+  },
+  {
+    "id": "64590a4fa929",
+    "quote": "Waste no more time arguing what a good man should be. Be one.",
+    "source": "Meditations, Marcus Aurelius",
+    "translationSource": "Meditations (Modern Library) – https://www.amazon.com/dp/0812968255",
+    "translationAuthor": "Gregory Hays",
+    "topComment": "control the controllables. what would living this for a week change? adding this to my notes."
+  },
+  {
+    "id": "6befebed0f28",
+    "quote": "Nowhere can man find a quieter or more untroubled retreat than in his own soul.",
+    "source": "Meditations, Marcus Aurelius",
+    "translationSource": "Meditations (Modern Library) – https://www.amazon.com/dp/0812968255",
+    "translationAuthor": "Gregory Hays",
+    "topComment": "feels like a practice, not a take. thoughts?"
+  },
+  {
+    "id": "8b3925d5b8f6",
+    "quote": "The best revenge is to be unlike him who performed the injustice.",
+    "source": "Meditations, Marcus Aurelius",
+    "translationSource": "Meditations (Modern Library) – https://www.amazon.com/dp/0812968255",
+    "translationAuthor": "Gregory Hays",
+    "topComment": "feels stoic in the best way. this is more about practice than belief. will report back."
   },
   {
     "id": "a7ea35349962",
     "quote": "The happiness of your life depends upon the quality of your thoughts.",
-    "source": "Marcus Aurelius, Meditations, Book 4",
+    "source": "Meditations, Marcus Aurelius",
+    "translationSource": "Meditations (Modern Library) – https://www.amazon.com/dp/0812968255",
     "translationAuthor": "Gregory Hays",
-    "topComment": "This reminds us that our internal state is within our control."
+    "topComment": "feels stoic in the best way. this actually helps in real life. gentle nudge."
   },
   {
-    "id": "913efd28d2dd",
-    "quote": "The obstacle is the way.",
-    "source": "Marcus Aurelius, Meditations, Book 5",
-    "translationAuthor": "Gregory Hays",
-    "topComment": "Every challenge is an opportunity for growth."
+    "id": "a86ab5780357",
+    "quote": "Accept whatever comes to you woven in the pattern of your destiny, for what could more aptly fit your needs?",
+    "source": "Meditations, Marcus Aurelius",
+    "translationSource": "Meditations (Penguin Classics) – https://www.amazon.com/dp/0140449337",
+    "translationAuthor": "Martin Hammond",
+    "topComment": "tiny line, big ask. will report back."
   },
   {
-    "id": "af682d6403b2",
-    "quote": "You have power over your mind—not outside events. Realize this, and you will find strength.",
-    "source": "Marcus Aurelius, Meditations, Book 5",
-    "translationAuthor": "Gregory Hays"
+    "id": "ba1ca1aea82a",
+    "quote": "Do not act as if you had ten thousand years to live. Death hangs over you. While you live, while it is in your power, be good.",
+    "source": "Meditations, Marcus Aurelius",
+    "translationSource": "Meditations (Oxford World's Classics) – https://www.amazon.com/dp/0199573204",
+    "translationAuthor": "Robin Hard",
+    "topComment": "feels stoic in the best way. what would living this for a week change?"
+  },
+  {
+    "id": "c3cdc72e2bcd",
+    "quote": "Confine yourself to the present.",
+    "source": "Meditations, Marcus Aurelius",
+    "translationSource": "Meditations (Oxford World's Classics) – https://www.amazon.com/dp/0199573204",
+    "translationAuthor": "Robin Hard",
+    "topComment": "own what you can, release what you can't. 24h experiment: drop one habit tied to confine. thoughts?"
+  },
+  {
+    "id": "cb80b4231d24",
+    "quote": "It never ceases to amaze me: we all love ourselves more than other people, but care more about their opinion than our own.",
+    "source": "Meditations, Marcus Aurelius",
+    "translationSource": "Meditations (Modern Library) – https://www.amazon.com/dp/0812968255",
+    "translationAuthor": "Gregory Hays",
+    "topComment": "feels stoic in the best way. rewrite this in your own words and use it once. adding this to my notes."
+  },
+  {
+    "id": "fa514ad8a928",
+    "quote": "Very little is needed to make a happy life; it is all within yourself, in your way of thinking.",
+    "source": "Meditations, Marcus Aurelius",
+    "translationSource": "Meditations (Penguin Classics) – https://www.amazon.com/dp/0140449337",
+    "translationAuthor": "Martin Hammond",
+    "topComment": "control the controllables. what would living this for a week change? adding this to my notes. (noted)"
+  },
+  {
+    "id": "fd474a90b1d8",
+    "quote": "The object of life is not to be on the side of the majority, but to escape finding oneself in the ranks of the insane.",
+    "source": "Meditations, Marcus Aurelius",
+    "translationSource": "Meditations (Penguin Classics) – https://www.amazon.com/dp/0140449337",
+    "translationAuthor": "Martin Hammond",
+    "topComment": "feels stoic in the best way. tiny line, big ask. will report back."
+  },
+  {
+    "id": "6ffe5d09e2cb",
+    "quote": "The great man is he who does not lose his child's heart.",
+    "source": "Mencius",
+    "translationSource": "Mencius (Penguin Classics) – https://www.amazon.com/dp/014044971X",
+    "translationAuthor": "D. C. Lau",
+    "topComment": "assume better, train accordingly. anyone got a story where this helped? will report back."
+  },
+  {
+    "id": "d152ae0a9221",
+    "quote": "The mind is not a vessel to be filled but a fire to be kindled.",
+    "source": "Moralia, Plutarch",
+    "translationSource": "Essays (Penguin Classics) – https://www.amazon.com/dp/0140445641",
+    "translationAuthor": "Ian Kidd",
+    "topComment": "small fires everywhere. to me this argues for small, repeatable moves."
+  },
+  {
+    "id": "1ecb404d0c8e",
+    "quote": "Without friends, no one would choose to live, though he had all other goods.",
+    "source": "Nicomachean Ethics, Aristotle",
+    "translationSource": "Nicomachean Ethics (Oxford World's Classics) – https://www.amazon.com/dp/0199213615",
+    "translationAuthor": "W. D. Ross (rev. Lesley Brown)",
+    "topComment": "aim for the mean, not the extremes. this one travels well. adding this to my notes."
+  },
+  {
+    "id": "247b9d87aff6",
+    "quote": "People are frugal in guarding their personal property; but when it comes to wasting time, they are most extravagant.",
+    "source": "On the Shortness of Life, Seneca",
+    "translationSource": "On the Shortness of Life (Penguin Great Ideas) – https://www.amazon.com/dp/0143036327",
+    "translationAuthor": "C. D. N. Costa",
+    "topComment": "own what you can, release what you can't. bookmarking this. will report back."
+  },
+  {
+    "id": "c3e793b168ad",
+    "quote": "Life is long, if you know how to use it.",
+    "source": "On the Shortness of Life, Seneca",
+    "translationSource": "On the Shortness of Life (Penguin Great Ideas) – https://www.amazon.com/dp/0143036327",
+    "translationAuthor": "C. D. N. Costa",
+    "topComment": "control the controllables. i hear this as a push toward life. open to pushback."
+  },
+  {
+    "id": "6725e7983a70",
+    "quote": "Gratitude is not only the greatest of virtues, but the parent of all the others.",
+    "source": "Orations, Cicero",
+    "translationSource": "Cicero: Selected Works (Penguin Classics) – https://www.amazon.com/dp/0140440995",
+    "translationAuthor": "Michael Grant",
+    "topComment": "gratitude builds the city. anyone got a story where this helped? open to pushback."
+  },
+  {
+    "id": "8c2e70e3e00a",
+    "quote": "The heart has its reasons which reason knows nothing of.",
+    "source": "Pensées, Blaise Pascal",
+    "translationSource": "Pensées (Penguin Classics) – https://www.amazon.com/dp/0140446451",
+    "translationAuthor": "A. J. Krailsheimer",
+    "topComment": "quiet but strong. will report back."
+  },
+  {
+    "id": "ce8b062a5096",
+    "quote": "All of humanity's problems stem from man's inability to sit quietly in a room alone.",
+    "source": "Pensées, Blaise Pascal",
+    "translationSource": "Pensées (Penguin Classics) – https://www.amazon.com/dp/0140446451",
+    "translationAuthor": "A. J. Krailsheimer",
+    "topComment": "small but sharp. hard truth, soft landing. will report back."
+  },
+  {
+    "id": "5d86171e05a6",
+    "quote": "Who is wise? One who learns from everyone.",
+    "source": "Pirkei Avot (Ethics of the Fathers)",
+    "translationSource": "Pirkei Avot: Ethics of the Fathers (Koren Publishers) – https://www.amazon.com/dp/1592642702",
+    "translationAuthor": "Rabbi Jonathan Sacks",
+    "topComment": "pass the wisdom along. keeping this close. will report back."
+  },
+  {
+    "id": "dc2115b3f893",
+    "quote": "If you want to make a man happy, do not add to his riches but take away from his desires.",
+    "source": "Principal Doctrines, Epicurus",
+    "translationSource": "The Epicurus Reader (Hackett Classics) – https://www.amazon.com/dp/0872202410",
+    "translationAuthor": "Brad Inwood & L. P. Gerson",
+    "topComment": "subtract a want today. this actually helps in real life. open to pushback."
+  },
+  {
+    "id": "3546f5da1400",
+    "quote": "God does not burden any soul with more than it can bear.",
+    "source": "Qur'an (2:286)",
+    "translationSource": "The Qur'an (Oxford World's Classics) – https://www.amazon.com/dp/0199535957",
+    "translationAuthor": "M. A. S. Abdel Haleem",
+    "topComment": "weight carried, not denied. translate it into one sentence you'll say today. thoughts?"
+  },
+  {
+    "id": "e192dedeb77a",
+    "quote": "Indeed, with hardship comes ease.",
+    "source": "Qur'an (94:6)",
+    "translationSource": "The Qur'an (Oxford World's Classics) – https://www.amazon.com/dp/0199535957",
+    "translationAuthor": "M. A. S. Abdel Haleem",
+    "topComment": "weight carried, not denied. sounds simple; the rhythm is the work. thoughts?"
+  },
+  {
+    "id": "239bfaecaba0",
+    "quote": "Courage is knowing what not to fear.",
+    "source": "Republic, Plato (attributed)",
+    "translationSource": "The Republic (Penguin Classics) – https://www.amazon.com/dp/0141442433",
+    "translationAuthor": "Desmond Lee",
+    "topComment": "simple, not easy. curious what others think."
+  },
+  {
+    "id": "a4f7ffb3daab",
+    "quote": "In the depth of winter, I finally learned that within me there lay an invincible summer.",
+    "source": "Return to Tipasa, Albert Camus",
+    "translationSource": "The Myth of Sisyphus and Other Essays (Vintage) – https://www.amazon.com/dp/0679733736",
+    "translationAuthor": "Justin O'Brien",
+    "topComment": "choose meaning anyway. i hear this as a push toward depth. gentle nudge."
+  },
+  {
+    "id": "231fe714a9b4",
+    "quote": "Faith is to believe what you do not see; the reward of this faith is to see what you believe.",
+    "source": "Sermons, Saint Augustine",
+    "translationSource": "The Works of Saint Augustine: Sermons (New City Press) – https://www.amazon.com/dp/1565480848",
+    "translationAuthor": "Edmund Hill",
+    "topComment": "aim your love first. needed this today. adding this to my notes."
+  },
+  {
+    "id": "afcb82e0b941",
+    "quote": "Darkness cannot drive out darkness; only light can do that. Hate cannot drive out hate; only love can do that.",
+    "source": "Strength to Love, Martin Luther King Jr.",
+    "translationSource": "A Testament of Hope: The Essential Writings of MLK (Harper One) – https://www.amazon.com/dp/0060646918",
+    "translationAuthor": "James M. Washington (editor)",
+    "topComment": "hard truth, soft landing. saving this."
+  },
+  {
+    "id": "e0dd45154ac7",
+    "quote": "To one who has faith, no explanation is necessary. To one without faith, no explanation is possible.",
+    "source": "Summa Theologica, Thomas Aquinas",
+    "translationSource": "Summa Theologica (Christian Classics) – https://www.amazon.com/dp/0870610635",
+    "translationAuthor": "Fathers of the English Dominican Province",
+    "topComment": "worth testing. what would living this for a week change? gentle nudge."
+  },
+  {
+    "id": "4c7b73ef3a59",
+    "quote": "Knowing others is intelligence; knowing yourself is true wisdom. Mastering others is strength; mastering yourself is true power.",
+    "source": "Tao Te Ching, Lao Tzu",
+    "translationSource": "Tao Te Ching (Hampton Roads) – https://www.amazon.com/dp/1571743673",
+    "translationAuthor": "Stephen Mitchell",
+    "topComment": "soft beats hard over time. needed this today. gentle nudge."
+  },
+  {
+    "id": "7a1fb78115e5",
+    "quote": "Nature does not hurry, yet everything is accomplished.",
+    "source": "Tao Te Ching, Lao Tzu",
+    "translationSource": "Tao Te Ching (Hampton Roads) – https://www.amazon.com/dp/1571743673",
+    "translationAuthor": "Stephen Mitchell",
+    "topComment": "quiet but strong. gentle nudge."
+  },
+  {
+    "id": "98a14d4a4858",
+    "quote": "A journey of a thousand miles begins with a single step.",
+    "source": "Tao Te Ching, Lao Tzu",
+    "translationSource": "Tao Te Ching (Penguin Classics) – https://www.amazon.com/dp/014044131X",
+    "translationAuthor": "D. C. Lau",
+    "topComment": "less push, more pace. translate it into one sentence you'll say today. open to pushback."
+  },
+  {
+    "id": "98bf1c7e947b",
+    "quote": "He who knows does not speak; he who speaks does not know.",
+    "source": "Tao Te Ching, Lao Tzu",
+    "translationSource": "Tao Te Ching (Penguin Classics) – https://www.amazon.com/dp/014044131X",
+    "translationAuthor": "D. C. Lau",
+    "topComment": "flow > force. mini-challenge: one action about knows today."
+  },
+  {
+    "id": "bbbc54e52aeb",
+    "quote": "When you realize nothing is lacking, the whole world belongs to you.",
+    "source": "Tao Te Ching, Lao Tzu",
+    "translationSource": "Tao Te Ching (Hampton Roads) – https://www.amazon.com/dp/1571743673",
+    "translationAuthor": "Stephen Mitchell",
+    "topComment": "soft beats hard over time. mini-challenge: one action about realize today. saving this."
+  },
+  {
+    "id": "c81698c9ad5c",
+    "quote": "A good traveler has no fixed plans and is not intent on arriving.",
+    "source": "Tao Te Ching, Lao Tzu",
+    "translationSource": "Tao Te Ching (Shambhala Classics) – https://www.amazon.com/dp/1590305469",
+    "translationAuthor": "John C. H. Wu",
+    "topComment": "this one travels well. thoughts?"
+  },
+  {
+    "id": "01b631980f43",
+    "quote": "Those who are free of resentful thoughts surely find peace.",
+    "source": "The Buddha (attributed)",
+    "translationSource": "Teachings of the Buddha (Shambhala) – https://www.amazon.com/dp/1590306546",
+    "translationAuthor": "Jack Kornfield (editor)",
+    "topComment": "choose non-harm, even in tone. pick one person and practice this with them. will report back."
+  },
+  {
+    "id": "354c47834c93",
+    "quote": "Thousands of candles can be lit from a single candle, and the life of the candle will not be shortened. Happiness never decreases by being shared.",
+    "source": "The Buddha (attributed)",
+    "translationSource": "Teachings of the Buddha (Shambhala) – https://www.amazon.com/dp/1590306546",
+    "translationAuthor": "Jack Kornfield (editor)",
+    "topComment": "gentle, not passive. what would living this for a week change? will report back."
+  },
+  {
+    "id": "2c3f5401dc39",
+    "quote": "Wisdom begins in wonder.",
+    "source": "Theaetetus, Plato",
+    "translationSource": "Plato: Complete Works (Hackett) – https://www.amazon.com/dp/0872203492",
+    "translationAuthor": "M. J. Levett",
+    "topComment": "this actually helps in real life. open to pushback."
+  },
+  {
+    "id": "f70ef1093ab8",
+    "quote": "Whereof one cannot speak, thereof one must be silent.",
+    "source": "Tractatus Logico-Philosophicus, Ludwig Wittgenstein",
+    "translationSource": "Tractatus Logico-Philosophicus (Routledge Classics) – https://www.amazon.com/dp/0415254086",
+    "translationAuthor": "C. K. Ogden",
+    "topComment": "quiet but strong. thoughts?"
+  },
+  {
+    "id": "7f24dc32fbee",
+    "quote": "What does not kill me makes me stronger.",
+    "source": "Twilight of the Idols, Friedrich Nietzsche",
+    "translationSource": "Twilight of the Idols (Penguin Classics) – https://www.amazon.com/dp/0140445145",
+    "translationAuthor": "R. J. Hollingdale",
+    "topComment": "watch for ressentiment. this is more about practice than belief. gentle nudge."
+  },
+  {
+    "id": "edf9584708d0",
+    "quote": "If we have our own why of life, we shall get along with almost any how.",
+    "source": "Twilight of the Idols, Friedrich Nietzsche",
+    "translationSource": "Twilight of the Idols (Penguin Classics) – https://www.amazon.com/dp/0140445145",
+    "translationAuthor": "R. J. Hollingdale",
+    "topComment": "forge the values. translate it into one sentence you'll say today. gentle nudge."
+  },
+  {
+    "id": "33fc01b4d10c",
+    "quote": "Not what we have but what we enjoy constitutes our abundance.",
+    "source": "Vatican Sayings, Epicurus",
+    "translationSource": "The Epicurus Reader (Hackett Classics) – https://www.amazon.com/dp/0872202410",
+    "translationAuthor": "Brad Inwood & L. P. Gerson",
+    "topComment": "good north star. gentle nudge."
+  },
+  {
+    "id": "29e349e0c4fd",
+    "quote": "When the student is ready, the teacher will appear.",
+    "source": "Zen Proverb",
+    "translationSource": "The Way of Zen (Vintage) – https://www.amazon.com/dp/0375705104",
+    "translationAuthor": "Alan Watts",
+    "topComment": "say it, then do it. anyone got a story where this helped? thoughts?"
+  },
+  {
+    "id": "86332775d148",
+    "quote": "Do not seek to follow in the footsteps of the wise; seek what they sought.",
+    "source": "Zen Proverb",
+    "translationSource": "Zen Flesh, Zen Bones (Tuttle Publishing) – https://www.amazon.com/dp/0804831866",
+    "translationAuthor": "Paul Reps & Nyogen Senzaki",
+    "topComment": "put this on the fridge. reads like a check on seek vs follow. saving this."
+  },
+  {
+    "id": "d79d28d21fb0",
+    "quote": "Before enlightenment, chop wood, carry water. After enlightenment, chop wood, carry water.",
+    "source": "Zen Proverb",
+    "translationSource": "Zen Flesh, Zen Bones (Tuttle Publishing) – https://www.amazon.com/dp/0804831866",
+    "translationAuthor": "Paul Reps & Nyogen Senzaki",
+    "topComment": "put this on the fridge. sounds simple; the rhythm is the work. adding this to my notes."
+  },
+  {
+    "id": "9bacc57cd537",
+    "quote": "The frog in the well knows nothing of the great ocean.",
+    "source": "Zhuangzi",
+    "translationSource": "Zhuangzi: Basic Writings (Columbia University Press) – https://www.amazon.com/dp/0231129599",
+    "translationAuthor": "Burton Watson",
+    "topComment": "play with perspective. i like how practical this is. adding this to my notes."
+  },
+  {
+    "id": "b6d74370af36",
+    "quote": "Flow with whatever may happen, and let your mind be free: Stay centered by accepting whatever you are doing. This is the ultimate.",
+    "source": "Zhuangzi",
+    "translationSource": "The Complete Works of Chuang Tzu (Columbia University Press) – https://www.amazon.com/dp/0231105959",
+    "translationAuthor": "Burton Watson",
+    "topComment": "bigger sky, smaller self. i like how practical this is. trying this quietly."
   }
 ]
