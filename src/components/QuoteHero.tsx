@@ -33,7 +33,7 @@ export default function QuoteHero({
         "
       >
         {/* Share: macOS-style, unobtrusive */}
-        <div className="absolute right-3 top-3 md:right-4 md:top-4">
+        <div className="absolute right-4 top-4 md:right-6 md:top-6">
           <ShareButton
             quote={quote}
             source={source}

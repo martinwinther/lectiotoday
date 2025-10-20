@@ -65,15 +65,16 @@ export default function ShareButton({
         aria-label="Share"
         className={[
           "inline-flex items-center justify-center",
-          "rounded-full border border-white/10",
-          "bg-white/6 hover:bg-white/10",
-          "backdrop-blur px-2.5 py-2",
-          "text-zinc-300/80 hover:text-zinc-100",
-          "transition shadow-[0_4px_18px_rgba(0,0,0,0.25)]",
-          compact ? "text-[11px]" : "text-xs"
+          "rounded-full border border-white/5",
+          "bg-white/3 hover:bg-white/6",
+          "backdrop-blur px-1.5 py-1",
+          "text-zinc-400/50 hover:text-zinc-300/70",
+          "transition-all duration-200",
+          "opacity-60 hover:opacity-90",
+          compact ? "text-[9px]" : "text-[10px]"
         ].join(" ")}
       >
-        <MacShareIcon className={compact ? "w-3.5 h-3.5" : "w-4 h-4"} />
+        <MacShareIcon className={compact ? "w-2.5 h-2.5" : "w-3 h-3"} />
       </button>
 
       {copied && (
