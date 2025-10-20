@@ -35,12 +35,16 @@ export default function QuoteHero({
 
         {(source || translationSource || translationAuthor) && (
           <div className="mt-6 text-sm text-zinc-300/85">
-            {source}
-            {translationSource && (
-              <> • <span className="opacity-80">{translationSource}</span></>
-            )}
+            <div>
+              {source}
+              {translationSource && (
+                <> • <span className="opacity-80">{translationSource}</span></>
+              )}
+            </div>
             {translationAuthor && (
-              <> — <span className="opacity-70">{translationAuthor}</span></>
+              <div className="text-xs opacity-70 mt-1">
+                Translation by {translationAuthor}
+              </div>
             )}
           </div>
         )}
