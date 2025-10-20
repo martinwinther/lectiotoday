@@ -65,12 +65,13 @@ export default function ShareButton({
         aria-label="Share"
         className={[
           "inline-flex items-center justify-center",
-          "rounded-full border border-white/5",
-          "bg-white/3 hover:bg-white/6",
+          "rounded-full border-0",
+          "bg-transparent hover:bg-white/6",
+          "hover:border hover:border-white/10",
           "backdrop-blur px-1.5 py-1",
-          "text-zinc-400/50 hover:text-zinc-300/70",
-          "transition-all duration-200",
-          "opacity-60 hover:opacity-90",
+          "text-zinc-400/40 hover:text-zinc-300/80",
+          "transition-all duration-300",
+          "opacity-50 hover:opacity-100",
           compact ? "text-[9px]" : "text-[10px]"
         ].join(" ")}
       >
