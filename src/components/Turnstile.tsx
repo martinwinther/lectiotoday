@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 declare global {
   interface Window {
@@ -32,8 +32,12 @@ export function Turnstile({
 }: Props) {
   const hostRef = useRef<HTMLDivElement | null>(null);
   const widgetIdRef = useRef<string | null>(null);
+  const renderedRef = useRef(false);
 
-  const renderWidget = useCallback(() => {
+  useEffect(() => {
+    if (renderedRef.current || !hostRef.current) return;
+    renderedRef.current = true;
+
     function currentSize(): 'normal' | 'compact' | 'flexible' {
       if (size) return size;
       // Compact on narrow screens, flexible otherwise
@@ -42,33 +46,31 @@ export function Turnstile({
         : 'flexible';
     }
 
-    if (!window.turnstile || !hostRef.current) return;
-    hostRef.current.innerHTML = '';
-    widgetIdRef.current = window.turnstile.render(hostRef.current, {
-      sitekey: siteKey,
-      callback: (t: string) => onToken(t),
-      'expired-callback': () => onToken(''),
-      'error-callback': () => onToken(''),
-      appearance,              // only show if a challenge is required
-      size: currentSize(),     // compact on mobile, flexible otherwise
-      theme,                   // auto matches light/dark
-    });
-    onReady?.({
-      reset: () => {
-        try {
-          if (widgetIdRef.current && window.turnstile) {
-            window.turnstile.reset(widgetIdRef.current);
-          } else {
-            renderWidget();
+    const renderWidget = () => {
+      if (!window.turnstile || !hostRef.current) return;
+      hostRef.current.innerHTML = '';
+      widgetIdRef.current = window.turnstile.render(hostRef.current, {
+        sitekey: siteKey,
+        callback: (t: string) => onToken(t),
+        'expired-callback': () => onToken(''),
+        'error-callback': () => onToken(''),
+        appearance,              // only show if a challenge is required
+        size: currentSize(),     // compact on mobile, flexible otherwise
+        theme,                   // auto matches light/dark
+      });
+      onReady?.({
+        reset: () => {
+          try {
+            if (widgetIdRef.current && window.turnstile) {
+              window.turnstile.reset(widgetIdRef.current);
+            }
+          } catch {
+            // ignore reset errors
           }
-        } catch {
-          renderWidget();
-        }
-      },
-    });
-  }, [siteKey, onToken, onReady, appearance, theme, size]);
+        },
+      });
+    };
 
-  useEffect(() => {
     const ensureScriptAndRender = () => {
       if (window.turnstile) return renderWidget();
       const s = document.createElement('script');
@@ -77,8 +79,9 @@ export function Turnstile({
       s.onload = renderWidget;
       document.head.appendChild(s);
     };
+    
     ensureScriptAndRender();
-  }, [renderWidget]);
+  }, [siteKey, onToken, onReady, appearance, theme, size]);
 
   return <div ref={hostRef} className="min-h-10" />; // keeps layout stable
 }

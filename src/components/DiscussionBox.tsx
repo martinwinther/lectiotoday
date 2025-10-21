@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { fetchComments, postComment } from '@/lib/comments';
 import { saveToken } from '@/lib/turnstile-token';
 import { Turnstile } from '@/components/Turnstile';
@@ -19,6 +19,15 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const resetTurnstileRef = useRef<null | (() => void)>(null);
+
+  const handleToken = useCallback((t: string) => {
+    setToken(t);
+    if (t) saveToken(t);
+  }, []);
+
+  const handleReady = useCallback((api: { reset: () => void }) => {
+    resetTurnstileRef.current = api.reset;
+  }, []);
 
   useEffect(() => {
     async function load() {
@@ -159,14 +168,10 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
             {siteKey ? (
               <div className="flex justify-center sm:justify-start">
                 <Turnstile
+                  key="turnstile-widget"
                   siteKey={siteKey}
-                  onToken={(t) => {
-                    setToken(t);
-                    if (t) saveToken(t);
-                  }}
-                  onReady={(api) => {
-                    resetTurnstileRef.current = api.reset;
-                  }}
+                  onToken={handleToken}
+                  onReady={handleReady}
                   appearance="interaction-only"
                   theme="auto"
                 />
