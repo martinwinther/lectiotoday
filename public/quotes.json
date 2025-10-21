@@ -1,25 +1,7 @@
 [
   {
-    "id": "e598761e3446",
-    "quote": "There are only two ways to live your life. One is as though nothing is a miracle. The other is as though everything is a miracle.",
-    "source": "Albert Einstein (attributed)",
-    "translationAuthor": "Alice Calaprice (editor)"
-  },
-  {
     "id": "218ac86ddb32",
     "quote": "Our greatest glory is not in never falling, but in rising every time we fall.",
-    "source": "Analects (attributed), Confucius",
-    "translationAuthor": "Lin Yutang (editor)"
-  },
-  {
-    "id": "5d1f7d45efd4",
-    "quote": "Choose a job you love, and you will never have to work a day in your life.",
-    "source": "Analects (attributed), Confucius",
-    "translationAuthor": "Raymond Dawson"
-  },
-  {
-    "id": "ac8d0e7ba885",
-    "quote": "Wheresoever you go, go with all your heart.",
     "source": "Analects (attributed), Confucius",
     "translationAuthor": "Lin Yutang (editor)"
   },
@@ -48,12 +30,6 @@
     "translationAuthor": "Raymond Dawson"
   },
   {
-    "id": "581ce09a0557",
-    "quote": "Silence is a true friend who never betrays.",
-    "source": "Analects, Confucius",
-    "translationAuthor": "Raymond Dawson"
-  },
-  {
     "id": "5bb92d266635",
     "quote": "When anger rises, think of the consequences.",
     "source": "Analects, Confucius",
@@ -78,10 +54,39 @@
     "translationAuthor": "G. M. A. Grube"
   },
   {
-    "id": "850f19a4cc6c",
-    "quote": "We are what we repeatedly do. Excellence, then, is not an act, but a habit.",
-    "source": "Aristotle (attributed)",
-    "translationAuthor": "Will Durant"
+    "id": "581ce09a0557",
+    "quote": "Silence is a true friend who never betrays.",
+    "source": "Attributed to Confucius"
+  },
+  {
+    "id": "5d1f7d45efd4",
+    "quote": "Choose a job you love, and you will never have to work a day in your life.",
+    "source": "Attributed to Confucius"
+  },
+  {
+    "id": "ac8d0e7ba885",
+    "quote": "Wheresoever you go, go with all your heart.",
+    "source": "Attributed to Confucius"
+  },
+  {
+    "id": "47a46a5ba96b",
+    "quote": "The uneducated person accuses others; the partly educated person accuses themselves; the educated person accuses neither.",
+    "source": "Attributed to Epictetus"
+  },
+  {
+    "id": "97438077833f",
+    "quote": "Only the educated are free.",
+    "source": "Attributed to Epictetus"
+  },
+  {
+    "id": "b693bd5b1447",
+    "quote": "We have two ears and one mouth so that we can listen twice as much as we speak.",
+    "source": "Attributed to Epictetus"
+  },
+  {
+    "id": "d79d28d21fb0",
+    "quote": "Before enlightenment, chop wood, carry water. After enlightenment, chop wood, carry water.",
+    "source": "Attributed to Layman Pang"
   },
   {
     "id": "c8314ae89fa4",
@@ -165,12 +170,7 @@
     "id": "ebe4c9333211",
     "quote": "You are what your deep, driving desire is. As your desire is, so is your will. As your will is, so is your deed. As your deed is, so is your destiny.",
     "source": "Brihadaranyaka Upanishad",
-    "translationAuthor": "Juan Mascaró"
-  },
-  {
-    "id": "5b417d1b5620",
-    "quote": "It is better to light a single candle than to curse the darkness.",
-    "source": "Chinese Proverb"
+    "translationAuthor": "Eknath Easwaran"
   },
   {
     "id": "6b9395837a02",
@@ -263,12 +263,6 @@
     "translationAuthor": "Donald A. Cress"
   },
   {
-    "id": "b693bd5b1447",
-    "quote": "We have two ears and one mouth so that we can listen twice as much as we speak.",
-    "source": "Discourses (fragment), Epictetus",
-    "translationAuthor": "W. A. Oldfather"
-  },
-  {
     "id": "1e4ef8de5d58",
     "quote": "How long are you going to wait before you demand the best for yourself?",
     "source": "Discourses, Epictetus",
@@ -278,7 +272,7 @@
     "id": "81f650a09f7e",
     "quote": "Know, first, who you are; and then adorn yourself accordingly.",
     "source": "Discourses, Epictetus",
-    "translationAuthor": "Robin Hard"
+    "translationAuthor": "Robert Dobbin"
   },
   {
     "id": "852bb7a7e21c",
@@ -293,8 +287,8 @@
     "translationAuthor": "Robert Dobbin"
   },
   {
-    "id": "97438077833f",
-    "quote": "Only the educated are free.",
+    "id": "8d95fbcd20ad",
+    "quote": "No man is free who is not master of himself.",
     "source": "Discourses, Epictetus",
     "translationAuthor": "Robert Dobbin"
   },
@@ -302,61 +296,31 @@
     "id": "a51ead686acb",
     "quote": "First learn the meaning of what you say, and then speak.",
     "source": "Discourses, Epictetus",
-    "translationAuthor": "Robin Hard"
+    "translationAuthor": "Robert Dobbin"
   },
   {
     "id": "cfc4d7ed41a1",
     "quote": "Difficulties are things that show a person what they are.",
     "source": "Discourses, Epictetus",
-    "translationAuthor": "George Long"
+    "translationAuthor": "Robert Dobbin"
   },
   {
     "id": "f0b3925aee1d",
     "quote": "Wealth consists not in having great possessions, but in having few wants.",
     "source": "Discourses, Epictetus",
-    "translationAuthor": "George Long"
-  },
-  {
-    "id": "12b40632b5ed",
-    "quote": "The only thing necessary for the triumph of evil is for good men to do nothing.",
-    "source": "Edmund Burke (attributed)",
-    "translationAuthor": "Peter J. Stanlis (editor)"
-  },
-  {
-    "id": "380a958ea698",
-    "quote": "It's not what happens to you, but how you react to it that matters.",
-    "source": "Enchiridion, Epictetus",
     "translationAuthor": "Robert Dobbin"
   },
   {
-    "id": "47a46a5ba96b",
-    "quote": "The uneducated person accuses others; the partly educated person accuses themselves; the educated person accuses neither.",
-    "source": "Enchiridion, Epictetus",
-    "translationAuthor": "W. A. Oldfather"
-  },
-  {
-    "id": "53d97150ddfe",
-    "quote": "First say to yourself what you would be; and then do what you have to do.",
+    "id": "11ac5f707c86",
+    "quote": "First say to yourself what you would be; then do what you ought to do.",
     "source": "Enchiridion, Epictetus",
     "translationAuthor": "Elizabeth Carter"
   },
   {
-    "id": "8d95fbcd20ad",
-    "quote": "No man is free who is not master of himself.",
-    "source": "Enchiridion, Epictetus",
-    "translationAuthor": "Robert Dobbin"
-  },
-  {
-    "id": "a01d1a831609",
-    "quote": "Don't seek to have events happen as you wish, but wish them to happen as they do happen, and your life will go smoothly.",
+    "id": "15387362244b",
+    "quote": "Men are disturbed, not by things, but by the principles and notions which they form concerning things.",
     "source": "Enchiridion, Epictetus",
     "translationAuthor": "Elizabeth Carter"
-  },
-  {
-    "id": "b7d93a99a598",
-    "quote": "If you want to improve, be content to be thought foolish and stupid.",
-    "source": "Enchiridion, Epictetus",
-    "translationAuthor": "W. A. Oldfather"
   },
   {
     "id": "bd20525903a8",
@@ -365,9 +329,16 @@
     "translationAuthor": "Elizabeth Carter"
   },
   {
-    "id": "82151b26af1e",
-    "quote": "Do not go where the path may lead, go instead where there is no path and leave a trail.",
-    "source": "Essays, Ralph Waldo Emerson"
+    "id": "c381212dac3f",
+    "quote": "If you would improve, be content to be thought foolish and stupid with regard to external things.",
+    "source": "Enchiridion, Epictetus",
+    "translationAuthor": "Elizabeth Carter"
+  },
+  {
+    "id": "d5c75358ba43",
+    "quote": "Seek not that the things which happen should happen as you wish; but wish the things which happen to be as they are, and you will have a tranquil flow of life.",
+    "source": "Enchiridion, Epictetus",
+    "translationAuthor": "Elizabeth Carter"
   },
   {
     "id": "25d4abec407b",
@@ -409,6 +380,12 @@
     "id": "8c03d5da0edb",
     "quote": "Injustice anywhere is a threat to justice everywhere.",
     "source": "Letter from Birmingham Jail, Martin Luther King Jr."
+  },
+  {
+    "id": "eaa763b896be",
+    "quote": "Honesty is the first chapter in the book of wisdom.",
+    "source": "Letter to Nathaniel Macon (Jan 12, 1819), Thomas Jefferson",
+    "translationAuthor": "Adrienne Koch & William Peden (editors)"
   },
   {
     "id": "05735f6d754e",
@@ -471,12 +448,6 @@
     "translationAuthor": "Robin Campbell"
   },
   {
-    "id": "eaa763b896be",
-    "quote": "Honesty is the first chapter in the book of wisdom.",
-    "source": "Letters, Thomas Jefferson",
-    "translationAuthor": "Adrienne Koch & William Peden (editors)"
-  },
-  {
     "id": "07e18f82193a",
     "quote": "How much more grievous are the consequences of anger than the causes of it.",
     "source": "Meditations, Marcus Aurelius",
@@ -498,19 +469,13 @@
     "id": "20d56df5d2a0",
     "quote": "The universe is change; our life is what our thoughts make it.",
     "source": "Meditations, Marcus Aurelius",
-    "translationAuthor": "Martin Hammond"
+    "translationAuthor": "M. H. Morgan"
   },
   {
     "id": "22a46f15430b",
     "quote": "The soul becomes dyed with the color of its thoughts.",
     "source": "Meditations, Marcus Aurelius",
     "translationAuthor": "Maxwell Staniforth"
-  },
-  {
-    "id": "24f49e2937d1",
-    "quote": "Everything that we hear is an opinion, not a fact. Everything we see is a perspective, not the truth.",
-    "source": "Meditations, Marcus Aurelius",
-    "translationAuthor": "Robin Hard"
   },
   {
     "id": "39667bb10b21",
@@ -523,6 +488,12 @@
     "quote": "If you are distressed by anything external, the pain is not due to the thing itself, but to your estimate of it; and this you have the power to revoke at any moment.",
     "source": "Meditations, Marcus Aurelius",
     "translationAuthor": "Gregory Hays"
+  },
+  {
+    "id": "3d5df7f223a2",
+    "quote": "Everything is what you suppose it to be.",
+    "source": "Meditations, Marcus Aurelius",
+    "translationAuthor": "Robin Hard"
   },
   {
     "id": "5be2eac53d8c",
@@ -546,17 +517,11 @@
     "id": "6befebed0f28",
     "quote": "Nowhere can man find a quieter or more untroubled retreat than in his own soul.",
     "source": "Meditations, Marcus Aurelius",
-    "translationAuthor": "Gregory Hays"
+    "translationAuthor": "George Long"
   },
   {
     "id": "8b3925d5b8f6",
     "quote": "The best revenge is to be unlike him who performed the injustice.",
-    "source": "Meditations, Marcus Aurelius",
-    "translationAuthor": "Gregory Hays"
-  },
-  {
-    "id": "a7ea35349962",
-    "quote": "The happiness of your life depends upon the quality of your thoughts.",
     "source": "Meditations, Marcus Aurelius",
     "translationAuthor": "Gregory Hays"
   },
@@ -573,16 +538,22 @@
     "translationAuthor": "Robin Hard"
   },
   {
-    "id": "c3cdc72e2bcd",
-    "quote": "Confine yourself to the present.",
-    "source": "Meditations, Marcus Aurelius",
-    "translationAuthor": "Robin Hard"
-  },
-  {
     "id": "cb80b4231d24",
     "quote": "It never ceases to amaze me: we all love ourselves more than other people, but care more about their opinion than our own.",
     "source": "Meditations, Marcus Aurelius",
     "translationAuthor": "Gregory Hays"
+  },
+  {
+    "id": "e9fe6c93a26d",
+    "quote": "The things you think about determine the quality of your mind. Your soul takes on the color of your thoughts.",
+    "source": "Meditations, Marcus Aurelius",
+    "translationAuthor": "Gregory Hays"
+  },
+  {
+    "id": "efb8e22e16ad",
+    "quote": "Confine your attention to the present time.",
+    "source": "Meditations, Marcus Aurelius",
+    "translationAuthor": "Robin Hard"
   },
   {
     "id": "fa514ad8a928",
@@ -601,6 +572,21 @@
     "quote": "The great man is he who does not lose his child's heart.",
     "source": "Mencius",
     "translationAuthor": "D. C. Lau"
+  },
+  {
+    "id": "e598761e3446",
+    "quote": "There are only two ways to live your life. One is as though nothing is a miracle. The other is as though everything is a miracle.",
+    "source": "Misattributed to Albert Einstein"
+  },
+  {
+    "id": "12b40632b5ed",
+    "quote": "The only thing necessary for the triumph of evil is for good men to do nothing.",
+    "source": "Misattributed to Edmund Burke"
+  },
+  {
+    "id": "e0dd45154ac7",
+    "quote": "To one who has faith, no explanation is necessary. To one without faith, no explanation is possible.",
+    "source": "Misattributed to Thomas Aquinas"
   },
   {
     "id": "d152ae0a9221",
@@ -693,10 +679,10 @@
     "translationAuthor": "James M. Washington (editor)"
   },
   {
-    "id": "e0dd45154ac7",
-    "quote": "To one who has faith, no explanation is necessary. To one without faith, no explanation is possible.",
-    "source": "Summa Theologica, Thomas Aquinas",
-    "translationAuthor": "Fathers of the English Dominican Province"
+    "id": "1b000e86b0bc",
+    "quote": "A journey of a thousand miles starts from beneath one's feet.",
+    "source": "Tao Te Ching, Lao Tzu",
+    "translationAuthor": "D. C. Lau"
   },
   {
     "id": "4c7b73ef3a59",
@@ -709,12 +695,6 @@
     "quote": "Nature does not hurry, yet everything is accomplished.",
     "source": "Tao Te Ching, Lao Tzu",
     "translationAuthor": "Stephen Mitchell"
-  },
-  {
-    "id": "98a14d4a4858",
-    "quote": "A journey of a thousand miles begins with a single step.",
-    "source": "Tao Te Ching, Lao Tzu",
-    "translationAuthor": "D. C. Lau"
   },
   {
     "id": "98bf1c7e947b",
@@ -747,6 +727,11 @@
     "translationAuthor": "Jack Kornfield (editor)"
   },
   {
+    "id": "5b417d1b5620",
+    "quote": "It is better to light a single candle than to curse the darkness.",
+    "source": "The Christophers (motto)"
+  },
+  {
     "id": "2c3f5401dc39",
     "quote": "Wisdom begins in wonder.",
     "source": "Theaetetus, Plato",
@@ -777,6 +762,16 @@
     "translationAuthor": "Brad Inwood & L. P. Gerson"
   },
   {
+    "id": "850f19a4cc6c",
+    "quote": "We are what we repeatedly do. Excellence, then, is not an act, but a habit.",
+    "source": "Will Durant (on Aristotle)"
+  },
+  {
+    "id": "82151b26af1e",
+    "quote": "Do not go where the path may lead, go instead where there is no path and leave a trail.",
+    "source": "Wind-Wafted Wild Flowers (1903), Muriel Strode"
+  },
+  {
     "id": "29e349e0c4fd",
     "quote": "When the student is ready, the teacher will appear.",
     "source": "Zen Proverb",
@@ -785,12 +780,6 @@
   {
     "id": "86332775d148",
     "quote": "Do not seek to follow in the footsteps of the wise; seek what they sought.",
-    "source": "Zen Proverb",
-    "translationAuthor": "Paul Reps & Nyogen Senzaki"
-  },
-  {
-    "id": "d79d28d21fb0",
-    "quote": "Before enlightenment, chop wood, carry water. After enlightenment, chop wood, carry water.",
     "source": "Zen Proverb",
     "translationAuthor": "Paul Reps & Nyogen Senzaki"
   },
