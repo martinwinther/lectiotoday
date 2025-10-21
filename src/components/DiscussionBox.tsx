@@ -75,9 +75,11 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
     try {
       // 1) Check for cached token first
       const token = getCachedToken();
+      console.log('Cached token check:', token ? 'found' : 'not found');
       
       if (!token) {
         // Need to get a new token - show hidden Turnstile
+        console.log('No cached token, showing Turnstile widget');
         setNeedsTurnstile(true);
         setBusy(false);
         return; // Will continue when token is received
@@ -116,14 +118,17 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
   // Handle token received from Turnstile
   useEffect(() => {
     if (turnstileToken && needsTurnstile) {
+      console.log('Token received, continuing submission:', turnstileToken);
       // Token received, retry the submission
       setNeedsTurnstile(false);
+      setTurnstileToken(null); // Reset token state
       setBusy(true);
       
       // Continue with submission using the new token
       submitOnce(turnstileToken).then(async (r) => {
         if (!r.ok && (r.code === 403 || r.err === 'bot_check_failed')) {
           // Still failed, clear and try again
+          console.log('Token failed, clearing and retrying');
           clearToken();
           setNeedsTurnstile(true);
           setBusy(false);
@@ -137,6 +142,7 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
         }
 
         // success: refresh list & reset form
+        console.log('Comment posted successfully');
         const refresh = await fetchComments(quoteId);
         setComments(refresh.comments || []);
         setBody('');
@@ -222,6 +228,7 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
         <HiddenTurnstile
           siteKey={siteKey}
           onToken={(token) => {
+            console.log('Turnstile token received:', token);
             if (token) {
               saveToken(token);
               setTurnstileToken(token);

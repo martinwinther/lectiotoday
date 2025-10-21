@@ -27,16 +27,20 @@ export function HiddenTurnstile({
 }: Props) {
   const mountRef = useRef<HTMLDivElement>(null);
   const [widgetId, setWidgetId] = useState<string | null>(null);
+  const [scriptLoaded, setScriptLoaded] = useState(false);
 
   useEffect(() => {
-    if (!shouldRender || !mountRef.current) return;
+    if (!shouldRender || !mountRef.current || widgetId) return;
 
     const mount = mountRef.current;
 
     function renderWidget() {
-      if (!window.turnstile || !mount) return;
+      if (!window.turnstile || !mount || widgetId) return;
 
       try {
+        // Clear any existing content first
+        mount.innerHTML = '';
+        
         const id = window.turnstile.render(mount, {
           sitekey: siteKey,
           appearance,
@@ -46,19 +50,24 @@ export function HiddenTurnstile({
           'error-callback': () => onToken(''),
         });
         setWidgetId(id);
+        console.log('Turnstile widget rendered with ID:', id);
       } catch (error) {
         console.warn('Turnstile render failed:', error);
       }
     }
 
     if (window.turnstile) {
+      setScriptLoaded(true);
       renderWidget();
-    } else {
+    } else if (!scriptLoaded) {
       const script = document.createElement('script');
       script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
       script.async = true;
       script.defer = true;
-      script.onload = renderWidget;
+      script.onload = () => {
+        setScriptLoaded(true);
+        renderWidget();
+      };
       script.onerror = () => {
         console.warn('Failed to load Turnstile script');
       };
@@ -73,10 +82,11 @@ export function HiddenTurnstile({
           } else {
             window.turnstile.reset(widgetId);
           }
+          setWidgetId(null);
         } catch {}
       }
     };
-  }, [shouldRender, siteKey, appearance, onToken, widgetId]);
+  }, [shouldRender, siteKey, appearance, onToken, widgetId, scriptLoaded]);
 
   if (!shouldRender) return null;
 
