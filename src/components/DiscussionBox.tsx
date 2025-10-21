@@ -50,8 +50,8 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
       }),
     });
     if (res.ok) return { ok: true as const };
-    const j = await res.json().catch(() => ({}));
-    return { ok: false as const, code: res.status, err: j?.error };
+    const j = (await res.json().catch(() => ({}))) as { error?: string };
+    return { ok: false as const, code: res.status, err: j.error };
   }
 
   async function submit() {
