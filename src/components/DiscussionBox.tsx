@@ -1,24 +1,20 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { Turnstile } from '@/components/Turnstile';
-import { fetchComments, postComment } from '@/lib/comments';
+import { fetchComments } from '@/lib/comments';
+import { ensureToken, invalidateToken } from '@/lib/turnstile-token';
 import type { Comment } from '@/types/comment';
 
 export function DiscussionBox({ quoteId }: { quoteId: string }) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [body, setBody] = useState('');
   const [displayName, setDisplayName] = useState('');
-  const [token, setToken] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [typingStart, setTypingStart] = useState<number | null>(null);
   const [reportFor, setReportFor] = useState<Comment | null>(null);
-  const [showCaptcha, setShowCaptcha] = useState(false);
   const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY as string;
 
-  // hold reset() so we can call it after post or on errors
-  const resetTurnstileRef = useRef<null | (() => void)>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
@@ -36,27 +32,33 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
   // reset state whenever the quote changes
   useEffect(() => {
     setBody('');
-    setToken('');
     setTypingStart(null);
-    setShowCaptcha(false);
-    resetTurnstileRef.current?.();
   }, [quoteId]);
 
   const minTypingMs = 900; // reduced to be less strict
+
+  async function submitOnce(token: string) {
+    const res = await fetch('/api/comments', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        quoteId,
+        body: body.trim(),
+        displayName: displayName.trim() || undefined,
+        turnstileToken: token,
+        honeypot: '',
+      }),
+    });
+    if (res.ok) return { ok: true as const };
+    const j = await res.json().catch(() => ({}));
+    return { ok: false as const, code: res.status, err: j?.error };
+  }
 
   async function submit() {
     if (busy) return;
     const text = body.trim();
     if (text.length < 2) {
       setError('Say a little more.');
-      return;
-    }
-
-    // if no token yet, guide user instead of disabling button
-    if (!token) {
-      setError('Please complete the check below first.');
-      // try to nudge a refresh in case widget didn't auto-issue token
-      resetTurnstileRef.current?.();
       return;
     }
 
@@ -68,35 +70,32 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
     setBusy(true);
     setError(null);
     try {
-      await postComment({
-        quoteId,
-        body: text,
-        displayName: displayName.trim() || undefined,
-        turnstileToken: token,
-        honeypot: '',
-      });
-      // success: refresh list & fully reset UI for another post
-      const r = await fetchComments(quoteId);
-      setComments(r.comments || []);
+      // 1) get or reuse a token (invisible unless challenge is truly required)
+      const token = await ensureToken(siteKey);
+      let r = await submitOnce(token);
+
+      // 2) If Turnstile says no, invalidate & retry once
+      if (!r.ok && (r.code === 403 || r.err === 'bot_check_failed')) {
+        invalidateToken();
+        const t2 = await ensureToken(siteKey);
+        r = await submitOnce(t2);
+      }
+
+      if (!r.ok) {
+        setError('Could not post right now. Please try again.');
+        return;
+      }
+
+      // success: refresh list & reset form, but keep the token cached for next post
+      const refresh = await fetchComments(quoteId);
+      setComments(refresh.comments || []);
       setBody('');
       setTypingStart(null);
-      setToken('');
-      setShowCaptcha(false);
-      resetTurnstileRef.current?.(); // force a fresh token
       // focus back to textarea for quick second post
       requestAnimationFrame(() => textareaRef.current?.focus());
     } catch (e) {
       const msg = e instanceof Error ? e.message : 'Could not post.';
       setError(msg);
-      // any token-related failure → get a new token
-      if (
-        msg.includes('bot') ||
-        msg.includes('token') ||
-        msg.includes('check')
-      ) {
-        resetTurnstileRef.current?.();
-        setToken('');
-      }
     } finally {
       setBusy(false);
     }
@@ -153,7 +152,6 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
           placeholder="Add a thoughtful, kind comment…"
           rows={3}
           value={body}
-          onFocus={() => setShowCaptcha(true)}
           onChange={(e) => {
             setBody(e.target.value);
             if (!typingStart) setTypingStart(Date.now());
@@ -161,32 +159,13 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
         />
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="text-[11px] text-zinc-500">Keep it kind. Max one link.</div>
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            {siteKey ? (
-              <div className="flex justify-center sm:justify-start">
-                <Turnstile
-                  siteKey={siteKey}
-                  onToken={setToken}
-                  onReady={(api) => {
-                    resetTurnstileRef.current = api.reset;
-                  }}
-                  shouldRender={showCaptcha}
-                  appearance="interaction-only"
-                  theme="auto"
-                  // omit size to auto-switch: compact on narrow screens, flexible otherwise
-                />
-              </div>
-            ) : (
-              <span className="text-xs text-zinc-500">Add Turnstile key</span>
-            )}
-            <button
-              onClick={submit}
-              disabled={busy || body.trim().length < 2}
-              className="glass-button px-6 py-2 rounded-lg text-sm font-medium text-zinc-300 hover:text-white disabled:opacity-40 w-full sm:w-auto"
-            >
-              {busy ? 'Posting…' : 'Post'}
-            </button>
-          </div>
+          <button
+            onClick={submit}
+            disabled={busy || body.trim().length < 2}
+            className="glass-button px-6 py-2 rounded-lg text-sm font-medium text-zinc-300 hover:text-white disabled:opacity-40 w-full sm:w-auto"
+          >
+            {busy ? 'Posting…' : 'Post'}
+          </button>
         </div>
         {error && <div className="text-xs text-red-400 mt-2">{error}</div>}
       </div>
