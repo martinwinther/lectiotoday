@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { fetchComments } from '@/lib/comments';
-import { ensureToken, invalidateToken } from '@/lib/turnstile-token';
+import { getCachedToken, saveToken, clearToken } from '@/lib/turnstile-token';
+import { HiddenTurnstile } from '@/components/HiddenTurnstile';
 import type { Comment } from '@/types/comment';
 
 export function DiscussionBox({ quoteId }: { quoteId: string }) {
@@ -13,6 +14,8 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
   const [error, setError] = useState<string | null>(null);
   const [typingStart, setTypingStart] = useState<number | null>(null);
   const [reportFor, setReportFor] = useState<Comment | null>(null);
+  const [needsTurnstile, setNeedsTurnstile] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY as string;
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -37,7 +40,7 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
 
   const minTypingMs = 900; // reduced to be less strict
 
-  async function submitOnce(token: string) {
+  const submitOnce = useCallback(async (token: string) => {
     const res = await fetch('/api/comments', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -52,7 +55,7 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
     if (res.ok) return { ok: true as const };
     const j = (await res.json().catch(() => ({}))) as { error?: string };
     return { ok: false as const, code: res.status, err: j.error };
-  }
+  }, [quoteId, body, displayName]);
 
   async function submit() {
     if (busy) return;
@@ -70,27 +73,24 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
     setBusy(true);
     setError(null);
     try {
-      // 1) get or reuse a token (invisible unless challenge is truly required)
-      let token: string;
-      try {
-        token = await ensureToken(siteKey);
-      } catch {
-        setError('Security verification failed. Please refresh and try again.');
-        return;
+      // 1) Check for cached token first
+      const token = getCachedToken();
+      
+      if (!token) {
+        // Need to get a new token - show hidden Turnstile
+        setNeedsTurnstile(true);
+        setBusy(false);
+        return; // Will continue when token is received
       }
 
-      let r = await submitOnce(token);
+      const r = await submitOnce(token);
 
       // 2) If Turnstile says no, invalidate & retry once
       if (!r.ok && (r.code === 403 || r.err === 'bot_check_failed')) {
-        invalidateToken();
-        try {
-          const t2 = await ensureToken(siteKey);
-          r = await submitOnce(t2);
-        } catch {
-          setError('Security verification failed. Please refresh and try again.');
-          return;
-        }
+        clearToken();
+        setNeedsTurnstile(true);
+        setBusy(false);
+        return; // Will continue when new token is received
       }
 
       if (!r.ok) {
@@ -112,6 +112,45 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
       setBusy(false);
     }
   }
+
+  // Handle token received from Turnstile
+  useEffect(() => {
+    if (turnstileToken && needsTurnstile) {
+      // Token received, retry the submission
+      setNeedsTurnstile(false);
+      setBusy(true);
+      
+      // Continue with submission using the new token
+      submitOnce(turnstileToken).then(async (r) => {
+        if (!r.ok && (r.code === 403 || r.err === 'bot_check_failed')) {
+          // Still failed, clear and try again
+          clearToken();
+          setNeedsTurnstile(true);
+          setBusy(false);
+          return;
+        }
+
+        if (!r.ok) {
+          setError('Could not post right now. Please try again.');
+          setBusy(false);
+          return;
+        }
+
+        // success: refresh list & reset form
+        const refresh = await fetchComments(quoteId);
+        setComments(refresh.comments || []);
+        setBody('');
+        setTypingStart(null);
+        // focus back to textarea for quick second post
+        requestAnimationFrame(() => textareaRef.current?.focus());
+        setBusy(false);
+      }).catch((e) => {
+        const msg = e instanceof Error ? e.message : 'Could not post.';
+        setError(msg);
+        setBusy(false);
+      });
+    }
+  }, [turnstileToken, needsTurnstile, submitOnce, quoteId]);
 
   return (
     <div className="rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 overflow-hidden">
@@ -179,6 +218,18 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
             {busy ? 'Posting…' : 'Post'}
           </button>
         </div>
+        
+        <HiddenTurnstile
+          siteKey={siteKey}
+          onToken={(token) => {
+            if (token) {
+              saveToken(token);
+              setTurnstileToken(token);
+            }
+          }}
+          shouldRender={needsTurnstile}
+          appearance="interaction-only"
+        />
         {error && <div className="text-xs text-red-400 mt-2">{error}</div>}
       </div>
 
