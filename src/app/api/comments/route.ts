@@ -33,7 +33,7 @@ export async function GET(req: NextRequest) {
 
   const { results } = await DB.prepare(
     `SELECT id, quote_id, parent_id, body, display_name, created_at, updated_at, score
-     FROM comments WHERE quote_id = ? AND hidden = 0 AND deleted_at IS NULL ORDER BY created_at DESC`
+     FROM comments WHERE quote_id = ? AND hidden = 0 AND deleted_at IS NULL ORDER BY created_at ASC`
   )
     .bind(p.data.quoteId)
     .all();
