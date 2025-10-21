@@ -61,30 +61,38 @@ export function initTurnstile(
   rendered = true;
 
   const mount = document.createElement('div');
-  // keep it off-screen yet present; Turnstile will only show if it needs a challenge
-  mount.style.position = 'absolute';
-  mount.style.left = '-9999px';
-  mount.style.width = '1px';
-  mount.style.height = '1px';
+  // position off-screen but still accessible to iframes
+  mount.style.position = 'fixed';
+  mount.style.top = '-1000px';
+  mount.style.left = '-1000px';
+  mount.style.width = '300px';
+  mount.style.height = '65px';
+  mount.style.visibility = 'hidden';
+  mount.style.pointerEvents = 'none';
   document.body.appendChild(mount);
 
   function onReady() {
-    widgetId = window.turnstile!.render(mount, {
-      sitekey: siteKey,
-      appearance,
-      size: 'flexible',
-      callback: (token: string) => {
-        save(token);
-        // resolve any pending callers
-        for (const w of waiters.splice(0)) w(token);
-      },
-      'expired-callback': () => {
-        clear();
-      },
-      'error-callback': () => {
-        clear();
-      },
-    });
+    try {
+      widgetId = window.turnstile!.render(mount, {
+        sitekey: siteKey,
+        appearance,
+        size: 'normal',
+        callback: (token: string) => {
+          save(token);
+          // resolve any pending callers
+          for (const w of waiters.splice(0)) w(token);
+        },
+        'expired-callback': () => {
+          clear();
+        },
+        'error-callback': () => {
+          clear();
+        },
+      });
+    } catch (error) {
+      console.warn('Turnstile render failed:', error);
+      clear();
+    }
   }
 
   // load script once
@@ -96,6 +104,10 @@ export function initTurnstile(
     s.async = true;
     s.defer = true;
     s.onload = onReady;
+    s.onerror = () => {
+      console.warn('Failed to load Turnstile script');
+      clear();
+    };
     document.head.appendChild(s);
   }
 }
@@ -108,12 +120,25 @@ export async function ensureToken(siteKey: string): Promise<string> {
   // render (once) then wait for callback to give us a token
   initTurnstile(siteKey, 'interaction-only');
 
-  return new Promise<string>((resolve) => {
-    waiters.push(resolve);
-    // if widget already exists, ask for a fresh token without forcing a visible challenge
+  return new Promise<string>((resolve, reject) => {
+    const timeout = setTimeout(() => {
+      reject(new Error('Turnstile token timeout'));
+    }, 30000); // 30 second timeout
+
+    waiters.push((token) => {
+      clearTimeout(timeout);
+      resolve(token);
+    });
+
+    // if widget already exists, ask for a fresh token
     try {
-      if (widgetId && window.turnstile) window.turnstile.reset(widgetId);
-    } catch {}
+      if (widgetId && window.turnstile) {
+        window.turnstile.reset(widgetId);
+      }
+    } catch {
+      clearTimeout(timeout);
+      reject(new Error('Failed to reset Turnstile widget'));
+    }
   });
 }
 

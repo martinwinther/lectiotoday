@@ -71,14 +71,26 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
     setError(null);
     try {
       // 1) get or reuse a token (invisible unless challenge is truly required)
-      const token = await ensureToken(siteKey);
+      let token: string;
+      try {
+        token = await ensureToken(siteKey);
+      } catch {
+        setError('Security verification failed. Please refresh and try again.');
+        return;
+      }
+
       let r = await submitOnce(token);
 
       // 2) If Turnstile says no, invalidate & retry once
       if (!r.ok && (r.code === 403 || r.err === 'bot_check_failed')) {
         invalidateToken();
-        const t2 = await ensureToken(siteKey);
-        r = await submitOnce(t2);
+        try {
+          const t2 = await ensureToken(siteKey);
+          r = await submitOnce(t2);
+        } catch {
+          setError('Security verification failed. Please refresh and try again.');
+          return;
+        }
       }
 
       if (!r.ok) {
