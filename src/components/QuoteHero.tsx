@@ -3,12 +3,10 @@ import ShareButton from "@/components/ShareButton";
 export default function QuoteHero({
   quote,
   source,
-  translationSource,
   translationAuthor,
 }: {
   quote: string;
   source?: string;
-  translationSource?: string;
   translationAuthor?: string;
 }) {
   return (
@@ -46,14 +44,9 @@ export default function QuoteHero({
           &ldquo;{quote}&rdquo;
         </blockquote>
 
-        {(source || translationSource || translationAuthor) && (
+        {(source || translationAuthor) && (
           <div className="mt-6 text-sm text-zinc-300/85 text-center">
-            <div>
-              {source}
-              {translationSource && (
-                <> • <span className="opacity-80">{translationSource}</span></>
-              )}
-            </div>
+            {source && <div>{source}</div>}
             {translationAuthor && (
               <div className="text-xs opacity-70 mt-1">
                 Translation by {translationAuthor}

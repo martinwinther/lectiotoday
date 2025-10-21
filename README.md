@@ -45,7 +45,6 @@ Quotes are maintained in CSV and compiled to JSON for deployment.
 
 - `Quote` — text of the passage (required)
 - `Source` — author/work or scripture citation
-- `Translation source` — translation title (optional)
 - `Translation author` — translator (optional)
 - `Top comment` — seed comment to spark discussion (optional)
 

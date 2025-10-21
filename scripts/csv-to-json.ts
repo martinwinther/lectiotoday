@@ -7,7 +7,6 @@ import { quoteIdFromText } from '../src/lib/hash';
 type Row = {
   Quote?: string;
   Source?: string;
-  'Translation source'?: string;
   'Translation author'?: string;
   'Top comment'?: string;
 };
@@ -16,7 +15,6 @@ type QuoteOut = {
   id: string;
   quote: string;
   source: string;
-  translationSource?: string;
   translationAuthor?: string;
   topComment?: string;
 };
@@ -53,7 +51,6 @@ async function main() {
       id,
       quote,
       source: (r.Source ?? '').toString().trim(),
-      translationSource: (r['Translation source'] ?? '').toString().trim() || undefined,
       translationAuthor: (r['Translation author'] ?? '').toString().trim() || undefined,
       topComment: (r['Top comment'] ?? '').toString().trim() || undefined,
     };
@@ -64,7 +61,6 @@ async function main() {
       byId.set(id, {
         ...existing,
         source: existing.source || item.source,
-        translationSource: existing.translationSource || item.translationSource,
         translationAuthor: existing.translationAuthor || item.translationAuthor,
         topComment: existing.topComment || item.topComment,
       });

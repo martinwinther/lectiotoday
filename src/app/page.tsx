@@ -22,7 +22,6 @@ export default async function HomePage() {
       <QuoteHero
         quote={item.quote}
         source={item.source}
-        translationSource={item.translationSource}
         translationAuthor={item.translationAuthor}
       />
 
