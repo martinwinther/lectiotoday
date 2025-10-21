@@ -8,7 +8,6 @@ type Row = {
   Quote?: string;
   Source?: string;
   'Translation author'?: string;
-  'Top comment'?: string;
 };
 
 type QuoteOut = {
@@ -16,7 +15,6 @@ type QuoteOut = {
   quote: string;
   source: string;
   translationAuthor?: string;
-  topComment?: string;
 };
 
 const args = process.argv.slice(2);
@@ -52,7 +50,6 @@ async function main() {
       quote,
       source: (r.Source ?? '').toString().trim(),
       translationAuthor: (r['Translation author'] ?? '').toString().trim() || undefined,
-      topComment: (r['Top comment'] ?? '').toString().trim() || undefined,
     };
 
     // dedupe by id, prefer first non-empty fields
@@ -62,7 +59,6 @@ async function main() {
         ...existing,
         source: existing.source || item.source,
         translationAuthor: existing.translationAuthor || item.translationAuthor,
-        topComment: existing.topComment || item.topComment,
       });
     } else {
       byId.set(id, item);

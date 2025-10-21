@@ -3,6 +3,5 @@ export type Quote = {
   quote: string;
   source: string;
   translationAuthor?: string;
-  topComment?: string;
 };
 
