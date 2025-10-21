@@ -7,7 +7,7 @@ const LEEWAY_MS = 90_000; // consider token stale ~90s after issue
 const MAX_AGE_MS = 300_000; // safety cap, tokens usually expire earlier
 
 let mem: Cache | null = null;
-let waiters: Array<(t: string) => void> = [];
+const waiters: Array<(t: string) => void> = [];
 let widgetId: string | null = null;
 let rendered = false;
 
