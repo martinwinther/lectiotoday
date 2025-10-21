@@ -1,24 +1,24 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { fetchComments } from '@/lib/comments';
-import { getCachedToken, saveToken, clearToken } from '@/lib/turnstile-token';
-import { HiddenTurnstile } from '@/components/HiddenTurnstile';
+import { useEffect, useRef, useState } from 'react';
+import { fetchComments, postComment } from '@/lib/comments';
+import { saveToken } from '@/lib/turnstile-token';
+import { Turnstile } from '@/components/Turnstile';
 import type { Comment } from '@/types/comment';
 
 export function DiscussionBox({ quoteId }: { quoteId: string }) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [body, setBody] = useState('');
   const [displayName, setDisplayName] = useState('');
+  const [token, setToken] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [typingStart, setTypingStart] = useState<number | null>(null);
   const [reportFor, setReportFor] = useState<Comment | null>(null);
-  const [needsTurnstile, setNeedsTurnstile] = useState(false);
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY as string;
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const resetTurnstileRef = useRef<null | (() => void)>(null);
 
   useEffect(() => {
     async function load() {
@@ -35,33 +35,24 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
   // reset state whenever the quote changes
   useEffect(() => {
     setBody('');
+    setToken('');
     setTypingStart(null);
+    resetTurnstileRef.current?.();
   }, [quoteId]);
 
   const minTypingMs = 900; // reduced to be less strict
-
-  const submitOnce = useCallback(async (token: string) => {
-    const res = await fetch('/api/comments', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({
-        quoteId,
-        body: body.trim(),
-        displayName: displayName.trim() || undefined,
-        turnstileToken: token,
-        honeypot: '',
-      }),
-    });
-    if (res.ok) return { ok: true as const };
-    const j = (await res.json().catch(() => ({}))) as { error?: string };
-    return { ok: false as const, code: res.status, err: j.error };
-  }, [quoteId, body, displayName]);
 
   async function submit() {
     if (busy) return;
     const text = body.trim();
     if (text.length < 2) {
       setError('Say a little more.');
+      return;
+    }
+
+    // if no token yet, guide user instead of disabling button
+    if (!token) {
+      setError('Please complete the check below first.');
       return;
     }
 
@@ -73,90 +64,38 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
     setBusy(true);
     setError(null);
     try {
-      // 1) Check for cached token first
-      const token = getCachedToken();
-      console.log('Cached token check:', token ? 'found' : 'not found');
-      
-      if (!token) {
-        // Need to get a new token - show hidden Turnstile
-        console.log('No cached token, showing Turnstile widget');
-        setNeedsTurnstile(true);
-        setBusy(false);
-        return; // Will continue when token is received
-      }
-
-      const r = await submitOnce(token);
-
-      // 2) If Turnstile says no, invalidate & retry once
-      if (!r.ok && (r.code === 403 || r.err === 'bot_check_failed')) {
-        clearToken();
-        setNeedsTurnstile(true);
-        setBusy(false);
-        return; // Will continue when new token is received
-      }
-
-      if (!r.ok) {
-        setError('Could not post right now. Please try again.');
-        return;
-      }
-
-      // success: refresh list & reset form, but keep the token cached for next post
-      const refresh = await fetchComments(quoteId);
-      setComments(refresh.comments || []);
+      await postComment({
+        quoteId,
+        body: text,
+        displayName: displayName.trim() || undefined,
+        turnstileToken: token,
+        honeypot: '',
+      });
+      // success: refresh list & fully reset UI for another post
+      const r = await fetchComments(quoteId);
+      setComments(r.comments || []);
       setBody('');
       setTypingStart(null);
+      setToken('');
+      resetTurnstileRef.current?.(); // force a fresh token
       // focus back to textarea for quick second post
       requestAnimationFrame(() => textareaRef.current?.focus());
     } catch (e) {
       const msg = e instanceof Error ? e.message : 'Could not post.';
       setError(msg);
+      // any token-related failure → get a new token
+      if (
+        msg.includes('bot') ||
+        msg.includes('token') ||
+        msg.includes('check')
+      ) {
+        resetTurnstileRef.current?.();
+        setToken('');
+      }
     } finally {
       setBusy(false);
     }
   }
-
-  // Handle token received from Turnstile
-  useEffect(() => {
-    if (turnstileToken && needsTurnstile) {
-      console.log('Token received, continuing submission:', turnstileToken);
-      // Token received, retry the submission
-      setNeedsTurnstile(false);
-      setTurnstileToken(null); // Reset token state
-      setBusy(true);
-      
-      // Continue with submission using the new token
-      submitOnce(turnstileToken).then(async (r) => {
-        if (!r.ok && (r.code === 403 || r.err === 'bot_check_failed')) {
-          // Still failed, clear and try again
-          console.log('Token failed, clearing and retrying');
-          clearToken();
-          setNeedsTurnstile(true);
-          setBusy(false);
-          return;
-        }
-
-        if (!r.ok) {
-          setError('Could not post right now. Please try again.');
-          setBusy(false);
-          return;
-        }
-
-        // success: refresh list & reset form
-        console.log('Comment posted successfully');
-        const refresh = await fetchComments(quoteId);
-        setComments(refresh.comments || []);
-        setBody('');
-        setTypingStart(null);
-        // focus back to textarea for quick second post
-        requestAnimationFrame(() => textareaRef.current?.focus());
-        setBusy(false);
-      }).catch((e) => {
-        const msg = e instanceof Error ? e.message : 'Could not post.';
-        setError(msg);
-        setBusy(false);
-      });
-    }
-  }, [turnstileToken, needsTurnstile, submitOnce, quoteId]);
 
   return (
     <div className="rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 overflow-hidden">
@@ -216,27 +155,34 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
         />
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="text-[11px] text-zinc-500">Keep it kind. Max one link.</div>
-          <button
-            onClick={submit}
-            disabled={busy || body.trim().length < 2}
-            className="glass-button px-6 py-2 rounded-lg text-sm font-medium text-zinc-300 hover:text-white disabled:opacity-40 w-full sm:w-auto"
-          >
-            {busy ? 'Posting…' : 'Post'}
-          </button>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            {siteKey ? (
+              <div className="flex justify-center sm:justify-start">
+                <Turnstile
+                  siteKey={siteKey}
+                  onToken={(t) => {
+                    setToken(t);
+                    if (t) saveToken(t);
+                  }}
+                  onReady={(api) => {
+                    resetTurnstileRef.current = api.reset;
+                  }}
+                  appearance="interaction-only"
+                  theme="auto"
+                />
+              </div>
+            ) : (
+              <span className="text-xs text-zinc-500">Add Turnstile key</span>
+            )}
+            <button
+              onClick={submit}
+              disabled={busy || body.trim().length < 2}
+              className="glass-button px-6 py-2 rounded-lg text-sm font-medium text-zinc-300 hover:text-white disabled:opacity-40 w-full sm:w-auto"
+            >
+              {busy ? 'Posting…' : 'Post'}
+            </button>
+          </div>
         </div>
-        
-        <HiddenTurnstile
-          siteKey={siteKey}
-          onToken={(token) => {
-            console.log('Turnstile token received:', token);
-            if (token) {
-              saveToken(token);
-              setTurnstileToken(token);
-            }
-          }}
-          shouldRender={needsTurnstile}
-          appearance="interaction-only"
-        />
         {error && <div className="text-xs text-red-400 mt-2">{error}</div>}
       </div>
 

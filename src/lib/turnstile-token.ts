@@ -3,8 +3,8 @@
 type Cache = { token: string; exp: number };
 
 const KEY = 'lt_turnstile';
-const LEEWAY_MS = 90_000;
-const MAX_AGE_MS = 300_000;
+const LEEWAY_MS = 90_000; // 90 seconds
+const MAX_AGE_MS = 300_000; // 5 minutes
 
 let mem: Cache | null = null;
 
@@ -34,13 +34,6 @@ function save(token: string) {
   } catch {}
 }
 
-export function clearToken() {
-  mem = null;
-  try {
-    sessionStorage.removeItem(KEY);
-  } catch {}
-}
-
 export function getCachedToken(): string | null {
   const c = read();
   return c ? c.token : null;
@@ -50,8 +43,10 @@ export function saveToken(token: string) {
   save(token);
 }
 
-// for testing
-export function _peek() {
-  return read();
+export function clearToken() {
+  mem = null;
+  try {
+    sessionStorage.removeItem(KEY);
+  } catch {}
 }
 
