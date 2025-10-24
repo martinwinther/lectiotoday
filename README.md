@@ -1,145 +1,144 @@
 # LectioToday
 
-A minimalist daily reflection site that presents one carefully selected philosophical or religious passage each day, with a quiet space for discussion. The focus is breadth and quality: sources span ancient, medieval, and modern traditions (e.g., Marcus Aurelius, Epictetus, the Bhagavad Gītā, the Bible, the Qur’an, Confucian and Daoist texts, modern philosophers, and more). Comments are persisted and tied to a stable `quoteId` so when a passage reappears, its conversation returns with it.
+A minimalist daily reflection application that presents one carefully curated philosophical or religious passage each day, accompanied by a thoughtful discussion space. Built as a showcase of modern web development practices, the application demonstrates expertise in full-stack TypeScript development, serverless architecture, and thoughtful user experience design.
 
-## Overview
+## What It Does
 
-- **Single‑view application:** the home page shows today’s passage and a discussion box.
-- **Persistent discussions:** threads are keyed by a stable `quoteId` derived from the passage text.
-- **Daily rotation:** based on the **Europe/Copenhagen** timezone for day boundaries.
-- **Zero‑cost stack:** Cloudflare Pages + Cloudflare D1 (SQLite) + Cloudflare Turnstile.
+LectioToday serves as a digital sanctuary for daily contemplation, featuring:
 
-## Tech Stack
+- **Daily Wisdom**: One carefully selected passage from diverse philosophical and religious traditions (Marcus Aurelius, Epictetus, Bhagavad Gītā, Bible, Qur'an, Confucian texts, and modern philosophers)
+- **Persistent Conversations**: Discussion threads that remain attached to specific passages through stable content-based IDs
+- **Thoughtful Community**: A moderated discussion space designed to encourage meaningful reflection rather than quick reactions
 
-- **Framework:** Next.js 15 (App Router)
-- **Deployment:** Cloudflare Pages via **OpenNext** (advanced mode, `.open-next` output)
-- **Database:** Cloudflare **D1** (SQLite)
-- **Anti‑spam:** Cloudflare **Turnstile**
-- **Language:** TypeScript (strict)
-- **Styling:** Tailwind CSS v4
-- **Runtime:** Node.js 20 (LTS)
-- **Package Manager:** npm
-- **Fonts:** EB Garamond (serif) for passages; system sans for UI
+## Technical Architecture
 
-> Note: In OpenNext advanced mode, Cloudflare Pages serves a generated Worker; the legacy `functions/` directory is ignored. All APIs live under **`app/api/*`** (App Router route handlers).
+### Core Technologies
 
-## Features
+- **Next.js 15** with App Router for modern React development
+- **TypeScript** with strict typing for robust code quality
+- **Tailwind CSS v4** for responsive, utility-first styling
+- **Cloudflare Pages** for global edge deployment
+- **Cloudflare D1** (SQLite) for serverless database operations
+- **Cloudflare Turnstile** for bot protection without cookies
 
-- One passage per day with a serene aesthetic
-- Stable IDs for passages to keep discussions attached across rotations
-- Comment system with:
-  - Turnstile verification
-  - Rate limiting (default: 5 posts / 10 minutes / IP hash)
-  - Duplicate detection (per quote)
-  - Link limit (max 1 URL per comment)
-  - Basic typing‑time check
-- Optional admin/reporting routes (if enabled) to hide/unhide comments
+### Key Technical Decisions
 
-*Out of scope by design:* archive, RSS/JSON feeds, open‑graph image generation, and third‑party embeds.
+**Serverless-First Architecture**: The application leverages Cloudflare's edge network for global performance while maintaining zero infrastructure costs. All API routes are implemented as Next.js App Router handlers that deploy as Cloudflare Workers.
 
-## Content Management
+**Content Management**: Philosophical passages are managed through a CSV-based workflow with automated JSON compilation, ensuring version control and easy content updates without database dependencies.
 
-Quotes are maintained in CSV and compiled to JSON for deployment.
+**Security & Privacy**:
 
-### CSV Columns
+- IP addresses are hashed with salt for rate limiting without storing personal data
+- Turnstile provides bot protection without invasive tracking
+- Rate limiting prevents spam while maintaining accessibility
+- Duplicate detection preserves discussion quality
 
-- `Quote` — text of the passage (required)
-- `Source` — author/work or scripture citation
-- `Translation author` — translator (optional)
+**Performance Optimizations**:
 
-### Build the JSON
+- Static generation for quote selection using deterministic hashing
+- Edge caching for optimal global performance
+- Minimal JavaScript bundle with modern React patterns
+- Progressive enhancement for core functionality
 
-```bash
-npm run content:build
-```
-This compiles `content/quotes.csv` into `public/quotes.json`, generating **stable IDs** (deterministic hashes of normalized text), merging duplicates, and sorting for clean diffs. Commit `public/quotes.json` so deploys don’t require a database.
+## Implementation Highlights
 
-## APIs (App Router)
+### Quote Selection Algorithm
 
-- `GET /api/health` → `{ ok: true, method: "GET" }` — basic health probe
-- `GET /api/comments?quoteId=<id>` → `{ comments: [...] }` — list comments for a passage
-- `POST /api/comments` — create a comment
-  - Body: `{ quoteId, body, displayName?, parentId?, turnstileToken, honeypot? }`
-  - Validates Turnstile, rate‑limits by IP hash, checks duplicates and link count
+The daily quote rotation uses a deterministic hash function based on the current date, ensuring consistent daily experience while appearing random. This approach eliminates the need for server-side state while maintaining predictable behavior.
 
-> These routes are implemented as **Next App Router** handlers and deployed through OpenNext. There is no `functions/` use in production.
+### Discussion System
 
-## Cloudflare Configuration
+Built with modern React patterns including:
 
-1. **Pages project**
-   - Build command: your OpenNext script (e.g., `npm run pages:build`)
-   - Output directory: `.open-next`
-2. **Bindings (Production + Preview)**
-   - D1 binding named **`DB`** → your D1 database
-3. **Environment variables (Production + Preview)**
-   - `NEXT_PUBLIC_TURNSTILE_SITE_KEY` — Turnstile site key
-   - `TURNSTILE_SECRET` — Turnstile secret key
-   - `HASH_SALT` — long random string for IP hashing
-   - (optional) `NEXT_PUBLIC_BASE_URL` — canonical base URL used by metadata
-4. **Turnstile allowed domains**
-   - Add `localhost`, your `*.pages.dev`, and your custom domain
-5. **Cache rules**
-   - Bypass cache for `/api/*`
-   - (Optional) Cache `/quotes.json` for 24h
+- Custom hooks for state management
+- Optimistic UI updates
+- Error boundary patterns
+- Accessibility-first design
+- Real-time validation and feedback
 
-## Local Development
+### Database Design
 
-The UI runs under `next dev`. API routes that need Cloudflare bindings (D1, Turnstile) are best tested in a Pages dev session:
+SQLite schema optimized for discussion features:
 
-```bash
-# 1) Build with OpenNext
-npm run pages:build
+- Stable quote IDs derived from content hashing
+- Efficient indexing for comment retrieval
+- Privacy-preserving IP hashing for rate limiting
+- Extensible design for future moderation features
 
-# 2) Serve the .open-next output locally via Wrangler
-npx wrangler pages dev .open-next
-```
+### Deployment Pipeline
 
-Alternatively, use preview deploys on Cloudflare for end‑to‑end testing.
+Automated deployment using OpenNext for Cloudflare compatibility:
 
-## Database Schema (D1)
+- Advanced mode configuration for optimal performance
+- Asset optimization and bundling
+- Environment-specific configurations
+- Zero-downtime deployments
 
-See `db/migrations/0001_init.sql`. The primary table is `comments` with fields:
+## Code Quality & Development Practices
 
-- `id` (TEXT, PK)
-- `quote_id` (TEXT)
-- `parent_id` (TEXT, nullable)
-- `body` (TEXT)
-- `display_name` (TEXT, nullable)
-- `created_at` (INTEGER or TIMESTAMP)
-- `updated_at` (INTEGER or TIMESTAMP)
-- `ip_hash` (TEXT)
-- `body_hash` (TEXT)
-- `score` (INTEGER, default 0)
-- `hidden` (INTEGER, default 0)
+### TypeScript Implementation
 
-Indexes support common lookups (e.g., by `quote_id`, recency) and uniqueness for votes/reports if you enable moderation later.
+- **Strict TypeScript** configuration with comprehensive type definitions
+- **Zod validation** for runtime type safety in API routes
+- **Custom type definitions** for domain models (quotes, comments)
+- **Error handling** with proper type guards and user-friendly messages
 
-## Security and Privacy
+### React Development Patterns
 
-- IP addresses are not stored; a salted hash (`HASH_SALT` + IP) is kept solely for rate limiting and abuse prevention.
-- Turnstile is used strictly to block automated submissions.
-- No advertising, tracking pixels, or third‑party analytics are included by default.
+- **Server Components** for optimal performance and SEO
+- **Client Components** only where interactivity is required
+- **Custom hooks** for reusable stateful logic
+- **Optimistic updates** for responsive user experience
+- **Accessibility-first** design with proper ARIA labels and keyboard navigation
 
-## Getting Started (Quick)
+### API Design
 
-```bash
-# Install dependencies
-npm install
+RESTful API endpoints built with Next.js App Router:
 
-# Dev (UI only)
-npm run dev
+- `GET /api/comments` - Retrieve comments for a specific quote
+- `POST /api/comments` - Create new comments with validation
+- `POST /api/report` - Report inappropriate content
+- Comprehensive input validation using Zod schemas
+- Rate limiting and spam prevention
+- Privacy-preserving data handling
 
-# Build for Cloudflare Pages (OpenNext)
-npm run pages:build
+### Database Architecture
 
-# Local Cloudflare preview (serves APIs + UI)
-npx wrangler pages dev .open-next
-```
+SQLite schema designed for scalability and privacy:
+
+- **Comments table** with efficient indexing for quote-based queries
+- **Votes table** prepared for future moderation features
+- **Hash-based deduplication** to prevent spam
+- **Privacy-first design** with IP hashing instead of storage
+
+### Build & Deployment
+
+- **OpenNext** configuration for Cloudflare Workers compatibility
+- **Automated content pipeline** from CSV to optimized JSON
+- **Edge-optimized** asset delivery
+- **Environment-specific** configurations for development and production
+
+## Skills Demonstrated
+
+This project showcases proficiency in:
+
+- **Modern React Development**: Server/Client Components, hooks, TypeScript
+- **Serverless Architecture**: Cloudflare Workers, edge computing, zero-config deployment
+- **Database Design**: SQLite optimization, indexing strategies, privacy considerations
+- **Security Implementation**: Bot protection, rate limiting, input validation
+- **Performance Optimization**: Edge caching, static generation, minimal bundle sizes
+- **Developer Experience**: Automated workflows, type safety, error handling
+- **User Experience Design**: Accessibility, responsive design, progressive enhancement
+
+## Technical Challenges Solved
+
+1. **Deterministic Quote Selection**: Implemented hash-based rotation without server state
+2. **Privacy-Preserving Rate Limiting**: IP hashing for abuse prevention without data collection
+3. **Edge-Compatible Architecture**: Full-stack application optimized for Cloudflare Workers
+4. **Content Version Control**: CSV-based workflow with automated JSON compilation
+5. **Real-time Validation**: Client-side feedback with server-side security validation
 
 ## License
 
 MIT
-
-## Acknowledgments
-
-Selections draw from a wide range of philosophical and religious texts and translators. Ensure you attribute translations where required (e.g., specific editions or translators) in your CSV.
