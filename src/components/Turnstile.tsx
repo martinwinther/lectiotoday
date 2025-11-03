@@ -28,7 +28,7 @@ export function Turnstile({
   onReady,
   appearance = 'always', // show the widget all the time
   size,
-  theme = 'auto',
+  theme = 'dark',
 }: Props) {
   const hostRef = useRef<HTMLDivElement | null>(null);
   const widgetIdRef = useRef<string | null>(null);

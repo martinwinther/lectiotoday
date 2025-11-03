@@ -173,7 +173,7 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
                   onToken={handleToken}
                   onReady={handleReady}
                   appearance="interaction-only"
-                  theme="auto"
+                  theme="dark"
                 />
               </div>
             ) : (
