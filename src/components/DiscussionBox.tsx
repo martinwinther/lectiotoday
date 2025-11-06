@@ -252,7 +252,7 @@ function ToastNotification({
 }) {
   return (
     <div
-      className="fixed bottom-6 right-6 z-50 toast-enter"
+      className="fixed bottom-6 right-6 z-[9999] toast-enter"
       role="alert"
       aria-live="assertive"
     >
