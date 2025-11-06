@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { fetchComments, postComment } from '@/lib/comments';
 import { saveToken } from '@/lib/turnstile-token';
 import { Turnstile } from '@/components/Turnstile';
@@ -228,9 +229,12 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
         </div>
       </div>
 
-      {toastMessage && (
-        <ToastNotification message={toastMessage} onDismiss={dismissToast} />
-      )}
+      {toastMessage &&
+        typeof window !== 'undefined' &&
+        createPortal(
+          <ToastNotification message={toastMessage} onDismiss={dismissToast} />,
+          document.body
+        )}
 
       {reportFor && (
         <ReportModal
