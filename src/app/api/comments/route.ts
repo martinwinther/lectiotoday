@@ -80,10 +80,20 @@ export async function POST(req: NextRequest) {
   const normalized = p.data.body.replace(/\s+/g, ' ').trim().toLowerCase();
   const bodyHash = await hashHex(normalized);
 
-  // check links limit (max 1)
-  const linkCount = (p.data.body.match(/https?:\/\//gi) || []).length;
-  if (linkCount > 1) {
-    return NextResponse.json({ error: 'too_many_links' }, { status: 400 });
+  // check for any links - block all link formats
+  const protocolPattern = /(https?:\/\/|ftp:\/\/|mailto:)/gi;
+  const wwwPattern = /www\./gi;
+  const domainPattern = /\S+\.\S+/g;
+  const emailPattern = /\S+@\S+\.\S+/g;
+
+  const hasLinks =
+    protocolPattern.test(p.data.body) ||
+    wwwPattern.test(p.data.body) ||
+    domainPattern.test(p.data.body) ||
+    emailPattern.test(p.data.body);
+
+  if (hasLinks) {
+    return NextResponse.json({ error: 'links_not_allowed' }, { status: 400 });
   }
 
   // rate limit: max 5 posts per 10 minutes per ip_hash

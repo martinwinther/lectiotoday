@@ -6,19 +6,46 @@ import { saveToken } from '@/lib/turnstile-token';
 import { Turnstile } from '@/components/Turnstile';
 import type { Comment } from '@/types/comment';
 
+const errorMessages: Record<string, string> = {
+  links_not_allowed: 'Links and email addresses are not allowed in comments.',
+  too_many_links: 'Links and email addresses are not allowed in comments.',
+  bot_check_failed: 'Please complete the verification check.',
+  rate_limited: 'Please wait a moment before posting again.',
+  duplicate: 'This comment has already been posted.',
+  invalid: 'Invalid input. Please try again.',
+};
+
 export function DiscussionBox({ quoteId }: { quoteId: string }) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [body, setBody] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [token, setToken] = useState('');
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [typingStart, setTypingStart] = useState<number | null>(null);
   const [reportFor, setReportFor] = useState<Comment | null>(null);
   const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY as string;
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const resetTurnstileRef = useRef<null | (() => void)>(null);
+  const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const showToast = useCallback((message: string) => {
+    setToastMessage(message);
+    if (toastTimeoutRef.current) {
+      clearTimeout(toastTimeoutRef.current);
+    }
+    toastTimeoutRef.current = setTimeout(() => {
+      setToastMessage(null);
+    }, 4000);
+  }, []);
+
+  const dismissToast = useCallback(() => {
+    setToastMessage(null);
+    if (toastTimeoutRef.current) {
+      clearTimeout(toastTimeoutRef.current);
+    }
+  }, []);
 
   const handleToken = useCallback((t: string) => {
     setToken(t);
@@ -46,8 +73,18 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
     setBody('');
     setToken('');
     setTypingStart(null);
+    setToastMessage(null);
     resetTurnstileRef.current?.();
   }, [quoteId]);
+
+  // cleanup toast timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (toastTimeoutRef.current) {
+        clearTimeout(toastTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const minTypingMs = 900; // reduced to be less strict
 
@@ -55,23 +92,23 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
     if (busy) return;
     const text = body.trim();
     if (text.length < 2) {
-      setError('Say a little more.');
+      showToast('Say a little more.');
       return;
     }
 
     // if no token yet, guide user instead of disabling button
     if (!token) {
-      setError('Please complete the check below first.');
+      showToast('Please complete the check below first.');
       return;
     }
 
     if (!typingStart || Date.now() - typingStart < minTypingMs) {
-      setError('Take a moment to gather your thought, then post.');
+      showToast('Take a moment to gather your thought, then post.');
       return;
     }
 
     setBusy(true);
-    setError(null);
+    setToastMessage(null);
     try {
       await postComment({
         quoteId,
@@ -91,7 +128,8 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
       requestAnimationFrame(() => textareaRef.current?.focus());
     } catch (e) {
       const msg = e instanceof Error ? e.message : 'Could not post.';
-      setError(msg);
+      const friendlyMessage = errorMessages[msg] || msg;
+      showToast(friendlyMessage);
       // any token-related failure → get a new token
       if (
         msg.includes('bot') ||
@@ -163,7 +201,7 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
           }}
         />
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div className="text-[11px] text-zinc-500">Keep it kind. Max one link.</div>
+          <div className="text-[11px] text-zinc-500">Keep it kind.</div>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             {siteKey ? (
               <div className="flex justify-center sm:justify-start">
@@ -188,8 +226,11 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
             </button>
           </div>
         </div>
-        {error && <div className="text-xs text-red-400 mt-2">{error}</div>}
       </div>
+
+      {toastMessage && (
+        <ToastNotification message={toastMessage} onDismiss={dismissToast} />
+      )}
 
       {reportFor && (
         <ReportModal
@@ -198,6 +239,45 @@ export function DiscussionBox({ quoteId }: { quoteId: string }) {
           onClose={() => setReportFor(null)}
         />
       )}
+    </div>
+  );
+}
+
+function ToastNotification({
+  message,
+  onDismiss,
+}: {
+  message: string;
+  onDismiss: () => void;
+}) {
+  return (
+    <div
+      className="fixed bottom-6 right-6 z-50 toast-enter"
+      role="alert"
+      aria-live="assertive"
+    >
+      <div className="rounded-xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg px-4 py-3 pr-10 max-w-sm relative">
+        <p className="text-sm text-zinc-100">{message}</p>
+        <button
+          onClick={onDismiss}
+          className="absolute top-2 right-2 text-zinc-400 hover:text-zinc-200 transition-colors"
+          aria-label="Dismiss notification"
+        >
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
   );
 }
